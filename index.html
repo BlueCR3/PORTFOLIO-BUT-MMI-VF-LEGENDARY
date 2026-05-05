@@ -477,23 +477,13 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* ── ACCESSIBILITÉ ── */
-        :focus-visible {
-            outline: 2px solid var(--dbz-blue);
-            outline-offset: 3px;
-            border-radius: 4px;
-        }
-        /* ── PERFORMANCE ── */
+        :focus-visible { outline: 2px solid var(--dbz-blue); outline-offset: 3px; border-radius: 4px; }
         img { content-visibility: auto; }
         .glass-card { will-change: transform; }
-        .energy-particle { will-change: transform, opacity; }
     </style>
 </head>
 <body>
-    <a href="#main-content" style="position:absolute;left:-9999px;top:4px;z-index:9999;padding:8px 16px;background:var(--dbz-blue);color:#fff;font-weight:bold;border-radius:99px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;" onfocus="this.style.left='16px'" onblur="this.style.left='-9999px'">
-        Aller au contenu principal
-    </a>
+    <a href="#main-content" style="position:absolute;left:-9999px;top:4px;z-index:9999;padding:8px 16px;background:var(--dbz-blue);color:#fff;font-weight:bold;border-radius:99px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;" onfocus="this.style.left='16px'" onblur="this.style.left='-9999px'">Aller au contenu principal</a>
     <!-- Fond animé Genkidama Centré -->
     <div class="aura-bg"></div>
     <div class="genkidama-container">
@@ -641,7 +631,7 @@
     </div>
     
     <!-- MODAL CV - OPTIMISÉ MOBILE AVEC JPEG -->
-    <div id="cv-modal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-label="Curriculum Vitae" onclick="closeOnOverlay(event)">
+    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Curriculum Vitae">
         <div class="modal-content glass-card">
             <span class="close-modal" onclick="toggleModal()">&times;</span>
             <div class="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-blue-500/5 gap-4 sm:gap-0">
@@ -855,7 +845,7 @@
         <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold">Mentions Légales</button>
     </footer>
      <!-- MODAL MENTIONS LÉGALES -->
-    <div id="mentions-modal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-label="Mentions légales" onclick="closeMentionsOnOverlay(event)">
+    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Mentions légales">
         <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto">
             <span class="close-modal" onclick="toggleMentionsModal()">&times;</span>
             <h2 class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span class="text-white">Légales</span></h2>
@@ -905,7 +895,7 @@
     </div>
 
     <!-- MODAL PREVIEW -->
-    <div id="preview-modal" role="dialog" aria-modal="true" aria-label="Prévisualisation du projet" onclick="closePreviewOnOverlay(event)">
+    <div id="preview-modal" onclick="closePreviewOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Prévisualisation du projet">
         <div class="preview-container">
             <!-- Header bar -->
             <div class="preview-header">
@@ -1353,10 +1343,19 @@
             // youtu.be/ID
             let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
             if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
+            // youtube.com/shorts/ID
+            m = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
             // youtube.com/watch?v=ID
             m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
             if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
             return null;
+        }
+
+        function getCanvaEmbedUrl(url) {
+            const m = url.match(/canva\.com\/design\/([^/]+)\/([^/]+)\/(view|watch)/);
+            if (m) return 'https://www.canva.com/design/' + m[1] + '/' + m[2] + '/' + m[3] + '?embed';
+            return url;
         }
 
         function openPreviewModal() {
@@ -1394,6 +1393,7 @@
                 typeBadge.style.display = 'inline-block';
                 const embedUrl = getYoutubeEmbedUrl(project.link);
                 if (embedUrl) {
+                    iframe.setAttribute('allow', 'autoplay; fullscreen');
                     iframe.style.display = 'block';
                     iframe.src = embedUrl;
                 } else {
@@ -1402,7 +1402,9 @@
             } else if (type === 'canva') {
                 typeBadge.textContent = '✦ Canva';
                 typeBadge.style.display = 'inline-block';
-                showPreviewCanva(project);
+                iframe.setAttribute('allow', 'fullscreen');
+                iframe.style.display = 'block';
+                iframe.src = getCanvaEmbedUrl(project.link);
             } else if (type === 'gdocs') {
                 typeBadge.textContent = '📄 PDF';
                 typeBadge.style.display = 'inline-block';
