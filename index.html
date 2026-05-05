@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethan Caraïbe | Z-Portfolio MMI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
@@ -365,29 +367,25 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.97);
+            background: rgba(0, 0, 0, 0.97);
             z-index: 200;
             justify-content: center;
             align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow: hidden;
+            padding: 16px;
         }
 
         .preview-container {
             width: 100%;
             max-width: 1200px;
-            height: calc(100dvh - 20px);
+            height: 95vh;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            box-sizing: border-box;
-            overflow: hidden;
+            gap: 10px;
         }
 
         @media (min-width: 640px) {
             #preview-modal { padding: 20px; }
-            .preview-container { height: calc(100dvh - 40px); gap: 12px; }
+            .preview-container { height: 90vh; gap: 12px; }
         }
 
         .preview-header {
@@ -418,111 +416,18 @@
 
         .preview-iframe-wrapper {
             flex: 1;
-            min-height: 0;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(0, 163, 255, 0.2);
             position: relative;
             background: #0a0a0f;
-            display: flex;
-            flex-direction: column;
         }
 
         .preview-iframe-wrapper iframe {
-            flex: 1;
             width: 100%;
-            min-height: 0;
+            height: 100%;
             border: none;
             display: block;
-        }
-
-        /* === IMAGE PREVIEW BLOCK === */
-        #preview-img-block {
-            position: absolute;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            background: #05070A;
-            overflow: hidden;
-        }
-
-        #preview-img-block.active {
-            display: flex;
-        }
-
-        #preview-img-scroll {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* mode FIT par défaut */
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #preview-img-scroll.mode-fill {
-            overflow-y: auto;
-            overflow-x: hidden;
-            align-items: flex-start;
-        }
-
-        #preview-big-img {
-            display: block;
-            border-radius: 10px;
-            border: 1px solid rgba(0,163,255,0.2);
-        }
-
-        /* Mode FIT : image entière, jamais de scroll */
-        #preview-img-scroll:not(.mode-fill) #preview-big-img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            cursor: zoom-in;
-        }
-
-        /* Mode FILL : largeur totale, scroll vertical seulement */
-        #preview-img-scroll.mode-fill #preview-big-img {
-            width: 100%;
-            height: auto;
-            max-height: none;
-            object-fit: unset;
-            cursor: zoom-out;
-        }
-
-        #preview-img-footer {
-            flex-shrink: 0;
-            width: 100%;
-            padding: 7px 14px 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0,0,0,0.55);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            box-sizing: border-box;
-        }
-
-        #toggle-mode-btn {
-            flex-shrink: 0;
-            padding: 5px 14px;
-            border-radius: 99px;
-            border: 1px solid rgba(0,163,255,0.4);
-            background: transparent;
-            color: #60a5fa;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-family: 'Orbitron', sans-serif;
-            white-space: nowrap;
-        }
-
-        #toggle-mode-btn:hover {
-            background: rgba(0,163,255,0.1);
         }
 
         .preview-fallback {
@@ -572,9 +477,23 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* ── ACCESSIBILITÉ ── */
+        :focus-visible {
+            outline: 2px solid var(--dbz-blue);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+        /* ── PERFORMANCE ── */
+        img { content-visibility: auto; }
+        .glass-card { will-change: transform; }
+        .energy-particle { will-change: transform, opacity; }
     </style>
 </head>
 <body>
+    <a href="#main-content" style="position:absolute;left:-9999px;top:4px;z-index:9999;padding:8px 16px;background:var(--dbz-blue);color:#fff;font-weight:bold;border-radius:99px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;" onfocus="this.style.left='16px'" onblur="this.style.left='-9999px'">
+        Aller au contenu principal
+    </a>
     <!-- Fond animé Genkidama Centré -->
     <div class="aura-bg"></div>
     <div class="genkidama-container">
@@ -582,7 +501,7 @@
     </div>
     <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]"></div>
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center">
+    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center" aria-label="Navigation principale">
         <div class="dbz-font text-2xl font-black tracking-tighter italic">
             ETHAN<span class="text-blue-500">CARAÏBE</span>
         </div>
@@ -593,15 +512,14 @@
             <a href="#competences" class="hover:text-blue-400 transition">Niveau de Ki</a>
             <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
         </div>
-        <!-- Burger Icon -->
-        <div class="md:hidden text-2xl text-white focus:outline-none" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars" id="burger-icon"></i>
-        </div>
+        <button class="md:hidden text-2xl text-white" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu" id="burger-btn">
+            <i class="fas fa-bars" aria-hidden="true" id="burger-icon" aria-hidden="true"></i>
+        </button>
     </nav>
      <!-- MENU MOBILE OVERLAY -->
     <div id="mobile-menu" class="fixed inset-0 bg-[#05070A] z-[60] flex flex-col justify-center items-center p-8 md:hidden">
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl">
-            <i class="fas fa-times"></i>
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl" aria-label="Fermer le menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
         </button>
         <div class="flex flex-col gap-8 text-center">
             <a href="#accueil" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">ACCUEIL</a>
@@ -611,10 +529,11 @@
             <a href="#contact" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">CONTACT</a>
         </div>
         <div class="mt-16 flex gap-6 text-2xl">
-            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/blue93971/" class="text-blue-500"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/blue93971/" class="text-blue-500"><i class="fab fa-instagram" aria-hidden="true"></i></a>
         </div>
     </div>
+    <main id="main-content">
     <!-- HERO SECTION -->
     <section id="accueil" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
         <div class="inline-block px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
@@ -632,7 +551,7 @@
            <a href="#contact" class="flex items-center justify-center px-6 py-3 md:px-8 rounded-full border border-white/20 hover:bg-white/10 transition font-bold uppercase tracking-tighter text-sm md:text-base">Me contacter</a>
             </a>
             <button onclick="toggleModal()" class="px-6 py-3 md:px-8 md:py-4 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold uppercase tracking-tighter text-sm md:text-base flex items-center gap-2">
-                <i class="fas fa-file-invoice"></i> Mon CV
+                <i class="fas fa-file-invoice" aria-hidden="true"></i> Mon CV
             </button>
         </div>
     </section>
@@ -640,7 +559,7 @@
     <section id="presentation" class="py-24 px-6 md:px-12 max-w-5xl mx-auto">
         <div class="glass-card p-8 md:p-16 border-blue-500/20 relative overflow-hidden">
             <div class="absolute top-0 right-0 p-4 opacity-10">
-                <i class="fas fa-user-ninja text-9xl"></i>
+                <i class="fas fa-user-ninja text-9xl" aria-hidden="true"></i>
             </div>
             <h2 class="dbz-font text-3xl md:text-4xl font-black italic mb-8 uppercase">
                 Bonjour, je suis <span class="text-blue-500">Ethan Caraïbe</span>
@@ -678,17 +597,17 @@
     </section>
 
   <!-- MODALE PROJET -->
-    <div id="project-modal" class="custom-modal" onclick="closeModalOnOverlay(event)">
+    <div id="project-modal" class="custom-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
         <div class="modal-body">
             
             <!-- Flèches Bureau (Positionnée par rapport à modal-body) -->
-            <div class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)"><i class="fas fa-chevron-left"></i></div>
-            <div class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)"><i class="fas fa-chevron-right"></i></div>
+            <div class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)"><i class="fas fa-chevron-left" aria-hidden="true"></i></div>
+            <div class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)"><i class="fas fa-chevron-right" aria-hidden="true"></i></div>
             
             <div class="glass-card overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] w-full border-white/20">
                 <!-- Image -->
                 <div class="md:w-3/5 bg-gray-900 overflow-hidden h-64 md:h-auto bg-black">
-                    <img id="modal-img" src="" alt="Projet" class="w-full h-full object-contain ">
+                    <img id="modal-img" src="" alt="" class="w-full h-full object-contain">
                 </div>
                 <!-- Texte -->
                 <div class="md:w-2/5 p-5 md:p-12 flex flex-col items-center justify-center bg-black/40">
@@ -699,18 +618,18 @@
                     <div class="flex gap-4 flex-wrap">
                         <a id="modal-link" href="#" target="_blank" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Voir en détails</a>
                         <button id="preview-btn" onclick="openPreviewModal()" class="px-8 py-3 rounded-full border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 transition font-bold uppercase text-xs flex items-center gap-2">
-                            <i class="fas fa-eye"></i> Preview
+                            <i class="fas fa-eye" aria-hidden="true"></i> Preview
                         </button>
-                        <button onclick="closeProjectModal()" class="px-8 py-3 rounded-full border border-white/10 hover:bg-white/5 transition font-bold uppercase text-xs">Fermer</button>
+                        <button onclick="closeProjectModal()" class="px-8 py-3 rounded-full border border-white/10 hover:bg-white/5 transition font-bold uppercase text-xs" aria-label="Fermer la modale projet">Fermer</button>
                     </div>
 
                     <!-- Navigation Mobile (Visible uniquement sous 1200px) -->
                     <div class="modal-nav-mobile hidden mt-10 flex justify-between w-full border-t border-white/10 pt-6">
                         <button onclick="changeProject(-1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
-                            <i class="fas fa-chevron-left"></i> Précédent
+                            <i class="fas fa-chevron-left" aria-hidden="true"></i> Précédent
                         </button>
                         <button onclick="changeProject(1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
-                            Suivant <i class="fas fa-chevron-right"></i>
+                            Suivant <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -722,13 +641,13 @@
     </div>
     
     <!-- MODAL CV - OPTIMISÉ MOBILE AVEC JPEG -->
-    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)">
+    <div id="cv-modal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-label="Curriculum Vitae" onclick="closeOnOverlay(event)">
         <div class="modal-content glass-card">
             <span class="close-modal" onclick="toggleModal()">&times;</span>
             <div class="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-blue-500/5 gap-4 sm:gap-0">
                 <h2 class="dbz-font text-lg sm:text-xl italic font-black uppercase">CURRICULUM <span class="text-blue-500">VITAE</span></h2>
                 <a href="images2/CV Caraibe Ethan VF.pdf" download class="btn-ki px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <i class="fas fa-download"></i> Télécharger PDF
+                    <i class="fas fa-download" aria-hidden="true"></i> Télécharger PDF
                 </a>
             </div>
             <div class="flex-grow overflow-auto p-4 bg-white/5 flex justify-center items-start">
@@ -756,73 +675,73 @@
                 
                 <!-- DaVinci Resolve (Source Wikimedia - Official) -->
                 <div class="skill-badge flex flex-col items-center">
-                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo">
+                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">DaVinci</span>
                 </div>
 
                 <!-- CapCut (Source VectorLogoZone - High Quality) -->
                 <div class="skill-badge">
-                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo">
+                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CapCut</span>
                 </div>
 
                 <!-- Canva (Official Brand Mark) -->
                 <div class="skill-badge">
-                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo">
+                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Canva</span>
                 </div>
 
                 <!-- Gemini (Google Official Sparkle) -->
                 <div class="skill-badge">
-                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo">
+                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Gemini</span>
                 </div>
 
                 <!-- ChatGPT (OpenAI Official Logo) -->
                 <div class="skill-badge">
-                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo">
+                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">ChatGPT</span>
                 </div>
 
                 <!-- Photoshop (Official Badge) -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo">
+                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Photoshop</span>
                 </div>
 
                 <!-- Illustrator (Official Badge) -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo">
+                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Illustrator</span>
                 </div>
 
                 <!-- Python -->
                 <div class="skill-badge">
-                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo">
+                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Python</span>
                 </div>
 
                 <!-- HTML5 -->
                 <div class="skill-badge">
-                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo">
+                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">HTML5</span>
                 </div>
 
                 <!-- CSS3 -->
                 <div class="skill-badge">
-                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo">
+                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CSS3</span>
                 </div>
 
                 <!-- JavaScript -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo">
+                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo" loading="lazy">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">JS</span>
                 </div>
 
                 <!-- PHP -->
                 <div class="skill-badge">
-                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo">
+                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo" loading="lazy">
                     <span class="text-sm font-bold uppercase tracking-widest mt-2">PHP</span>
                 </div>
 
@@ -838,19 +757,19 @@
                 <div class="space-y-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
                         </div>
                         <span>ethan.caraibe@gmail.com</span>
                     </div>
                     <div class="flex items-center gap-4">
                         <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></div>
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-linkedin-in" aria-hidden="true"></i></div>
                             <span class="group-hover:text-blue-400 transition-colors">linkedin.com/in/ethancaraibe</span>
                         </a>
                     </div>
                     <div class="flex items-center gap-4">
                         <a href="https://www.instagram.com/blue93971/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-instagram"></i></div>
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-instagram" aria-hidden="true"></i></div>
                             <span class="group-hover:text-blue-400 transition-colors">@blue93971</span>
                         </a>
                     </div>
@@ -859,9 +778,12 @@
             
             <!-- FORMULAIRE CONNECTÉ À FORMSPREE -->
             <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="md:w-1/2 space-y-4">
-                <input type="text" name="name" required placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
-                <input type="email" name="email" required placeholder="Votre Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
-                <textarea name="message" required placeholder="Votre Message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white"></textarea>
+                <label for="contact-name" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Nom</label>
+                <input id="contact-name" type="text" name="name" required placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
+                <label for="contact-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Email</label>
+                <input id="contact-email" type="email" name="email" required placeholder="Votre Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
+                <label for="contact-message" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Message</label>
+                <textarea id="contact-message" name="message" required placeholder="Votre Message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white"></textarea>
                 
                 <button type="submit" id="submit-btn" class="btn-ki w-full py-4 rounded-xl font-bold uppercase tracking-widest text-white">
                     <span id="btn-text">Envoyer le message</span>
@@ -870,6 +792,8 @@
             </form>
         </div>
     </section>
+
+    </main>
 
     <script>
         // Gestion de l'envoi du formulaire via AJAX pour éviter la redirection
@@ -883,7 +807,7 @@
             
             // État de chargement
             btn.disabled = true;
-            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Transmission...';
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Transmission...';
             status.innerText = "";
 
             const data = new FormData(form);
@@ -899,7 +823,7 @@
 
                 if (response.ok) {
                     // Succès : Message de réussite
-                    btnText.innerHTML = '<i class="fas fa-check"></i> Signal envoyé !';
+                    btnText.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Signal envoyé !';
                     status.classList.add("text-blue-400");
                     status.innerText = "Fusion réussie ! Je vous répondrai sous peu.";
                     form.reset();
@@ -925,13 +849,13 @@
     </script>
 
     <!-- FOOTER -->
-    <footer class="py-12 px-6 border-t border-white/5 text-center text-gray-500 text-sm">
+    <footer role="contentinfo" class="py-12 px-6 border-t border-white/5 text-center text-gray-500 text-sm">
         <p>© 2026 Ethan Caraïbe — Portfolio BUT MMI </p>
         <p class="mt-2 italic">Designé et codé avec l'énergie du Super Saiyan Blue.</p>
         <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold">Mentions Légales</button>
     </footer>
      <!-- MODAL MENTIONS LÉGALES -->
-    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)">
+    <div id="mentions-modal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-label="Mentions légales" onclick="closeMentionsOnOverlay(event)">
         <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto">
             <span class="close-modal" onclick="toggleMentionsModal()">&times;</span>
             <h2 class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span class="text-white">Légales</span></h2>
@@ -981,13 +905,13 @@
     </div>
 
     <!-- MODAL PREVIEW -->
-    <div id="preview-modal" onclick="closePreviewOnOverlay(event)">
+    <div id="preview-modal" role="dialog" aria-modal="true" aria-label="Prévisualisation du projet" onclick="closePreviewOnOverlay(event)">
         <div class="preview-container">
             <!-- Header bar -->
             <div class="preview-header">
                 <div class="flex items-center gap-3">
-                    <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center transition text-white/60 text-sm">
-                        <i class="fas fa-times"></i>
+                    <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center transition text-white/60 text-sm" aria-label="Fermer la prévisualisation">
+                        <i class="fas fa-times" aria-hidden="true"></i>
                     </button>
                     <span id="preview-title" class="dbz-font text-xs italic font-black text-white/80 uppercase hidden sm:block"></span>
                     <span id="preview-type-badge" style="display:none" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400"></span>
@@ -995,7 +919,7 @@
                 <div class="preview-url-bar" id="preview-url-display">—</div>
                 <div class="flex items-center gap-2">
                     <a id="preview-open-link" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-external-link-alt"></i>
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                         <span class="hidden sm:inline">Ouvrir</span>
                     </a>
                 </div>
@@ -1009,28 +933,29 @@
                 </div>
                 <!-- iFrame (YouTube embed ou site web) -->
                 <iframe id="preview-iframe" src="" allow="autoplay; fullscreen" onload="onIframeLoad()" onerror="showPreviewFallback()"></iframe>
-                <!-- Bloc image (Canva / visuel) -->
-                <div id="preview-img-block">
-                    <div id="preview-img-scroll">
-                        <img id="preview-big-img" src="" alt="Aperçu">
+                <!-- Bloc image Canva / aperçu image -->
+                <div id="preview-img-block" style="display:none; position:absolute; inset:0; flex-direction:column; justify-content:center; align-items:center; background:#05070A; gap:0; overflow:hidden;">
+                    <!-- Image zone -->
+                    <div style="flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:16px 16px 8px; min-height:0;">
+                        <img id="preview-big-img" src="" alt="Aperçu" style="max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain; border-radius:10px; border:1px solid rgba(0,163,255,0.2); box-shadow: 0 0 40px rgba(0,163,255,0.08);">
                     </div>
-                    <div id="preview-img-footer">
+                    <!-- Footer compact -->
+                    <div style="width:100%; padding:10px 16px 14px; display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.4); border-top:1px solid rgba(255,255,255,0.05); flex-shrink:0; gap:12px;">
                         <p id="preview-canva-title" class="dbz-font text-xs italic font-black uppercase text-white/80 truncate" style="flex:1; margin:0;"></p>
-                        <button id="toggle-mode-btn" onclick="toggleImgMode()">⊞ Largeur totale</button>
                         <a id="preview-canva-btn" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap" style="flex-shrink:0;">
-                            <i class="fas fa-external-link-alt"></i> Ouvrir
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Ouvrir
                         </a>
                     </div>
                 </div>
                 <!-- Fallback si le site bloque l'iframe -->
                 <div class="preview-fallback" id="preview-fallback">
                     <div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-4">
-                        <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
+                        <i class="fas fa-shield-alt text-blue-500 text-3xl" aria-hidden="true"></i>
                     </div>
                     <h3 class="dbz-font text-lg italic font-black uppercase">Aperçu bloqué</h3>
                     <p class="text-gray-500 text-sm max-w-sm">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
                     <a id="fallback-link" href="#" target="_blank" class="btn-ki mt-4 px-8 py-3 rounded-full font-bold uppercase text-xs flex items-center gap-2">
-                        <i class="fas fa-external-link-alt"></i> Visiter le site
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i> Visiter le site
                     </a>
                 </div>
             </div>
@@ -1345,11 +1270,13 @@
         let currentProjectIndex = 0;
         let filteredProjects = [...projects];
 
-         function toggleMobileMenu() {
+        function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('active');
-            // Empêche le scroll quand le menu est ouvert
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+            const isOpen = menu.classList.contains('active');
+            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+            const btn = document.getElementById('burger-btn');
+            if (btn) btn.setAttribute('aria-expanded', String(isOpen));
         }
 
         function renderProjects(filter = "Tous") {
@@ -1388,7 +1315,9 @@
             document.getElementById('modal-title').innerText = project.title;
             document.getElementById('modal-cat').innerText = project.category;
             document.getElementById('modal-desc').innerText = project.desc;
-            document.getElementById('modal-img').src = project.img;
+            const imgEl = document.getElementById('modal-img');
+            imgEl.src = project.img;
+            imgEl.alt = 'Visuel du projet : ' + project.title;
             document.getElementById('modal-link').href = project.link;
             
             document.getElementById('project-modal').style.display = 'flex';
@@ -1450,8 +1379,7 @@
             loading.classList.remove('hidden');
             iframe.style.display = 'none';
             iframe.src = '';
-            imgPreview.classList.remove('active');
-            document.getElementById('preview-img-scroll').classList.remove('mode-fill');
+            imgPreview.style.display = 'none';
 
             // Metadata
             titleEl.textContent = project.title;
@@ -1492,34 +1420,18 @@
         }
 
         function showPreviewCanva(project) {
+            // Show the project image full-screen with a nice overlay
             const loading    = document.getElementById('preview-loading');
-            const imgBlock   = document.getElementById('preview-img-block');
+            const imgPreview = document.getElementById('preview-img-block');
             const imgEl      = document.getElementById('preview-big-img');
-            const titleEl    = document.getElementById('preview-canva-title');
+            const canvaTitle = document.getElementById('preview-canva-title');
             const canvaBtn   = document.getElementById('preview-canva-btn');
-            const scroll     = document.getElementById('preview-img-scroll');
-            const toggleBtn  = document.getElementById('toggle-mode-btn');
-
-            // Reset to FIT mode
-            scroll.classList.remove('mode-fill');
-            toggleBtn.textContent = '⊞ Largeur totale';
 
             loading.classList.add('hidden');
             imgEl.src = project.img;
-            titleEl.textContent = project.title;
+            canvaTitle.textContent = project.title;
             canvaBtn.href = project.link;
-            imgBlock.classList.add('active');
-
-            // Click sur l'image = toggle mode
-            imgEl.onclick = toggleImgMode;
-        }
-
-        function toggleImgMode() {
-            const scroll    = document.getElementById('preview-img-scroll');
-            const toggleBtn = document.getElementById('toggle-mode-btn');
-            const isFill    = scroll.classList.toggle('mode-fill');
-            toggleBtn.textContent = isFill ? '⊠ Vue ajustée' : '⊞ Largeur totale';
-            if (!isFill) scroll.scrollTop = 0;
+            imgPreview.style.display = 'flex';
         }
 
         function onIframeLoad() {
@@ -1542,15 +1454,10 @@
         }
 
         function closePreviewModal() {
-            const modal    = document.getElementById('preview-modal');
-            const iframe   = document.getElementById('preview-iframe');
-            const imgBlock = document.getElementById('preview-img-block');
-            const scroll   = document.getElementById('preview-img-scroll');
+            const modal  = document.getElementById('preview-modal');
+            const iframe = document.getElementById('preview-iframe');
             modal.style.display = 'none';
             iframe.src = '';
-            imgBlock.classList.remove('active');
-            scroll.classList.remove('mode-fill');
-            scroll.scrollTop = 0;
             document.body.style.overflow = 'hidden';
         }
 
