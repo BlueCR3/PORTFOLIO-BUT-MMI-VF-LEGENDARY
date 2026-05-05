@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan Caraïbe | Z-Portfolio MMI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dbz-orange: #FF8A00;
+            --dbz-blue: #00A3FF;
+            --dbz-dark: #05070A;
+            --aura-glow: rgba(0, 163, 255, 0.3);
+        }
+
+        body {
+            background-color: var(--dbz-dark);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .dbz-font { font-family: 'Orbitron', sans-serif; }
+
+        /* Animation du Genkidama centré */
+        .genkidama-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .genkidama {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #fff 0%, var(--dbz-blue) 35%, transparent 75%);
+            border-radius: 50%;
+            filter: blur(40px);
+            box-shadow: 0 0 60px var(--dbz-blue), inset 0 0 30px #fff;
+            animation: pulseGenki 5s infinite ease-in-out;
+            opacity: 0.2;
+        }
+
+        @keyframes pulseGenki {
+            0%, 100% { transform: scale(1); opacity: 0.1; filter: blur(20px); }
+            50% { transform: scale(1.05); opacity: 0.6; filter: blur(35px); }
+        }
+
+        /* Particules d'énergie convergentes vers le centre */
+        .energy-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: gatherEnergy 4s infinite ease-out;
+        }
+
+        @keyframes gatherEnergy {
+            0% { 
+                transform: translate(var(--start-x), var(--start-y)) scale(0); 
+                opacity: 0; 
+            }
+            20% { opacity: 0.7; }
+            100% { 
+                transform: translate(50vw, 50vh) scale(1.5); 
+                opacity: 0; 
+            }
+        }
+
+
+        /* Animation d'Aura en arrière-plan */
+        .aura-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, var(--aura-glow) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(100px);
+            animation: pulseAura 8s infinite alternate;
+        }
+
+        @keyframes pulseAura {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        /* Effet de verre (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--dbz-blue);
+            box-shadow: 0 0 30px var(--aura-glow);
+        }
+
+        /* Barre de navigation fixe */
+        nav {
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Bento Grid Custom */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: 20px;
+        }
+
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+         /* Correction pour les images de la Bento Grid */
+        .bento-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .project-card:hover .bento-bg {
+            opacity: 0.5;
+        }
+
+        /* Scroller horizontal pour mobile */
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(1, 1fr);
+                grid-auto-rows: auto;
+            }
+        }
+         /* Bento Ki Section */
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(0, 163, 255, 0.1);
+            border-color: var(--dbz-blue);
+            transform: scale(1.05);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(0, 163, 255, 0.3));
+            transition: 0.3s;
+        }
+
+        .skill-badge:hover .skill-icon {
+            transform: rotate(10deg);
+            filter: drop-shadow(0 0 15px var(--dbz-blue));
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px var(--dbz-blue);
+        }
+
+        .btn-ki {
+            background: linear-gradient(90deg, var(--dbz-blue), #0057FF);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ki::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.2);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            left: -150%;
+        }
+
+        .btn-ki:hover::after {
+            left: 100%;
+        }
+
+        /* Category Filter Styles */
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .filter-btn.active {
+            background: var(--dbz-blue);
+            border-color: var(--dbz-blue);
+            box-shadow: 0 0 15px var(--dbz-blue);
+        }
+
+        /* Barre de progression de puissance */
+        .power-bar {
+            height: 4px;
+            background: #1a1a1a;
+            border-radius: 2px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .power-fill {
+            height: 100%;
+            background: var(--dbz-blue);
+            box-shadow: 0 0 10px var(--dbz-blue);
+        }
+
+        /* Menu Mobile */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Fenêtre Modale CV */
+        .custom-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #0a0c10;
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            border-radius: 24px;
+            border: 1px solid var(--dbz-blue);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            z-index: 110;
+            transition: color 0.3s;
+        }
+        .close-modal:hover { color: var(--dbz-blue); }
+        /* Modals */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-body {
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        /* Flèches de Navigation Modale - ADAPTATIVES */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 163, 255, 0.15);
+            width: 50px; /* Taille réduite par défaut pour portable */
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 163, 255, 0.4);
+            z-index: 300;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Positionnement pour PC portables */
+        .nav-prev { left: -60px; }
+        .nav-next { right: -60px; }
+
+        .nav-arrow:hover { 
+            background: var(--dbz-blue); 
+            color: white; 
+            box-shadow: 0 0 25px var(--dbz-blue);
+            border-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Adaptation pour PC Fixe (Grand écran) */
+        @media (min-width: 1600px) {
+            .nav-arrow { width: 65px; height: 65px; font-size: 1.5rem; }
+            .nav-prev { left: -85px; }
+            .nav-next { right: -85px; }
+        }
+
+        @media (max-width: 1200px) {
+            .nav-arrow { display: none !important; }
+            .modal-nav-mobile { display: flex !important; }
+        }
+
+        .project-card { cursor: pointer; }
+
+        /* Modal Preview */
+        #preview-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.97);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .preview-container {
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100dvh - 20px);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            #preview-modal { padding: 20px; }
+            .preview-container { height: calc(100dvh - 40px); gap: 12px; }
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0, 163, 255, 0.3);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-url-bar {
+            flex: 1;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 99px;
+            padding: 6px 16px;
+            font-size: 0.72rem;
+            color: #9ca3af;
+            font-family: 'Space Grotesk', monospace;
+            margin: 0 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .preview-iframe-wrapper {
+            flex: 1;
+            min-height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 163, 255, 0.2);
+            position: relative;
+            background: #0a0a0f;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-iframe-wrapper iframe {
+            flex: 1;
+            width: 100%;
+            min-height: 0;
+            border: none;
+            display: block;
+        }
+
+        /* === IMAGE PREVIEW BLOCK === */
+        #preview-img-block {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            background: #05070A;
+            overflow: hidden;
+        }
+
+        #preview-img-block.active {
+            display: flex;
+        }
+
+        #preview-img-scroll {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* mode FIT par défaut */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #preview-img-scroll.mode-fill {
+            overflow-y: auto;
+            overflow-x: hidden;
+            align-items: flex-start;
+        }
+
+        #preview-big-img {
+            display: block;
+            border-radius: 10px;
+            border: 1px solid rgba(0,163,255,0.2);
+        }
+
+        /* Mode FIT : image entière, jamais de scroll */
+        #preview-img-scroll:not(.mode-fill) #preview-big-img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            cursor: zoom-in;
+        }
+
+        /* Mode FILL : largeur totale, scroll vertical seulement */
+        #preview-img-scroll.mode-fill #preview-big-img {
+            width: 100%;
+            height: auto;
+            max-height: none;
+            object-fit: unset;
+            cursor: zoom-out;
+        }
+
+        #preview-img-footer {
+            flex-shrink: 0;
+            width: 100%;
+            padding: 7px 14px 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.55);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            box-sizing: border-box;
+        }
+
+        #toggle-mode-btn {
+            flex-shrink: 0;
+            padding: 5px 14px;
+            border-radius: 99px;
+            border: 1px solid rgba(0,163,255,0.4);
+            background: transparent;
+            color: #60a5fa;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Orbitron', sans-serif;
+            white-space: nowrap;
+        }
+
+        #toggle-mode-btn:hover {
+            background: rgba(0,163,255,0.1);
+        }
+
+        .preview-fallback {
+            display: none;
+            position: absolute;
+            inset: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            padding: 40px;
+            background: #05070A;
+        }
+
+        .preview-fallback.visible {
+            display: flex;
+        }
+
+        .preview-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            background: #05070A;
+            z-index: 5;
+            transition: opacity 0.4s;
+        }
+
+        .preview-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spin-ring {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(0,163,255,0.15);
+            border-top-color: var(--dbz-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fond animé Genkidama Centré -->
+    <div class="aura-bg"></div>
+    <div class="genkidama-container">
+        <div class="genkidama"></div>
+    </div>
+    <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]"></div>
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center">
+        <div class="dbz-font text-2xl font-black tracking-tighter italic">
+            ETHAN<span class="text-blue-500">CARAÏBE</span>
+        </div>
+        <div class="hidden md:flex gap-8 font-medium uppercase text-sm tracking-widest">
+            <a href="#accueil" class="hover:text-blue-400 transition">Accueil</a>
+            <a href="#presentation" class="hover:text-blue-400 transition">Profil</a>
+            <a href="#projets" class="hover:text-blue-400 transition">Projets</a>
+            <a href="#competences" class="hover:text-blue-400 transition">Niveau de Ki</a>
+            <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+        </div>
+        <!-- Burger Icon -->
+        <div class="md:hidden text-2xl text-white focus:outline-none" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars" id="burger-icon"></i>
+        </div>
+    </nav>
+     <!-- MENU MOBILE OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#05070A] z-[60] flex flex-col justify-center items-center p-8 md:hidden">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="flex flex-col gap-8 text-center">
+            <a href="#accueil" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">ACCUEIL</a>
+            <a href="#presentation" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROFIL</a>
+            <a href="#projets" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROJETS</a>
+            <a href="#competences" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">NIVEAU DE KI</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">CONTACT</a>
+        </div>
+        <div class="mt-16 flex gap-6 text-2xl">
+            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/blue93971/" class="text-blue-500"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+    <!-- HERO SECTION -->
+    <section id="accueil" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div class="inline-block px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+            Étudiant BUT MMI • Créatif & Développeur
+        </div>
+        <h1 class="dbz-font text-5xl md:text-8xl font-black italic leading-none mb-6">
+            REPOUSSER LES <br> <span class="text-blue-500 text-glow">LIMITES DU WEB</span>
+        </h1>
+        <p class="max-w-2xl text-gray-400 text-lg md:text-xl mb-10 text-center">
+            Inspiré par l'esthétique DBZ Moderne. Je fusionne design graphique, développement front-end et stratégie de communication pour créer des expériences digitales foudroyantes.
+
+        <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+            <a href="#projets" class="btn-ki px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-tighter text-sm md:text-base text-white">
+                Mes projets
+           <a href="#contact" class="flex items-center justify-center px-6 py-3 md:px-8 rounded-full border border-white/20 hover:bg-white/10 transition font-bold uppercase tracking-tighter text-sm md:text-base">Me contacter</a>
+            </a>
+            <button onclick="toggleModal()" class="px-6 py-3 md:px-8 md:py-4 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold uppercase tracking-tighter text-sm md:text-base flex items-center gap-2">
+                <i class="fas fa-file-invoice"></i> Mon CV
+            </button>
+        </div>
+    </section>
+    <!-- SECTION PRÉSENTATION -->
+    <section id="presentation" class="py-24 px-6 md:px-12 max-w-5xl mx-auto">
+        <div class="glass-card p-8 md:p-16 border-blue-500/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <i class="fas fa-user-ninja text-9xl"></i>
+            </div>
+            <h2 class="dbz-font text-3xl md:text-4xl font-black italic mb-8 uppercase">
+                Bonjour, je suis <span class="text-blue-500">Ethan Caraïbe</span>
+            </h2>
+            <div class="space-y-6 text-gray-300 text-lg text-justify">
+                <p class="border-l-4 border-blue-500 pl-4 italic bg-blue-500/5 py-2">
+                    Étudiant en 3ᵉ année de BUT MMI à l’IUT de la Guadeloupe, je suis actuellement infographiste chez Pixel Services. Mon objectif est de devenir infographiste ou web designer, en alliant créativité et développement web. 
+                    Je développe mes compétences en programmation (HTML, CSS, PHP, Python) et en création graphique, avec une forte appétence pour les nouvelles technologies.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- PROJECT SECTION WITH FILTERS -->
+    <section id="projets" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <h2 class="dbz-font text-3xl md:text-5xl font-black italic mb-4 uppercase text-center md:text-left">
+            Mes <span class="text-blue-500">Missions</span>
+        </h2>
+        
+        <!-- Filters -->
+        <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-12" id="filter-container">
+            <button class="filter-btn active" data-category="Tous">Tous</button>
+            <button class="filter-btn" data-category="Exprimer">Exprimer</button>
+            <button class="filter-btn" data-category="Comprendre">Comprendre</button>
+            <button class="filter-btn" data-category="Concevoir">Concevoir</button>
+            <button class="filter-btn" data-category="Développer">Développer</button>
+            <button class="filter-btn" data-category="Entreprendre">Entreprendre</button>
+            <button class="filter-btn" data-category="Entreprise">Entreprise</button>
+            <button class="filter-btn" data-category="Personnel">Personnel</button>
+        </div>
+
+        <!-- Bento Grid Projects -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]" id="project-grid">
+            <!-- Projects injected by JS -->
+        </div>
+    </section>
+
+  <!-- MODALE PROJET -->
+    <div id="project-modal" class="custom-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-body">
+            
+            <!-- Flèches Bureau (Positionnée par rapport à modal-body) -->
+            <div class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)"><i class="fas fa-chevron-left"></i></div>
+            <div class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)"><i class="fas fa-chevron-right"></i></div>
+            
+            <div class="glass-card overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] w-full border-white/20">
+                <!-- Image -->
+                <div class="md:w-3/5 bg-gray-900 overflow-hidden h-64 md:h-auto bg-black">
+                    <img id="modal-img" src="" alt="Projet" class="w-full h-full object-contain ">
+                </div>
+                <!-- Texte -->
+                <div class="md:w-2/5 p-5 md:p-12 flex flex-col items-center justify-center bg-black/40">
+                    <span id="modal-cat" class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2 block"></span>
+                    <h2 id="modal-title" class="dbz-font text-xl md:text-3xl font-black italic mb-4"></h2>
+                    <p id="modal-desc" class="text-gray-400 mb-8 leading-relaxed text-justify hyphens-auto text-sm md:text-base"></p>
+                    
+                    <div class="flex gap-4 flex-wrap">
+                        <a id="modal-link" href="#" target="_blank" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Voir en détails</a>
+                        <button id="preview-btn" onclick="openPreviewModal()" class="px-8 py-3 rounded-full border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 transition font-bold uppercase text-xs flex items-center gap-2">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button onclick="closeProjectModal()" class="px-8 py-3 rounded-full border border-white/10 hover:bg-white/5 transition font-bold uppercase text-xs">Fermer</button>
+                    </div>
+
+                    <!-- Navigation Mobile (Visible uniquement sous 1200px) -->
+                    <div class="modal-nav-mobile hidden mt-10 flex justify-between w-full border-t border-white/10 pt-6">
+                        <button onclick="changeProject(-1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
+                            <i class="fas fa-chevron-left"></i> Précédent
+                        </button>
+                        <button onclick="changeProject(1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
+                            Suivant <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Croix Fermer -->
+            <span class="absolute -top-12 right-0 cursor-pointer text-4xl text-white/50 hover:text-blue-500 transition" onclick="closeProjectModal()">&times;</span>
+        </div>
+    </div>
+    
+    <!-- MODAL CV - OPTIMISÉ MOBILE AVEC JPEG -->
+    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)">
+        <div class="modal-content glass-card">
+            <span class="close-modal" onclick="toggleModal()">&times;</span>
+            <div class="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-blue-500/5 gap-4 sm:gap-0">
+                <h2 class="dbz-font text-lg sm:text-xl italic font-black uppercase">CURRICULUM <span class="text-blue-500">VITAE</span></h2>
+                <a href="images2/CV Caraibe Ethan VF.pdf" download class="btn-ki px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <i class="fas fa-download"></i> Télécharger PDF
+                </a>
+            </div>
+            <div class="flex-grow overflow-auto p-4 bg-white/5 flex justify-center items-start">
+                <!-- APERÇU IMAGE POUR MOBILE ET PC (Plus fiable que l'iframe) -->
+                <div class="w-full max-w-2xl shadow-2xl rounded-lg overflow-hidden border border-white/10">
+                    <img src="images2/CV Caraïbe Ethan VF.jpg" alt="Aperçu CV Ethan Caraïbe" class="w-full h-auto" onerror="this.src='https://via.placeholder.com/800x1200?text=Aperçu+Indisponible'">
+                </div>
+            </div>
+            <div class="p-4 bg-black/40 text-center text-[10px] text-gray-500 italic border-t border-white/5 uppercase">
+                Aperçu optimisé • Téléchargez le PDF pour la version complète
+            </div>
+        </div>
+    </div>
+
+
+   <!-- SECTION NIVEAU DE KI (LOGOS OFFICIELS) -->
+    <section id="competences" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="dbz-font text-3xl md:text-5xl font-black italic uppercase">Mon <span class="text-blue-500">Niveau de Ki</span></h2>
+                <p class="text-gray-400 mt-4 uppercase tracking-widest text-xs">Logiciels & Technologies maîtrisés</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                
+                <!-- DaVinci Resolve (Source Wikimedia - Official) -->
+                <div class="skill-badge flex flex-col items-center">
+                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">DaVinci</span>
+                </div>
+
+                <!-- CapCut (Source VectorLogoZone - High Quality) -->
+                <div class="skill-badge">
+                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CapCut</span>
+                </div>
+
+                <!-- Canva (Official Brand Mark) -->
+                <div class="skill-badge">
+                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Canva</span>
+                </div>
+
+                <!-- Gemini (Google Official Sparkle) -->
+                <div class="skill-badge">
+                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Gemini</span>
+                </div>
+
+                <!-- ChatGPT (OpenAI Official Logo) -->
+                <div class="skill-badge">
+                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">ChatGPT</span>
+                </div>
+
+                <!-- Photoshop (Official Badge) -->
+                <div class="skill-badge">
+                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Photoshop</span>
+                </div>
+
+                <!-- Illustrator (Official Badge) -->
+                <div class="skill-badge">
+                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Illustrator</span>
+                </div>
+
+                <!-- Python -->
+                <div class="skill-badge">
+                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Python</span>
+                </div>
+
+                <!-- HTML5 -->
+                <div class="skill-badge">
+                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">HTML5</span>
+                </div>
+
+                <!-- CSS3 -->
+                <div class="skill-badge">
+                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CSS3</span>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="skill-badge">
+                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo">
+                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">JS</span>
+                </div>
+
+                <!-- PHP -->
+                <div class="skill-badge">
+                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo">
+                    <span class="text-sm font-bold uppercase tracking-widest mt-2">PHP</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 px-6 flex items-center min-h-screen">
+        <div class="max-w-5xl mx-auto glass-card p-8 md:p-16 flex flex-col md:flex-row gap-12">
+            <div class="md:w-1/2">
+                <h2 class="dbz-font text-4xl font-black italic mb-6">PRÊT POUR LA <span class="text-blue-500 text-glow">FUSION ?</span></h2>
+                <p class="text-gray-400 mb-8 text-lg text-justify">Un projet en tête ou envie de discuter de mon parcours ? Envoyez-moi un signal, je réponds plus vite qu'un déplacement instantané.</p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>ethan.caraibe@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></div>
+                            <span class="group-hover:text-blue-400 transition-colors">linkedin.com/in/ethancaraibe</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <a href="https://www.instagram.com/blue93971/" target="_blank" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-instagram"></i></div>
+                            <span class="group-hover:text-blue-400 transition-colors">@blue93971</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FORMULAIRE CONNECTÉ À FORMSPREE -->
+            <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="md:w-1/2 space-y-4">
+                <input type="text" name="name" required placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
+                <input type="email" name="email" required placeholder="Votre Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
+                <textarea name="message" required placeholder="Votre Message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white"></textarea>
+                
+                <button type="submit" id="submit-btn" class="btn-ki w-full py-4 rounded-xl font-bold uppercase tracking-widest text-white">
+                    <span id="btn-text">Envoyer le message</span>
+                </button>
+                <p id="form-status" class="text-sm text-center mt-2 font-bold"></p>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Gestion de l'envoi du formulaire via AJAX pour éviter la redirection
+        const form = document.getElementById("contact-form");
+        const btn = document.getElementById("submit-btn");
+        const btnText = document.getElementById("btn-text");
+        const status = document.getElementById("form-status");
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            // État de chargement
+            btn.disabled = true;
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Transmission...';
+            status.innerText = "";
+
+            const data = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Succès : Message de réussite
+                    btnText.innerHTML = '<i class="fas fa-check"></i> Signal envoyé !';
+                    status.classList.add("text-blue-400");
+                    status.innerText = "Fusion réussie ! Je vous répondrai sous peu.";
+                    form.reset();
+                    
+                    // Réinitialisation du bouton après 5 secondes
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btnText.innerText = "Envoyer le message";
+                        status.innerText = "";
+                    }, 5000);
+                } else {
+                    // Erreur serveur
+                    throw new Error();
+                }
+            } catch (error) {
+                // Erreur réseau ou autre
+                btn.disabled = false;
+                btnText.innerText = "Réessayer";
+                status.classList.add("text-red-500");
+                status.innerText = "Erreur lors de l'envoi. Veuillez réessayer.";
+            }
+        };
+    </script>
+
+    <!-- FOOTER -->
+    <footer class="py-12 px-6 border-t border-white/5 text-center text-gray-500 text-sm">
+        <p>© 2026 Ethan Caraïbe — Portfolio BUT MMI </p>
+        <p class="mt-2 italic">Designé et codé avec l'énergie du Super Saiyan Blue.</p>
+        <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold">Mentions Légales</button>
+    </footer>
+     <!-- MODAL MENTIONS LÉGALES -->
+    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)">
+        <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto">
+            <span class="close-modal" onclick="toggleMentionsModal()">&times;</span>
+            <h2 class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span class="text-white">Légales</span></h2>
+            
+            <div class="space-y-6 text-gray-300 text-sm text-justify">
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">1. Édition du site</h3>
+                    <p>Le présent site est édité par : Ethan Caraïbe
+                        Étudiant en BUT Métiers du Multimédia et de l’Internet (MMI) à l’IUT de la Guadeloupe à Saint-Claude
+                        Contact : ethan.caraibe@gmail.com
+                        Ce site a pour vocation de présenter mon parcours, mes projets académiques et personnels, ainsi que mes compétences dans le domaine du multimédia, du web et du développement.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">2. Hébergement</h3>
+                    <p>Le site est hébergé par :
+                    <br>GitHub, Inc. Adresse : 88 Colin P. Kelly Jr Street, San Francisco, CA 94107, États-Unis 🌐 https://pages.github.com.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">3. Propriété Intellectuelle</h3>
+                    <p>L’ensemble du contenu présent sur ce site (textes, images, vidéos, logos, graphismes, codes, etc.) est la propriété exclusive d’Ethan Caraïbe, sauf mention contraire.
+                        Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, du contenu du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable. Les visuels issus de projets scolaires ou collectifs sont présentés à titre de démonstration et restent la propriété de leurs auteurs respectifs.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">4. Collecte de données</h3>
+                    <p>Les données collectées via le formulaire de contact sont utilisées uniquement pour répondre aux messages envoyés par les visiteurs.
+                        Aucune donnée personnelle n’est transmise, vendue ou partagée avec des tiers.
+                        Conformément à la loi Informatique et Libertés et au Règlement Général sur la Protection des Données (RGPD), vous disposez d’un droit d’accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, vous pouvez m’écrire à : ethan.caraibe@gmail.com</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">5. Cookies</h3>
+                    <p>Le contenu de ce site est fourni à titre informatif.
+                        Malgré le soin apporté à la rédaction et à la mise à jour, il peut contenir des erreurs ou omissions.
+                        Ethan Caraïbe ne saurait être tenu responsable de l’utilisation faite des informations disponibles sur ce site, ni des dommages directs ou indirects pouvant en résulter.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-widest mb-2">6. Crédits</h3>
+                    <p>Design et développement : Ethan Caraïbe</p>
+                        <p>Technologies utilisées : HTML, CSS, JavaScript, Bootstrap</p>
+                        <p>Hébergement : GitHub Pages</p>
+                </section>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-white/10 text-center">
+                <button onclick="toggleMentionsModal()" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PREVIEW -->
+    <div id="preview-modal" onclick="closePreviewOnOverlay(event)">
+        <div class="preview-container">
+            <!-- Header bar -->
+            <div class="preview-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center transition text-white/60 text-sm">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <span id="preview-title" class="dbz-font text-xs italic font-black text-white/80 uppercase hidden sm:block"></span>
+                    <span id="preview-type-badge" style="display:none" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400"></span>
+                </div>
+                <div class="preview-url-bar" id="preview-url-display">—</div>
+                <div class="flex items-center gap-2">
+                    <a id="preview-open-link" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span class="hidden sm:inline">Ouvrir</span>
+                    </a>
+                </div>
+            </div>
+            <!-- iFrame wrapper -->
+            <div class="preview-iframe-wrapper">
+                <!-- Loading -->
+                <div class="preview-loading" id="preview-loading">
+                    <div class="spin-ring"></div>
+                    <span class="text-gray-500 text-xs uppercase tracking-widest dbz-font">Chargement...</span>
+                </div>
+                <!-- iFrame (YouTube embed ou site web) -->
+                <iframe id="preview-iframe" src="" allow="autoplay; fullscreen" onload="onIframeLoad()" onerror="showPreviewFallback()"></iframe>
+                <!-- Bloc image (Canva / visuel) -->
+                <div id="preview-img-block">
+                    <div id="preview-img-scroll">
+                        <img id="preview-big-img" src="" alt="Aperçu">
+                    </div>
+                    <div id="preview-img-footer">
+                        <p id="preview-canva-title" class="dbz-font text-xs italic font-black uppercase text-white/80 truncate" style="flex:1; margin:0;"></p>
+                        <button id="toggle-mode-btn" onclick="toggleImgMode()">⊞ Largeur totale</button>
+                        <a id="preview-canva-btn" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap" style="flex-shrink:0;">
+                            <i class="fas fa-external-link-alt"></i> Ouvrir
+                        </a>
+                    </div>
+                </div>
+                <!-- Fallback si le site bloque l'iframe -->
+                <div class="preview-fallback" id="preview-fallback">
+                    <div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
+                    </div>
+                    <h3 class="dbz-font text-lg italic font-black uppercase">Aperçu bloqué</h3>
+                    <p class="text-gray-500 text-sm max-w-sm">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
+                    <a id="fallback-link" href="#" target="_blank" class="btn-ki mt-4 px-8 py-3 rounded-full font-bold uppercase text-xs flex items-center gap-2">
+                        <i class="fas fa-external-link-alt"></i> Visiter le site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestion de la modale CV
+        function toggleModal() {
+            const modal = document.getElementById('cv-modal');
+            const isVisible = modal.style.display === 'flex';
+            modal.style.display = isVisible ? 'none' : 'flex';
+            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
+        }
+
+        function closeOnOverlay(e) {
+            if (e.target.id === 'cv-modal') toggleModal();
+        }
+
+         // Système de particules convergentes
+        function createEnergyParticles() {
+            const field = document.getElementById('energy-field');
+            setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'energy-particle';
+                
+                // Position de départ aléatoire sur les bords de l'écran
+                const side = Math.floor(Math.random() * 4);
+                let x, y;
+                if(side === 0) { x = Math.random() * 100; y = -10; } // Haut
+                else if(side === 1) { x = 110; y = Math.random() * 100; } // Droite
+                else if(side === 2) { x = Math.random() * 100; y = 110; } // Bas
+                else { x = -10; y = Math.random() * 100; } // Gauche
+
+                p.style.setProperty('--start-x', x + 'vw');
+                p.style.setProperty('--start-y', y + 'vh');
+                
+                const size = Math.random() * 3 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.boxShadow = '0 0 8px #fff';
+                
+                field.appendChild(p);
+                setTimeout(() => p.remove(), 4000);
+            }, 150);
+        }
+
+        // Effet de parallaxe léger sur l'orbe
+        document.addEventListener('mousemove', (e) => {
+            const genki = document.querySelector('.genkidama-container');
+            const x = (e.clientX / window.innerWidth - 0.5) * 40;
+            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            genki.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+        });
+
+        // Apparition scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = "0";
+            section.style.transform = "translateY(20px)";
+            section.style.transition = "all 0.8s ease-out";
+            observer.observe(section);
+        });
+    </script>
+    
+    <script>
+        const projects = [
+               {
+                id: 0,
+                title: "Visuel de promotion pour un espace thermoludique",
+                category: "Exprimer",
+                desc: "Conception d’un flyer pour la réouverture de l’espace thermoludique Vitalys. Création du logo, mise en page sur Canva avec images inspirées de Ravine Chaude et intégration des informations clés : nom, slogan, date d’ouverture.",
+                img: "images2/Affiche-Vitalys-cp.jpg",
+                link: "https://www.canva.com/design/DAGm4HNe9GY/zqqKKqi6Lo1yl_j5m7SSew/view?utm_content=DAGm4HNe9GY&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hb0d1f8e301",
+                span: "md:col-span-2 md:row-span-2"
+            },
+            {
+                id: 1,
+                title: "Création d'un logo unique, Dragonix le studio de jeu de combat Next Gen",
+                category: "Concevoir",
+                desc: "Création d’un logo original pour un studio de jeux de combat : choix typographique, ajout d’effets visuels et déclinaisons sur mock-ups pour garantir une identité cohérente, responsive et impactante sur tout support.",
+                img: "images2/Plan-de-travail-9_3-cp.jpg",
+                link: "https://www.canva.com/design/DAGcM9i2V-E/j12JE-KQPLoScWYfmk4MVg/view?utm_content=DAGcM9i2V-E&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3f354637ea",
+                span: "md:col-span-1"
+            },
+            {
+                id: 2,
+                title: "Réaliser un visionboard",
+                category: "Entreprendre",
+                desc: "Réalisation d’un vision board branding illustrant mon image de soi idéale à travers un collage de mots, lieux et personnes inspirantes. Conçu sur Canva, ce projet m’a permis d’explorer l’expression visuelle personnelle.",
+                img: "images2/My-Vision-Board-cp 3.jpg",
+                link: "https://www.canva.com/design/DAF1wsKcaUk/Af4gws3IdFzYdtLatbncwA/view?utm_content=DAF1wsKcaUk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h53ca4d089c",
+                span: "md:col-span-1"
+            },
+            {
+                id: 3,
+                title: "SAE 1.05 : Produire un site web",
+                category: "Développer",
+                desc: "Création en groupe d’un site web sur la culture guadeloupéenne, avec 4 pages thématiques. Participation à la recherche de contenu et au développement HTML/CSS du site. Travail collaboratif sur Figma.",
+                img: "images2/Culture-Gwada-1-cp.jpg",
+                link: "https://culture-guadeloupeenne.onrender.com/",
+                span: "md:col-span-2"
+            },
+            {
+                id: 4,
+                title: "Projet tournois de jeux vidéos",
+                category: "Entreprendre",
+                desc: "Mise en place d’un tournoi e-sport étudiant, de la planification à la communication. Répartition des rôles, création d’un budget prévisionnel de 200 € et gestion logistique complète de l’événement.",
+                img: "images2/Affiche-Gaming-Tournament-cp.jpg",
+                link: "https://www.canva.com/design/DAGm4Me-jhg/ca33ec5SBwGbj40pF9Vu2g/view?utm_content=DAGm4Me-jhg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbaa569b1db",
+                span: "md:col-span-1"
+            },
+            {
+                id: 5,
+                title: "Affiche gardien de la galaxie",
+                category: "Exprimer",
+                desc: "Réalisation d’une affiche inspirée du tutoriel “Affiche X-Men” en utilisant Photoshop. Incrustation du personnage Star-Lord sur un fond extraterrestre et travail sur la typographie originale.",
+                img: "images2/Affiche gardien de la galaxie 2.png",
+                link: "https://www.canva.com/design/DAGm4LKYzfA/jkJBF8rqKDWi9t2rKSmZjQ/view?utm_content=DAGm4LKYzfA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hdcaa445dde",
+                span: "md:col-span-1"
+            },
+            {
+                id: 6,
+                title: "SAE 1.04 : Produire un contenu audio et visuel",
+                category: "Exprimer",
+                desc: "Conception en groupe d’un court-métrage de 3 minutes, de l’écriture du scénario au montage final. J’ai assuré la captation vidéo en tant que cameraman et participé à la direction artistique.",
+                img: "images2/miniature silent resilience.jpg",
+                link: "https://youtu.be/VSV6v8G04TM",
+                span: "md:col-span-2"
+            },
+            {
+                id: 7,
+                title: "Stratégie de communication pour l’agence Penchard Voyages",
+                category: "Comprendre",
+                desc: "Analyse complète de la stratégie de communication de l’agence : identification des cibles, canaux utilisés et positionnement. Proposition d’axes d’amélioration à partir d’une étude de marché.",
+                img: "images2/miniaPenchardVoyages.png",
+                link: "https://www.canva.com/design/DAF9hgMg5fk/tj5q3TEPBid1fU-6yhUauA/view?utm_content=DAF9hgMg5fk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h8031a5b60c",
+                span: "md:col-span-1"
+            },
+            {
+                id: 8,
+                title: "SAE 1.01 : Auditer une communication numérique",
+                category: "Comprendre",
+                desc: "Réalisation d’un audit de vidéos YouTube de la chaîne Cellule Enov. Évaluation de la qualité visuelle, sonore et de la pertinence du discours. Identification des points d’amélioration narrative.",
+                img: "images2/miniaVidéoCelluleEnov.png",
+                link: "https://youtu.be/i03nImANt1k?si=dkYsDkVAuSJQ318M",
+                span: "md:col-span-1"
+            },
+            {
+                id: 9,
+                title: "Concevoir une affiche pour présenter les filières de L'IUT",
+                category: "Concevoir",
+                desc: "Conception d’un flyer institutionnel présentant les formations de l’IUT de la Guadeloupe : mise en page hiérarchisée, intégration de QR codes et respect de la charte graphique.",
+                img: "images2/Affiche-formations-IUT-de-la-Guadeloupe-V2.jpg",
+                link: "https://www.canva.com/design/DAGm4b3asew/9jFQQ3SsQd8_qg2sC1igrQ/view?utm_content=DAGm4b3asew&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbc9f03ec26",
+                span: "md:col-span-2"
+            },
+            {
+                id: 10,
+                title: "SAE 1.02 : Recommandation de communication numérique",
+                category: "Concevoir",
+                desc: "Conception d’une affiche promotionnelle en anglais destinée à valoriser l’apprentissage des langues. Élaboration d’une stratégie visuelle ludique pour rendre le message attractif.",
+                img: "images2/English.png",
+                link: "https://www.canva.com/design/DAFyUNRujp8/2Ht9FxQdbNnNgxMOk1ualQ/view?utm_content=DAFyUNRujp8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha472e828f2",
+                span: "md:col-span-1"
+            },
+            {
+                id: 11,
+                title: "Design émotionnel pour une campagne (Chlordécone)",
+                category: "Concevoir",
+                desc: "Création d’une affiche de sensibilisation sur la pollution au chlordécone. Application des principes du design émotionnel pour susciter l’empathie et inciter à la prise de conscience.",
+                img: "images2/Affiche-de- campagne-de sensibilisation-sur le-chlordécone.jpg",
+                link: "https://www.canva.com/design/DAGDFYbt4aE/LvLMNvd8bfHjnrczHnVi5g/view?utm_content=DAGDFYbt4aE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h2e31defddb",
+                span: "md:col-span-1"
+            },
+            {
+                id: 12,
+                title: "SAE 2.02 : Concevoir un produit et sa communication",
+                category: "Développer",
+                desc: "Conception d’un site vitrine pour une marque de thé glacé locale. Gestion du projet web complet : création des pages, diagramme de Gantt et suivi du planning. Projet associant design et code.",
+                img: "images2/minia site thé pays.png",
+                link: "https://xn--thpays-cva.com/",
+                span: "md:col-span-2"
+            },
+            {
+                id: 13,
+                title: "Vidéo type Day in my life à l’ASFO",
+                category: "Entreprendre",
+                desc: "Réalisation d’une vidéo storytelling illustrant une journée de formation de façon immersive. Tournée au smartphone, elle combine narration, humour et voix off pour un rendu authentique.",
+                img: "images2/Day in my Life by EC.png",
+                link: "https://www.canva.com/design/DAGVYG3a2Bo/mzSUH_haA0OEdbBK1RmuBQ/watch?utm_content=DAGVYG3a2Bo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h489805ea3b",
+                span: "md:col-span-1"
+            },
+            {
+                id: 14,
+                title: "Stratégie de communication pour Vitalys",
+                category: "Comprendre",
+                desc: "Réalisation d’une campagne complète pour la réouverture du centre Vitalys : définition des cibles, identité visuelle et plan média avec budget de 20 000 € et rétroplanning.",
+                img: "images2/miniaVitalys.png",
+                link: "https://www.canva.com/design/DAGW1Ov4n2Q/Iji-YDa1n1isiIAQfPCnmg/view?utm_content=DAGW1Ov4n2Q&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3a6387f84c",
+                span: "md:col-span-1"
+            },
+            {
+                id: 15,
+                title: "Animation d’intro vidéo Interface 2025",
+                category: "Entreprendre",
+                desc: "Création d’une animation vidéo du logo MMI sur After Effects pour l’événement Interface 2025. Utilisation d’effets de lumière et caméra virtuelle pour un rendu professionnel.",
+                img: "images2/ANIMATION INTRO BUTMMI.png",
+                link: "https://www.canva.com/design/DAGm5WpfK74/M7KsMgaxPpJRRO6MfogFhA/watch?utm_content=DAGm5WpfK74&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h7bbcf7d8b9",
+                span: "md:col-span-2"
+            },
+            {
+                id: 16,
+                title: "Etude de Cas : La Pépinière Citoyenne",
+                category: "Comprendre",
+                desc: "Création d’une stratégie éditoriale pour une association de jardin partagé : cibles, calendrier de publication, charte éditoriale et logo. Mise en place d’indicateurs d'engagement.",
+                img: "images2/Logo La Pépinière Citoyenne.png",
+                link: "https://www.canva.com/design/DAGn1ywW-3E/xC2E7JKWYKGXGL2S8PFONA/view?utm_content=DAGn1ywW-3E&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h46c7a1c649",
+                span: "md:col-span-1"
+            },
+            {
+                id: 17,
+                title: "Interview de Catherine – Interface 2025",
+                category: "Entreprendre",
+                desc: "Tournage et montage vidéo d’une interview professionnelle. Captation 9:16 avec DJI Osmo Pocket 3, ajout de sous-titres et habillage graphique cohérent.",
+                img: "images2/MINIATURE INTERVIEW CATHERINE.png",
+                link: "https://youtube.com/shorts/T5DOwkHfDKQ",
+                span: "md:col-span-1"
+            },
+            {
+                id: 18,
+                title: "SAE 4.CREA.02 – FAQ Instagram IUT",
+                category: "Exprimer",
+                desc: "Création d’une story interactive de FAQ sur Canva pour informer les futurs étudiants. Conception visuelle conforme à la charte IUT et liens interactifs.",
+                img: "images2/STORY FAQ IUT COUVERTURE.png",
+                link: "https://www.canva.com/design/DAGx9CwVrrQ/3KStPEcyRce4u7cCLn3sPA/view?utm_content=DAGx9CwVrrQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h15e5339ed6",
+                span: "md:col-span-2"
+            },
+            {
+                id: 19,
+                title: "Court-métrage thriller – Hors-champ",
+                category: "Exprimer",
+                desc: "Réalisation d’un thriller reposant sur le hors-champ et le sound design. Montage sur DaVinci Resolve pour installer une tension narrative immersive.",
+                img: "images2/CAPTURE THRILLER HORS CHAMP.png",
+                link: "https://youtu.be/nEBoauXwSJQ",
+                span: "md:col-span-1"
+            },
+            {
+                id: 20,
+                title: "GwadaCollect – Application Mobile",
+                category: "Entreprendre",
+                desc: "Conception d'une application éco-citoyenne pour la collecte des déchets en Guadeloupe. Centralisation des infos, notifications et guide du tri local.",
+                img: "images2/CAPTURE GWADA COLLECT.png",
+                link: "https://www.canva.com/design/DAG1n7LIqwo/E2RX_kUmHXKaFAPkbQr2lw/view?utm_content=DAG1n7LIqwo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h8dab637b84",
+                span: "md:col-span-2"
+            },
+            {
+                id: 21,
+                title: "Post éditorial J-V – Blo’k Actu",
+                category: "Entreprendre",
+                desc: "Réalisation d’un post éditorial pour valoriser les sorties jeux vidéo. Recherche de titres, sélection d’extraits et respect de la ligne éditoriale du média.",
+                img: "images2/jv nouveautés (1080 x 1350 px).jpg",
+                link: "https://www.canva.com/design/DAG2bt7zJkE/GhNNqq9Zo-ztsU8SJrUZVA/watch?utm_content=DAG2bt7zJkE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h262dabe7c3",
+                span: "md:col-span-1"
+            },
+            {
+                id: 22,
+                title: "Conduite du changement – Étude de cas",
+                category: "Exprimer",
+                desc: "Conception d’un cours sur la conduite du changement en entreprise. Définition du concept, étapes clés et présentation d'un cas concret professionnel.",
+                img: "images2/R5.02_Conduite du changement SABAN & CARAIBE COURS.pdf.jpg",
+                link: "https://www.canva.com/design/DAG9pUNhEIE/YYwKXHepMv8tYENuWW2KVg/view?utm_content=DAG9pUNhEIE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hac8e105987",
+                span: "md:col-span-1"
+            },
+            {
+                id: 23,
+                title: "Atelier FAB Lab – Impression 3D",
+                category: "Entreprendre",
+                desc: "Atelier au BIK’LAB dédié à l’initiation à l’impression 3D. Découverte du prototypage numérique et réalisation d'une première impression additive.",
+                img: "images2/cropped-lebiklab_logo.png",
+                link: "https://www.canva.com/design/DAG_71LYvt0/E-dc-7gUghuCpi6Ds9jkjg/view?utm_content=DAG_71LYvt0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h170d9b2ce8",
+                span: "md:col-span-2"
+            },
+            {
+                id: 24,
+                title: "Assemblée générale UNSA",
+                category: "Personnel",
+                desc: "Conception d’une affiche A3 pour l’UNSA Douanes. Déclinaison de la charte graphique et gestion de la chaîne de production avec imprimeur professionnel.",
+                img: "images2/ASSEMBLÉE GÉNÉRALE UNSA DOUANES FORMAT 15X20 (A5).png",
+                link: "https://www.canva.com/design/DAGoIS1c7q4/eth_s_ypdGqZGoNMOuRzKA/view?utm_content=DAGoIS1c7q4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h5bdeda2349",
+                span: "md:col-span-1"
+            },
+            {
+                id: 25,
+                title: "Documentaire - Le Joueur Intérieur",
+                category: "Personnel",
+                desc: "Projet documentaire personnel explorant le jeu vidéo comme miroir de la psyché humaine. Esthétique minimaliste et montage introspectif rythmé.",
+                img: "images2/MINIATURE DOCUMENTAIRE JV.png",
+                link: "https://youtu.be/HjOy6rqdkDE",
+                span: "md:col-span-2 md:row-span-2"
+            }
+        ];
+
+        let currentProjectIndex = 0;
+        let filteredProjects = [...projects];
+
+         function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+            // Empêche le scroll quand le menu est ouvert
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function renderProjects(filter = "Tous") {
+            const grid = document.getElementById('project-grid');
+            grid.innerHTML = "";
+            filteredProjects = filter === "Tous" ? projects : projects.filter(p => p.category === filter);
+
+            filteredProjects.forEach((p, index) => {
+                const card = document.createElement('div');
+                card.className = `glass-card project-card bento-item ${p.span} p-8 flex flex-col justify-end overflow-hidden group relative`;
+                card.onclick = () => openProjectModal(index);
+                card.innerHTML = `
+                    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-20 group-hover:opacity-40 transition-all duration-500" style="background-image: url('${p.img}')"></div>
+                    <div class="relative z-10 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <span class="text-blue-500 font-bold text-sm uppercase tracking-[3px]">${p.category}</span>
+                        <h3 class="dbz-font text-xl font-black italic text-white mt-1">${p.title}</h3>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById('filter-container').addEventListener('click', (e) => {
+            if(e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                renderProjects(e.target.dataset.category);
+            }
+        });
+
+        function openProjectModal(index) {
+            currentProjectIndex = index;
+            const project = filteredProjects[currentProjectIndex];
+            if(!project) return;
+
+            document.getElementById('modal-title').innerText = project.title;
+            document.getElementById('modal-cat').innerText = project.category;
+            document.getElementById('modal-desc').innerText = project.desc;
+            document.getElementById('modal-img').src = project.img;
+            document.getElementById('modal-link').href = project.link;
+            
+            document.getElementById('project-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            document.getElementById('project-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeProject(direction) {
+            currentProjectIndex += direction;
+            if (currentProjectIndex < 0) currentProjectIndex = filteredProjects.length - 1;
+            if (currentProjectIndex >= filteredProjects.length) currentProjectIndex = 0;
+            openProjectModal(currentProjectIndex);
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'project-modal') closeProjectModal();
+        }
+
+        // --- PREVIEW MODAL ---
+
+        function detectLinkType(url) {
+            if (/youtube\.com|youtu\.be/.test(url)) return 'youtube';
+            if (/canva\.com/.test(url)) return 'canva';
+            if (/docs\.google\.com\/viewer/.test(url)) return 'gdocs';
+            return 'iframe';
+        }
+
+        function getYoutubeEmbedUrl(url) {
+            // youtu.be/ID
+            let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
+            // youtube.com/watch?v=ID
+            m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
+            return null;
+        }
+
+        function openPreviewModal() {
+            const project = filteredProjects[currentProjectIndex];
+            if (!project) return;
+
+            const modal      = document.getElementById('preview-modal');
+            const iframe     = document.getElementById('preview-iframe');
+            const loading    = document.getElementById('preview-loading');
+            const fallback   = document.getElementById('preview-fallback');
+            const imgPreview = document.getElementById('preview-img-block');
+            const urlBar     = document.getElementById('preview-url-display');
+            const titleEl    = document.getElementById('preview-title');
+            const openLink   = document.getElementById('preview-open-link');
+            const fallbackLink = document.getElementById('fallback-link');
+            const typeBadge  = document.getElementById('preview-type-badge');
+
+            // Reset all zones
+            fallback.classList.remove('visible');
+            loading.classList.remove('hidden');
+            iframe.style.display = 'none';
+            iframe.src = '';
+            imgPreview.classList.remove('active');
+            document.getElementById('preview-img-scroll').classList.remove('mode-fill');
+
+            // Metadata
+            titleEl.textContent = project.title;
+            urlBar.textContent  = project.link;
+            openLink.href       = project.link;
+            fallbackLink.href   = project.link;
+
+            const type = detectLinkType(project.link);
+
+            if (type === 'youtube') {
+                typeBadge.textContent = '▶ YouTube';
+                typeBadge.style.display = 'inline-block';
+                const embedUrl = getYoutubeEmbedUrl(project.link);
+                if (embedUrl) {
+                    iframe.style.display = 'block';
+                    iframe.src = embedUrl;
+                } else {
+                    showPreviewCanva(project);
+                }
+            } else if (type === 'canva') {
+                typeBadge.textContent = '✦ Canva';
+                typeBadge.style.display = 'inline-block';
+                showPreviewCanva(project);
+            } else if (type === 'gdocs') {
+                typeBadge.textContent = '📄 PDF';
+                typeBadge.style.display = 'inline-block';
+                iframe.style.display = 'block';
+                iframe.removeAttribute('sandbox');
+                iframe.src = project.link;
+            } else {
+                typeBadge.style.display = 'none';
+                iframe.style.display = 'block';
+                iframe.src = project.link;
+            }
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showPreviewCanva(project) {
+            const loading    = document.getElementById('preview-loading');
+            const imgBlock   = document.getElementById('preview-img-block');
+            const imgEl      = document.getElementById('preview-big-img');
+            const titleEl    = document.getElementById('preview-canva-title');
+            const canvaBtn   = document.getElementById('preview-canva-btn');
+            const scroll     = document.getElementById('preview-img-scroll');
+            const toggleBtn  = document.getElementById('toggle-mode-btn');
+
+            // Reset to FIT mode
+            scroll.classList.remove('mode-fill');
+            toggleBtn.textContent = '⊞ Largeur totale';
+
+            loading.classList.add('hidden');
+            imgEl.src = project.img;
+            titleEl.textContent = project.title;
+            canvaBtn.href = project.link;
+            imgBlock.classList.add('active');
+
+            // Click sur l'image = toggle mode
+            imgEl.onclick = toggleImgMode;
+        }
+
+        function toggleImgMode() {
+            const scroll    = document.getElementById('preview-img-scroll');
+            const toggleBtn = document.getElementById('toggle-mode-btn');
+            const isFill    = scroll.classList.toggle('mode-fill');
+            toggleBtn.textContent = isFill ? '⊠ Vue ajustée' : '⊞ Largeur totale';
+            if (!isFill) scroll.scrollTop = 0;
+        }
+
+        function onIframeLoad() {
+            document.getElementById('preview-loading').classList.add('hidden');
+            const iframe = document.getElementById('preview-iframe');
+            // Cross-origin check: if we CAN read the doc and it's blank → blocked
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                if (doc && (doc.URL === 'about:blank' || doc.body.innerHTML.trim() === '')) {
+                    showPreviewFallback();
+                }
+            } catch(e) {
+                // Cross-origin = loaded correctly, do nothing
+            }
+        }
+
+        function showPreviewFallback() {
+            document.getElementById('preview-loading').classList.add('hidden');
+            document.getElementById('preview-fallback').classList.add('visible');
+        }
+
+        function closePreviewModal() {
+            const modal    = document.getElementById('preview-modal');
+            const iframe   = document.getElementById('preview-iframe');
+            const imgBlock = document.getElementById('preview-img-block');
+            const scroll   = document.getElementById('preview-img-scroll');
+            modal.style.display = 'none';
+            iframe.src = '';
+            imgBlock.classList.remove('active');
+            scroll.classList.remove('mode-fill');
+            scroll.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreviewOnOverlay(e) {
+            if (e.target.id === 'preview-modal') closePreviewModal();
+        }
+
+        function toggleCVModal() {
+            const m = document.getElementById('cv-modal');
+            const isVisible = m.style.display === 'flex';
+            m.style.display = isVisible ? 'none' : 'flex';
+        }
+
+        function closeCVOnOverlay(e) { if(e.target.id === 'cv-modal') toggleCVModal(); }
+
+        // --- GESTION MENTIONS ---
+        function toggleMentionsModal() {
+            const m = document.getElementById('mentions-modal');
+            const isVisible = m.style.display === 'flex';
+            m.style.display = isVisible ? 'none' : 'flex';
+            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
+        }
+        function closeMentionsOnOverlay(e) { if(e.target.id === 'mentions-modal') toggleMentionsModal(); }
+
+         // --- EVENTS ---
+        document.getElementById('filter-container').addEventListener('click', (e) => {
+            if(e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                renderProjects(e.target.dataset.category);
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const aura = document.querySelector('.aura-bg');
+            const x = (e.clientX / window.innerWidth - 0.5) * 40;
+            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            aura.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.1)`;
+        });
+
+        window.onload = () => renderProjects();
+        createEnergyParticles();
+        </script>
+</body>
+</html>
