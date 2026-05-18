@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethan Caraïbe | Z-Portfolio MMI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Portfolio d'Ethan Caraïbe, infographiste et web designer étudiant en BUT MMI à l'IUT de la Guadeloupe.">
+    <meta name="theme-color" content="#05070A">
+    <title>Ethan Caraïbe | Portfolio MMI – Infographiste & Web Designer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
@@ -15,6 +15,63 @@
             --dbz-blue: #00A3FF;
             --dbz-dark: #05070A;
             --aura-glow: rgba(0, 163, 255, 0.3);
+            /* Taille de police fluide */
+            --fs-sm: clamp(0.8rem, 2vw, 0.875rem);
+            --fs-base: clamp(1rem, 2.5vw, 1.125rem);
+            --fs-lg: clamp(1.1rem, 3vw, 1.25rem);
+            --fs-xl: clamp(1.5rem, 4vw, 2rem);
+            --fs-hero: clamp(2.5rem, 8vw, 5rem);
+            /* Zone sûre iOS (notch/barre d'onglets) */
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+            --safe-left: env(safe-area-inset-left);
+            --safe-right: env(safe-area-inset-right);
+        }
+
+        /* ========================
+           SKIP LINK ACCESSIBILITÉ
+        ======================== */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            background: var(--dbz-blue);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 0 0 8px 8px;
+            font-weight: bold;
+            font-size: var(--fs-sm);
+            z-index: 9999;
+            text-decoration: none;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* ========================
+           FOCUS VISIBLE GLOBAL
+        ======================== */
+        :focus-visible {
+            outline: 3px solid var(--dbz-blue);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+        /* Supprime l'outline par défaut uniquement pour la souris */
+        :focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        /* ========================
+           REDUCE MOTION
+        ======================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .aura-bg, .genkidama, .energy-particle { display: none; }
         }
 
         body {
@@ -23,6 +80,11 @@
             font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            font-size: var(--fs-base);
+            /* Zone sûre pour les appareils avec notch */
+            padding-left: var(--safe-left);
+            padding-right: var(--safe-right);
+            -webkit-text-size-adjust: 100%;
         }
 
         .dbz-font { font-family: 'Orbitron', sans-serif; }
@@ -118,7 +180,22 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Bento Grid Custom */
+        /* Taille minimale touch target iOS/Android (44×44px WCAG 2.5.5) */
+        button, a, [role="button"] {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* ========================
+           RESPONSIVE TYPO FLUIDE
+        ======================== */
+        h1 { font-size: var(--fs-hero); }
+        h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
+        h3 { font-size: clamp(1.1rem, 3vw, 1.5rem); }
+
+        /* ========================
+           BENTO GRID RESPONSIVE
+        ======================== */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -131,13 +208,11 @@
             overflow: hidden;
         }
 
-         /* Correction pour les images de la Bento Grid */
+        /* Correction pour les images de la Bento Grid */
         .bento-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -145,16 +220,20 @@
             transition: opacity 0.5s ease;
             z-index: 0;
         }
+        .project-card:hover .bento-bg { opacity: 0.5; }
 
-        .project-card:hover .bento-bg {
-            opacity: 0.5;
-        }
-
-        /* Scroller horizontal pour mobile */
-        @media (max-width: 768px) {
+        /* Mobile : 1 colonne, hauteur auto */
+        @media (max-width: 639px) {
             .bento-grid {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: 1fr;
                 grid-auto-rows: auto;
+            }
+        }
+        /* Tablette : 2 colonnes */
+        @media (min-width: 640px) and (max-width: 1023px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 220px;
             }
         }
          /* Bento Ki Section */
@@ -218,19 +297,27 @@
 
         /* Category Filter Styles */
         .filter-btn {
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 99px;
-            font-size: 0.8rem;
+            font-size: var(--fs-sm);
             text-transform: uppercase;
             font-weight: bold;
             transition: all 0.3s;
             border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            /* Touch target min 44px */
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
         }
-
         .filter-btn.active {
             background: var(--dbz-blue);
             border-color: var(--dbz-blue);
             box-shadow: 0 0 15px var(--dbz-blue);
+        }
+        .filter-btn:hover:not(.active) {
+            background: rgba(0, 163, 255, 0.15);
+            border-color: rgba(0, 163, 255, 0.4);
         }
 
         /* Barre de progression de puissance */
@@ -252,24 +339,77 @@
         #mobile-menu {
             transform: translateX(100%);
             transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            /* Zone sûre iOS */
+            padding-top: calc(1.5rem + var(--safe-top));
+            padding-bottom: calc(2rem + var(--safe-bottom));
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
         #mobile-menu.active {
             transform: translateX(0);
+        }
+
+        /* Skill logo size */
+        .skill-logo {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+        }
+        @media (max-width: 639px) {
+            .skill-logo { width: 44px; height: 44px; }
+        }
+
+        /* Formulaire de contact - labels visibles */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-label {
+            font-size: var(--fs-sm);
+            color: #9ca3af;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Amélioration contrastes inputs */
+        .form-input {
+            width: 100%;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 14px 20px;
+            outline: none;
+            color: white;
+            font-size: var(--fs-base);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .form-input:focus {
+            border-color: var(--dbz-blue);
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.2);
+        }
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.35);
         }
         
         /* Fenêtre Modale CV */
         .custom-modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9);
             z-index: 100;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            padding-top: max(20px, var(--safe-top));
+            padding-bottom: max(20px, var(--safe-bottom));
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
 
         .modal-content {
@@ -288,15 +428,21 @@
 
         .close-modal {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
+            top: 16px; right: 16px;
+            font-size: 1.8rem;
             cursor: pointer;
             color: white;
             z-index: 110;
             transition: color 0.3s;
+            /* Touch target */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
         }
-        .close-modal:hover { color: var(--dbz-blue); }
+        .close-modal:hover { color: var(--dbz-blue); background: rgba(0,163,255,0.1); }
         /* Modals */
         .custom-modal {
             display: none;
@@ -306,7 +452,11 @@
             z-index: 100;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
+            padding-top: max(16px, var(--safe-top));
+            padding-bottom: max(16px, var(--safe-bottom));
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
 
         .modal-body {
@@ -477,70 +627,85 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        :focus-visible { outline: 2px solid var(--dbz-blue); outline-offset: 3px; border-radius: 4px; }
-        img { content-visibility: auto; }
-        .glass-card { will-change: transform; }
     </style>
 </head>
 <body>
-    <a href="#main-content" style="position:absolute;left:-9999px;top:4px;z-index:9999;padding:8px 16px;background:var(--dbz-blue);color:#fff;font-weight:bold;border-radius:99px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;" onfocus="this.style.left='16px'" onblur="this.style.left='-9999px'">Aller au contenu principal</a>
+    <!-- SKIP LINK accessibilité clavier -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
     <!-- Fond animé Genkidama Centré -->
-    <div class="aura-bg"></div>
-    <div class="genkidama-container">
+    <div class="aura-bg" aria-hidden="true"></div>
+    <div class="genkidama-container" aria-hidden="true">
         <div class="genkidama"></div>
     </div>
-    <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]"></div>
+    <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]" aria-hidden="true"></div>
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center" aria-label="Navigation principale">
-        <div class="dbz-font text-2xl font-black tracking-tighter italic">
+    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center" role="navigation" aria-label="Navigation principale">
+        <a href="#accueil" class="dbz-font text-2xl font-black tracking-tighter italic focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Ethan Caraïbe - Accueil">
             ETHAN<span class="text-blue-500">CARAÏBE</span>
+        </a>
+        <div class="hidden md:flex gap-8 font-medium uppercase text-sm tracking-widest" role="list">
+            <a href="#accueil" class="hover:text-blue-400 transition" role="listitem">Accueil</a>
+            <a href="#presentation" class="hover:text-blue-400 transition" role="listitem">Profil</a>
+            <a href="#projets" class="hover:text-blue-400 transition" role="listitem">Projets</a>
+            <a href="#competences" class="hover:text-blue-400 transition" role="listitem">Niveau de Ki</a>
+            <a href="#contact" class="hover:text-blue-400 transition" role="listitem">Contact</a>
         </div>
-        <div class="hidden md:flex gap-8 font-medium uppercase text-sm tracking-widest">
-            <a href="#accueil" class="hover:text-blue-400 transition">Accueil</a>
-            <a href="#presentation" class="hover:text-blue-400 transition">Profil</a>
-            <a href="#projets" class="hover:text-blue-400 transition">Projets</a>
-            <a href="#competences" class="hover:text-blue-400 transition">Niveau de Ki</a>
-            <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
-        </div>
-        <button class="md:hidden text-2xl text-white" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu" id="burger-btn">
-            <i class="fas fa-bars" aria-hidden="true" id="burger-icon" aria-hidden="true"></i>
+        <!-- Burger Icon -->
+        <button
+            class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition"
+            onclick="toggleMobileMenu()"
+            id="burger-btn"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Ouvrir le menu de navigation">
+            <i class="fas fa-bars text-xl" id="burger-icon" aria-hidden="true"></i>
         </button>
     </nav>
      <!-- MENU MOBILE OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 bg-[#05070A] z-[60] flex flex-col justify-center items-center p-8 md:hidden">
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl" aria-label="Fermer le menu">
-            <i class="fas fa-times" aria-hidden="true"></i>
+    <div id="mobile-menu"
+         class="fixed inset-0 bg-[#05070A] z-[60] flex flex-col justify-center items-center p-8 md:hidden"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Menu de navigation"
+         aria-hidden="true">
+        <button onclick="toggleMobileMenu()"
+                class="absolute top-6 right-6 text-white p-2 rounded-lg hover:bg-white/10 transition"
+                aria-label="Fermer le menu">
+            <i class="fas fa-times text-2xl" aria-hidden="true"></i>
         </button>
-        <div class="flex flex-col gap-8 text-center">
-            <a href="#accueil" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">ACCUEIL</a>
-            <a href="#presentation" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROFIL</a>
-            <a href="#projets" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROJETS</a>
-            <a href="#competences" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">NIVEAU DE KI</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">CONTACT</a>
-        </div>
-        <div class="mt-16 flex gap-6 text-2xl">
-            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-            <a href="https://www.instagram.com/blue93971/" class="text-blue-500"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <nav aria-label="Menu mobile">
+            <ul class="flex flex-col gap-8 text-center list-none p-0 m-0">
+                <li><a href="#accueil" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition block">ACCUEIL</a></li>
+                <li><a href="#presentation" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition block">PROFIL</a></li>
+                <li><a href="#projets" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition block">PROJETS</a></li>
+                <li><a href="#competences" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition block">NIVEAU DE KI</a></li>
+                <li><a href="#contact" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition block">CONTACT</a></li>
+            </ul>
+        </nav>
+        <div class="mt-16 flex gap-6 text-2xl" role="list" aria-label="Réseaux sociaux">
+            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500 hover:text-blue-300 transition" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn d'Ethan Caraïbe (nouvelle fenêtre)"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/blue93971/" class="text-blue-500 hover:text-blue-300 transition" target="_blank" rel="noopener noreferrer" aria-label="Instagram @blue93971 (nouvelle fenêtre)"><i class="fab fa-instagram" aria-hidden="true"></i></a>
         </div>
     </div>
     <main id="main-content">
     <!-- HERO SECTION -->
-    <section id="accueil" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-        <div class="inline-block px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+    <section id="accueil" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20" aria-labelledby="hero-title">
+        <div class="inline-block px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6" aria-label="Métiers : Infographiste et Web Designer">
             INFOGRAPHISTE • WEB DESIGNER
         </div>
-        <h1 class="dbz-font text-5xl md:text-8xl font-black italic leading-none mb-6">
+        <h1 id="hero-title" class="dbz-font font-black italic leading-none mb-6" style="font-size: var(--fs-hero);">
             REPOUSSER LES <br> <span class="text-blue-500 text-glow">LIMITES DU WEB</span>
         </h1>
-        <p class="max-w-2xl text-gray-400 text-lg md:text-xl mb-10 text-center">
+        <p class="max-w-2xl text-gray-300 mb-10 text-center" style="font-size: var(--fs-lg);">
             Inspiré par l'esthétique DB Moderne. Je fusionne design graphique, développement front-end et stratégie de communication pour créer des expériences digitales foudroyantes.
-
+        </p>
         <div class="flex flex-wrap justify-center gap-3 md:gap-4">
             <a href="#projets" class="btn-ki px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-tighter text-sm md:text-base text-white">
                 Mes projets
-           <a href="#contact" class="flex items-center justify-center px-6 py-3 md:px-8 rounded-full border border-white/20 hover:bg-white/10 transition font-bold uppercase tracking-tighter text-sm md:text-base">Me contacter</a>
             </a>
-            <button onclick="toggleModal()" class="px-6 py-3 md:px-8 md:py-4 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold uppercase tracking-tighter text-sm md:text-base flex items-center gap-2">
+            <a href="#contact" class="flex items-center justify-center px-6 py-3 md:px-8 rounded-full border border-white/20 hover:bg-white/10 transition font-bold uppercase tracking-tighter text-sm md:text-base">Me contacter</a>
+            <button onclick="toggleModal()" class="px-6 py-3 md:px-8 md:py-4 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold uppercase tracking-tighter text-sm md:text-base flex items-center gap-2" aria-haspopup="dialog">
                 <i class="fas fa-file-invoice" aria-hidden="true"></i> Mon CV
             </button>
         </div>
@@ -549,7 +714,7 @@
     <section id="presentation" class="py-24 px-6 md:px-12 max-w-5xl mx-auto">
         <div class="glass-card p-8 md:p-16 border-blue-500/20 relative overflow-hidden">
             <div class="absolute top-0 right-0 p-4 opacity-10">
-                <i class="fas fa-user-ninja text-9xl" aria-hidden="true"></i>
+                <i class="fas fa-user-ninja text-9xl"></i>
             </div>
             <h2 class="dbz-font text-3xl md:text-4xl font-black italic mb-8 uppercase">
                 Bonjour, je suis <span class="text-blue-500">Ethan Caraïbe</span>
@@ -563,36 +728,49 @@
         </div>
     </section>
     <!-- PROJECT SECTION WITH FILTERS -->
-    <section id="projets" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 class="dbz-font text-3xl md:text-5xl font-black italic mb-4 uppercase text-center md:text-left">
+    <section id="projets" class="py-24 px-6 md:px-12 max-w-7xl mx-auto" aria-labelledby="projets-title">
+        <h2 id="projets-title" class="dbz-font text-3xl md:text-5xl font-black italic mb-4 uppercase text-center md:text-left">
             Mes <span class="text-blue-500">Missions</span>
         </h2>
         
         <!-- Filters -->
-        <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-12" id="filter-container">
-            <button class="filter-btn active" data-category="Tous">Tous</button>
-            <button class="filter-btn" data-category="Exprimer">Exprimer</button>
-            <button class="filter-btn" data-category="Comprendre">Comprendre</button>
-            <button class="filter-btn" data-category="Concevoir">Concevoir</button>
-            <button class="filter-btn" data-category="Développer">Développer</button>
-            <button class="filter-btn" data-category="Entreprendre">Entreprendre</button>
-            <button class="filter-btn" data-category="Entreprise">Entreprise</button>
-            <button class="filter-btn" data-category="Personnel">Personnel</button>
+        <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-12"
+             id="filter-container"
+             role="group"
+             aria-label="Filtrer les projets par catégorie">
+            <button class="filter-btn active" data-category="Tous" aria-pressed="true">Tous</button>
+            <button class="filter-btn" data-category="Exprimer" aria-pressed="false">Exprimer</button>
+            <button class="filter-btn" data-category="Comprendre" aria-pressed="false">Comprendre</button>
+            <button class="filter-btn" data-category="Concevoir" aria-pressed="false">Concevoir</button>
+            <button class="filter-btn" data-category="Développer" aria-pressed="false">Développer</button>
+            <button class="filter-btn" data-category="Entreprendre" aria-pressed="false">Entreprendre</button>
+            <button class="filter-btn" data-category="Entreprise" aria-pressed="false">Entreprise</button>
+            <button class="filter-btn" data-category="Personnel" aria-pressed="false">Personnel</button>
         </div>
 
         <!-- Bento Grid Projects -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]" id="project-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]"
+             id="project-grid"
+             role="list"
+             aria-live="polite"
+             aria-label="Liste des projets">
             <!-- Projects injected by JS -->
         </div>
     </section>
 
   <!-- MODALE PROJET -->
-    <div id="project-modal" class="custom-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
+    <div id="project-modal"
+         class="custom-modal"
+         onclick="closeModalOnOverlay(event)"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="modal-title"
+         aria-hidden="true">
         <div class="modal-body">
             
             <!-- Flèches Bureau (Positionnée par rapport à modal-body) -->
-            <div class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)"><i class="fas fa-chevron-left" aria-hidden="true"></i></div>
-            <div class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)"><i class="fas fa-chevron-right" aria-hidden="true"></i></div>
+            <button class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)" aria-label="Projet précédent"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)" aria-label="Projet suivant"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
             
             <div class="glass-card overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] w-full border-white/20">
                 <!-- Image -->
@@ -601,24 +779,24 @@
                 </div>
                 <!-- Texte -->
                 <div class="md:w-2/5 p-5 md:p-12 flex flex-col items-center justify-center bg-black/40">
-                    <span id="modal-cat" class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2 block"></span>
+                    <span id="modal-cat" class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2 block" aria-label="Catégorie"></span>
                     <h2 id="modal-title" class="dbz-font text-xl md:text-3xl font-black italic mb-4"></h2>
                     <p id="modal-desc" class="text-gray-400 mb-8 leading-relaxed text-justify hyphens-auto text-sm md:text-base"></p>
                     
                     <div class="flex gap-4 flex-wrap">
-                        <a id="modal-link" href="#" target="_blank" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Voir en détails</a>
+                        <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Voir en détails <span class="sr-only">(nouvelle fenêtre)</span></a>
                         <button id="preview-btn" onclick="openPreviewModal()" class="px-8 py-3 rounded-full border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 transition font-bold uppercase text-xs flex items-center gap-2">
                             <i class="fas fa-eye" aria-hidden="true"></i> Preview
                         </button>
-                        <button onclick="closeProjectModal()" class="px-8 py-3 rounded-full border border-white/10 hover:bg-white/5 transition font-bold uppercase text-xs" aria-label="Fermer la modale projet">Fermer</button>
+                        <button onclick="closeProjectModal()" class="px-8 py-3 rounded-full border border-white/10 hover:bg-white/5 transition font-bold uppercase text-xs">Fermer</button>
                     </div>
 
                     <!-- Navigation Mobile (Visible uniquement sous 1200px) -->
                     <div class="modal-nav-mobile hidden mt-10 flex justify-between w-full border-t border-white/10 pt-6">
-                        <button onclick="changeProject(-1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
+                        <button onclick="changeProject(-1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition" aria-label="Projet précédent">
                             <i class="fas fa-chevron-left" aria-hidden="true"></i> Précédent
                         </button>
-                        <button onclick="changeProject(1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition">
+                        <button onclick="changeProject(1)" class="flex items-center gap-2 text-blue-500 font-bold uppercase text-xs hover:text-white transition" aria-label="Projet suivant">
                             Suivant <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -631,13 +809,13 @@
     </div>
     
     <!-- MODAL CV - OPTIMISÉ MOBILE AVEC JPEG -->
-    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Curriculum Vitae">
+    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)">
         <div class="modal-content glass-card">
             <span class="close-modal" onclick="toggleModal()">&times;</span>
             <div class="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center bg-blue-500/5 gap-4 sm:gap-0">
                 <h2 class="dbz-font text-lg sm:text-xl italic font-black uppercase">CURRICULUM <span class="text-blue-500">VITAE</span></h2>
                 <a href="images2/CV Caraibe Ethan VF.pdf" download class="btn-ki px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <i class="fas fa-download" aria-hidden="true"></i> Télécharger PDF
+                    <i class="fas fa-download"></i> Télécharger PDF
                 </a>
             </div>
             <div class="flex-grow overflow-auto p-4 bg-white/5 flex justify-center items-start">
@@ -665,73 +843,73 @@
                 
                 <!-- DaVinci Resolve (Source Wikimedia - Official) -->
                 <div class="skill-badge flex flex-col items-center">
-                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo" loading="lazy">
+                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">DaVinci</span>
                 </div>
 
                 <!-- CapCut (Source VectorLogoZone - High Quality) -->
                 <div class="skill-badge">
-                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo" loading="lazy">
+                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CapCut</span>
                 </div>
 
                 <!-- Canva (Official Brand Mark) -->
                 <div class="skill-badge">
-                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo" loading="lazy">
+                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Canva</span>
                 </div>
 
                 <!-- Gemini (Google Official Sparkle) -->
                 <div class="skill-badge">
-                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo" loading="lazy">
+                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Gemini</span>
                 </div>
 
                 <!-- ChatGPT (OpenAI Official Logo) -->
                 <div class="skill-badge">
-                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo" loading="lazy">
+                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">ChatGPT</span>
                 </div>
 
                 <!-- Photoshop (Official Badge) -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Photoshop</span>
                 </div>
 
                 <!-- Illustrator (Official Badge) -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Illustrator</span>
                 </div>
 
                 <!-- Python -->
                 <div class="skill-badge">
-                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo" loading="lazy">
+                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Python</span>
                 </div>
 
                 <!-- HTML5 -->
                 <div class="skill-badge">
-                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">HTML5</span>
                 </div>
 
                 <!-- CSS3 -->
                 <div class="skill-badge">
-                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CSS3</span>
                 </div>
 
                 <!-- JavaScript -->
                 <div class="skill-badge">
-                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo">
                     <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">JS</span>
                 </div>
 
                 <!-- PHP -->
                 <div class="skill-badge">
-                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo" loading="lazy">
+                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo">
                     <span class="text-sm font-bold uppercase tracking-widest mt-2">PHP</span>
                 </div>
 
@@ -739,51 +917,70 @@
         </div>
     </section>
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-24 px-6 flex items-center min-h-screen">
+    <section id="contact" class="py-24 px-6 flex items-center min-h-screen" aria-labelledby="contact-title">
         <div class="max-w-5xl mx-auto glass-card p-8 md:p-16 flex flex-col md:flex-row gap-12">
             <div class="md:w-1/2">
-                <h2 class="dbz-font text-4xl font-black italic mb-6">PRÊT POUR LA <span class="text-blue-500 text-glow">FUSION ?</span></h2>
+                <h2 id="contact-title" class="dbz-font text-4xl font-black italic mb-6">PRÊT POUR LA <span class="text-blue-500 text-glow">FUSION ?</span></h2>
                 <p class="text-gray-400 mb-8 text-lg text-justify">Un projet en tête ou envie de discuter de mon parcours ? Envoyez-moi un signal, je réponds plus vite qu'un déplacement instantané.</p>
-                <div class="space-y-4">
+                <address class="space-y-4 not-italic">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400" aria-hidden="true">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <span>ethan.caraibe@gmail.com</span>
+                        <a href="mailto:ethan.caraibe@gmail.com" class="hover:text-blue-400 transition">ethan.caraibe@gmail.com</a>
                     </div>
                     <div class="flex items-center gap-4">
-                        <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-linkedin-in" aria-hidden="true"></i></div>
+                        <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group" aria-label="LinkedIn d'Ethan Caraïbe (nouvelle fenêtre)">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all" aria-hidden="true"><i class="fab fa-linkedin-in"></i></div>
                             <span class="group-hover:text-blue-400 transition-colors">linkedin.com/in/ethancaraibe</span>
                         </a>
                     </div>
                     <div class="flex items-center gap-4">
-                        <a href="https://www.instagram.com/blue93971/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fab fa-instagram" aria-hidden="true"></i></div>
+                        <a href="https://www.instagram.com/blue93971/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group" aria-label="Instagram @blue93971 (nouvelle fenêtre)">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all" aria-hidden="true"><i class="fab fa-instagram"></i></div>
                             <span class="group-hover:text-blue-400 transition-colors">@blue93971</span>
                         </a>
                     </div>
-                </div>
+                </address>
             </div>
             
             <!-- FORMULAIRE CONNECTÉ À FORMSPREE -->
-            <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="md:w-1/2 space-y-4">
-                <label for="contact-name" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Nom</label>
-                <input id="contact-name" type="text" name="name" required placeholder="Votre Nom" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
-                <label for="contact-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Email</label>
-                <input id="contact-email" type="email" name="email" required placeholder="Votre Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white">
-                <label for="contact-message" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Votre Message</label>
-                <textarea id="contact-message" name="message" required placeholder="Votre Message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-blue-500 transition text-white"></textarea>
+            <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="md:w-1/2 space-y-5" aria-label="Formulaire de contact" novalidate>
+                <div class="form-group">
+                    <label for="contact-name" class="form-label">Votre nom <span aria-hidden="true" class="text-blue-400">*</span></label>
+                    <input id="contact-name" type="text" name="name" required
+                           autocomplete="name"
+                           placeholder="Ex : Jean Dupont"
+                           class="form-input"
+                           aria-required="true"
+                           aria-describedby="name-hint">
+                    <span id="name-hint" class="sr-only">Champ obligatoire</span>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email" class="form-label">Votre email <span aria-hidden="true" class="text-blue-400">*</span></label>
+                    <input id="contact-email" type="email" name="email" required
+                           autocomplete="email"
+                           placeholder="Ex : jean@email.com"
+                           class="form-input"
+                           aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message" class="form-label">Votre message <span aria-hidden="true" class="text-blue-400">*</span></label>
+                    <textarea id="contact-message" name="message" required
+                              placeholder="Décrivez votre projet ou votre demande..."
+                              rows="4"
+                              class="form-input"
+                              style="resize: vertical;"
+                              aria-required="true"></textarea>
+                </div>
                 
                 <button type="submit" id="submit-btn" class="btn-ki w-full py-4 rounded-xl font-bold uppercase tracking-widest text-white">
                     <span id="btn-text">Envoyer le message</span>
                 </button>
-                <p id="form-status" class="text-sm text-center mt-2 font-bold"></p>
+                <p id="form-status" class="text-sm text-center mt-2 font-bold" aria-live="polite" role="status"></p>
             </form>
         </div>
     </section>
-
-    </main>
 
     <script>
         // Gestion de l'envoi du formulaire via AJAX pour éviter la redirection
@@ -797,7 +994,7 @@
             
             // État de chargement
             btn.disabled = true;
-            btnText.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Transmission...';
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Transmission...';
             status.innerText = "";
 
             const data = new FormData(form);
@@ -813,7 +1010,7 @@
 
                 if (response.ok) {
                     // Succès : Message de réussite
-                    btnText.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Signal envoyé !';
+                    btnText.innerHTML = '<i class="fas fa-check"></i> Signal envoyé !';
                     status.classList.add("text-blue-400");
                     status.innerText = "Fusion réussie ! Je vous répondrai sous peu.";
                     form.reset();
@@ -839,16 +1036,23 @@
     </script>
 
     <!-- FOOTER -->
-    <footer role="contentinfo" class="py-12 px-6 border-t border-white/5 text-center text-gray-500 text-sm">
-        <p>© 2026 Ethan Caraïbe — Portfolio Infographiste et Web Designer </p>
+    <footer class="py-12 px-6 border-t border-white/5 text-center text-gray-500 text-sm" style="padding-bottom: calc(3rem + var(--safe-bottom));">
+        <p>© 2026 Ethan Caraïbe — Portfolio Infographiste et Web Designer</p>
         <p class="mt-2 italic">Designé et codé avec l'énergie du Super Saiyan Blue.</p>
-        <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold">Mentions Légales</button>
+        <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold" aria-haspopup="dialog">Mentions Légales</button>
     </footer>
+    </main>
      <!-- MODAL MENTIONS LÉGALES -->
-    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Mentions légales">
-        <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto">
-            <span class="close-modal" onclick="toggleMentionsModal()">&times;</span>
-            <h2 class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span class="text-white">Légales</span></h2>
+    <div id="mentions-modal"
+         class="custom-modal-overlay"
+         onclick="closeMentionsOnOverlay(event)"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="mentions-title"
+         aria-hidden="true">
+        <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
+            <button class="close-modal" onclick="toggleMentionsModal()" aria-label="Fermer les mentions légales">&times;</button>
+            <h2 id="mentions-title" class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span class="text-white">Légales</span></h2>
             
             <div class="space-y-6 text-gray-300 text-sm text-justify">
                 <section>
@@ -895,13 +1099,13 @@
     </div>
 
     <!-- MODAL PREVIEW -->
-    <div id="preview-modal" onclick="closePreviewOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Prévisualisation du projet">
+    <div id="preview-modal" onclick="closePreviewOnOverlay(event)">
         <div class="preview-container">
             <!-- Header bar -->
             <div class="preview-header">
                 <div class="flex items-center gap-3">
-                    <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center transition text-white/60 text-sm" aria-label="Fermer la prévisualisation">
-                        <i class="fas fa-times" aria-hidden="true"></i>
+                    <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center transition text-white/60 text-sm">
+                        <i class="fas fa-times"></i>
                     </button>
                     <span id="preview-title" class="dbz-font text-xs italic font-black text-white/80 uppercase hidden sm:block"></span>
                     <span id="preview-type-badge" style="display:none" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400"></span>
@@ -909,7 +1113,7 @@
                 <div class="preview-url-bar" id="preview-url-display">—</div>
                 <div class="flex items-center gap-2">
                     <a id="preview-open-link" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        <i class="fas fa-external-link-alt"></i>
                         <span class="hidden sm:inline">Ouvrir</span>
                     </a>
                 </div>
@@ -933,19 +1137,19 @@
                     <div style="width:100%; padding:10px 16px 14px; display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.4); border-top:1px solid rgba(255,255,255,0.05); flex-shrink:0; gap:12px;">
                         <p id="preview-canva-title" class="dbz-font text-xs italic font-black uppercase text-white/80 truncate" style="flex:1; margin:0;"></p>
                         <a id="preview-canva-btn" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap" style="flex-shrink:0;">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Ouvrir
+                            <i class="fas fa-external-link-alt"></i> Ouvrir
                         </a>
                     </div>
                 </div>
                 <!-- Fallback si le site bloque l'iframe -->
                 <div class="preview-fallback" id="preview-fallback">
                     <div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-4">
-                        <i class="fas fa-shield-alt text-blue-500 text-3xl" aria-hidden="true"></i>
+                        <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
                     </div>
                     <h3 class="dbz-font text-lg italic font-black uppercase">Aperçu bloqué</h3>
                     <p class="text-gray-500 text-sm max-w-sm">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
                     <a id="fallback-link" href="#" target="_blank" class="btn-ki mt-4 px-8 py-3 rounded-full font-bold uppercase text-xs flex items-center gap-2">
-                        <i class="fas fa-external-link-alt" aria-hidden="true"></i> Visiter le site
+                        <i class="fas fa-external-link-alt"></i> Visiter le site
                     </a>
                 </div>
             </div>
@@ -958,6 +1162,7 @@
             const modal = document.getElementById('cv-modal');
             const isVisible = modal.style.display === 'flex';
             modal.style.display = isVisible ? 'none' : 'flex';
+            modal.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
             document.body.style.overflow = isVisible ? 'auto' : 'hidden';
         }
 
@@ -1021,7 +1226,7 @@
     
     <script>
         const projects = [
-              {
+                 {
                 id: 1,
                 title: "Création d'un logo unique, Dragonix le studio de jeu de combat Next Gen",
                 category: "Concevoir",
@@ -1179,13 +1384,26 @@
         let currentProjectIndex = 0;
         let filteredProjects = [...projects];
 
-        function toggleMobileMenu() {
+         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-            const isOpen = menu.classList.contains('active');
-            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
             const btn = document.getElementById('burger-btn');
-            if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+            const icon = document.getElementById('burger-icon');
+            const isOpen = menu.classList.contains('active');
+            
+            menu.classList.toggle('active');
+            document.body.style.overflow = !isOpen ? 'hidden' : 'auto';
+            
+            // Mise à jour accessibilité
+            menu.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+            btn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+            btn.setAttribute('aria-label', !isOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation');
+            icon.className = !isOpen ? 'fas fa-times text-xl' : 'fas fa-bars text-xl';
+            
+            // Focus sur le premier lien du menu à l'ouverture
+            if (!isOpen) {
+                const firstLink = menu.querySelector('a');
+                if (firstLink) setTimeout(() => firstLink.focus(), 300);
+            }
         }
 
         function renderProjects(filter = "Tous") {
@@ -1196,7 +1414,17 @@
             filteredProjects.forEach((p, index) => {
                 const card = document.createElement('div');
                 card.className = `glass-card project-card bento-item ${p.span} p-8 flex flex-col justify-end overflow-hidden group relative`;
+                // Accessibilité clavier
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'listitem');
+                card.setAttribute('aria-label', `Voir le projet : ${p.title}`);
                 card.onclick = () => openProjectModal(index);
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openProjectModal(index);
+                    }
+                };
                 card.innerHTML = `
                     <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-20 group-hover:opacity-40 transition-all duration-500" style="background-image: url('${p.img}')"></div>
                     <div class="relative z-10 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
@@ -1210,16 +1438,24 @@
 
         document.getElementById('filter-container').addEventListener('click', (e) => {
             if(e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
                 e.target.classList.add('active');
+                e.target.setAttribute('aria-pressed', 'true');
                 renderProjects(e.target.dataset.category);
             }
         });
+
+        let _lastFocusedCard = null;
 
         function openProjectModal(index) {
             currentProjectIndex = index;
             const project = filteredProjects[currentProjectIndex];
             if(!project) return;
+
+            _lastFocusedCard = document.activeElement;
 
             document.getElementById('modal-title').innerText = project.title;
             document.getElementById('modal-cat').innerText = project.category;
@@ -1228,14 +1464,26 @@
             imgEl.src = project.img;
             imgEl.alt = 'Visuel du projet : ' + project.title;
             document.getElementById('modal-link').href = project.link;
-            
-            document.getElementById('project-modal').style.display = 'flex';
+            document.getElementById('modal-link').setAttribute('aria-label', 'Voir le projet ' + project.title + ' en détails (nouvelle fenêtre)');
+
+            const modal = document.getElementById('project-modal');
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
+
+            // Focus sur le premier élément focusable de la modale
+            setTimeout(() => {
+                const first = modal.querySelector('a[href], button:not([disabled])');
+                if (first) first.focus();
+            }, 50);
         }
 
         function closeProjectModal() {
-            document.getElementById('project-modal').style.display = 'none';
+            const modal = document.getElementById('project-modal');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = 'auto';
+            if (_lastFocusedCard) _lastFocusedCard.focus();
         }
 
         function changeProject(direction) {
@@ -1379,7 +1627,7 @@
             const iframe = document.getElementById('preview-iframe');
             modal.style.display = 'none';
             iframe.src = '';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'auto';
         }
 
         function closePreviewOnOverlay(e) {
@@ -1390,6 +1638,7 @@
             const m = document.getElementById('cv-modal');
             const isVisible = m.style.display === 'flex';
             m.style.display = isVisible ? 'none' : 'flex';
+            m.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
         }
 
         function closeCVOnOverlay(e) { if(e.target.id === 'cv-modal') toggleCVModal(); }
@@ -1399,28 +1648,34 @@
             const m = document.getElementById('mentions-modal');
             const isVisible = m.style.display === 'flex';
             m.style.display = isVisible ? 'none' : 'flex';
+            m.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
             document.body.style.overflow = isVisible ? 'auto' : 'hidden';
         }
         function closeMentionsOnOverlay(e) { if(e.target.id === 'mentions-modal') toggleMentionsModal(); }
 
          // --- EVENTS ---
-        document.getElementById('filter-container').addEventListener('click', (e) => {
-            if(e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                renderProjects(e.target.dataset.category);
-            }
-        });
+        // (filtre déjà géré dans le bloc précédent)
 
+        // Parallaxe aura : souris sur PC, gyroscope désactivé sur mobile pour perf
         document.addEventListener('mousemove', (e) => {
             const aura = document.querySelector('.aura-bg');
+            if (!aura) return;
             const x = (e.clientX / window.innerWidth - 0.5) * 40;
             const y = (e.clientY / window.innerHeight - 0.5) * 40;
             aura.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.1)`;
-        });
+        }, { passive: true });
 
         window.onload = () => renderProjects();
         createEnergyParticles();
+
+        // Fermeture des modales avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (document.getElementById('preview-modal').style.display === 'flex') { closePreviewModal(); return; }
+            if (document.getElementById('project-modal').style.display === 'flex') { closeProjectModal(); return; }
+            if (document.getElementById('cv-modal').style.display === 'flex') { toggleModal(); return; }
+            if (document.getElementById('mentions-modal').style.display === 'flex') { toggleMentionsModal(); return; }
+        });
         </script>
 </body>
 </html>
