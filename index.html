@@ -4,1889 +4,490 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethan Caraïbe | Z-Portfolio MMI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Font Awesome en asynchrone (non bloquant) -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Polices Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
-    <style>
-        /* ============================================================
-           VARIABLES GLOBALES — MODE SOMBRE (défaut)
-        ============================================================ */
-        :root {
-            --dbz-orange: #FF8A00;
-            --dbz-blue: #00A3FF;
-            --dbz-dark: #05070A;
-            --aura-glow: rgba(0, 163, 255, 0.3);
 
-            /* Thème sombre */
-            --bg-body:          #05070A;
-            --bg-nav:           rgba(5, 7, 10, 0.7);
-            --bg-card:          rgba(255, 255, 255, 0.03);
-            --bg-card-hover:    rgba(0, 163, 255, 0.08);
-            --bg-skill:         rgba(255, 255, 255, 0.02);
-            --bg-input:         rgba(255, 255, 255, 0.05);
-            --bg-modal:         #0a0c10;
-            --bg-modal-header:  rgba(0, 163, 255, 0.05);
-            --bg-modal-footer:  rgba(0, 0, 0, 0.4);
-            --bg-preview-frame: #0a0a0f;
-            --bg-preview-load:  #05070A;
-            --bg-preview-fall:  #05070A;
-            --bg-img-block:     #05070A;
-            --bg-footer-img:    rgba(0, 0, 0, 0.4);
-            --bg-url-bar:       rgba(0, 0, 0, 0.4);
-            --bg-mobile-menu:   #05070A;
-            --bg-power-bar:     #1a1a1a;
-
-            --text-primary:     #ffffff;
-            --text-secondary:   #d1d5db;  /* gray-300 */
-            --text-muted:       #9ca3af;  /* gray-400 */
-            --text-faint:       #6b7280;  /* gray-500 */
-            --text-nav:         #ffffff;
-
-            --border-card:      rgba(255, 255, 255, 0.1);
-            --border-nav:       rgba(255, 255, 255, 0.1);
-            --border-input:     rgba(255, 255, 255, 0.1);
-            --border-skill:     rgba(255, 255, 255, 0.05);
-            --border-modal:     rgba(255, 255, 255, 0.1);
-            --border-footer:    rgba(255, 255, 255, 0.05);
-            --border-preview:   rgba(0, 163, 255, 0.2);
-            --border-preview-h: rgba(0, 163, 255, 0.3);
-            --border-url-bar:   rgba(255, 255, 255, 0.08);
-            --border-close-btn: rgba(255, 255, 255, 0.1);
-
-            --shadow-modal:     rgba(0, 0, 0, 0.9);
-            --filter-btn-border: rgba(255, 255, 255, 0.1);
-            --filter-btn-color:  #ffffff;
-
-            --close-modal-color: #ffffff;
-            --nav-arrow-bg:     rgba(0, 163, 255, 0.15);
-            --nav-arrow-border: rgba(0, 163, 255, 0.4);
-
-            --aura-opacity-dark:  rgba(0, 163, 255, 0.3);
-            --hero-badge-bg:    rgba(0, 163, 255, 0.1);
-            --hero-badge-border: rgba(0, 163, 255, 0.3);
-            --contact-icon-bg:  rgba(0, 163, 255, 0.2);
-            --modal-img-bg:     #000000;
-            --modal-text-bg:    rgba(0, 0, 0, 0.4);
-            --modal-nav-border: rgba(255, 255, 255, 0.1);
-            --preview-close-bg: rgba(255, 255, 255, 0.05);
-            --preview-title-color: rgba(255, 255, 255, 0.8);
-            --preview-canva-title: rgba(255, 255, 255, 0.8);
-            --preview-footer-border: rgba(255, 255, 255, 0.05);
-            --fallback-icon-bg: rgba(0, 163, 255, 0.1);
-            --cv-modal-img-border: rgba(255, 255, 255, 0.1);
-            --toggle-bg:        rgba(255,255,255,0.1);
-            --toggle-color:     #ffffff;
-            --particle-color:   white;
-        }
-
-        /* ============================================================
-           VARIABLES — MODE CLAIR
-        ============================================================ */
-        :root.light {
-            --dbz-blue: #0077CC;
-            --aura-glow: rgba(0, 119, 204, 0.15);
-
-            --bg-body:          #f0f4f8;
-            --bg-nav:           rgba(240, 244, 248, 0.85);
-            --bg-card:          rgba(255, 255, 255, 0.75);
-            --bg-card-hover:    rgba(0, 119, 204, 0.07);
-            --bg-skill:         rgba(255, 255, 255, 0.85);
-            --bg-input:         rgba(255, 255, 255, 0.9);
-            --bg-modal:         #ffffff;
-            --bg-modal-header:  rgba(0, 119, 204, 0.07);
-            --bg-modal-footer:  rgba(0, 0, 0, 0.05);
-            --bg-preview-frame: #e8edf2;
-            --bg-preview-load:  #f0f4f8;
-            --bg-preview-fall:  #f0f4f8;
-            --bg-img-block:     #f0f4f8;
-            --bg-footer-img:    rgba(255, 255, 255, 0.8);
-            --bg-url-bar:       rgba(230, 235, 241, 0.9);
-            --bg-mobile-menu:   #f0f4f8;
-            --bg-power-bar:     #d1d5db;
-
-            --text-primary:     #111827;
-            --text-secondary:   #374151;
-            --text-muted:       #4b5563;
-            --text-faint:       #6b7280;
-            --text-nav:         #111827;
-
-            --border-card:      rgba(0, 0, 0, 0.1);
-            --border-nav:       rgba(0, 0, 0, 0.1);
-            --border-input:     rgba(0, 0, 0, 0.15);
-            --border-skill:     rgba(0, 0, 0, 0.1);
-            --border-modal:     rgba(0, 0, 0, 0.1);
-            --border-footer:    rgba(0, 0, 0, 0.08);
-            --border-preview:   rgba(0, 119, 204, 0.25);
-            --border-preview-h: rgba(0, 119, 204, 0.4);
-            --border-url-bar:   rgba(0, 0, 0, 0.12);
-            --border-close-btn: rgba(0, 0, 0, 0.12);
-
-            --shadow-modal:     rgba(0, 0, 0, 0.5);
-            --filter-btn-border: rgba(0, 0, 0, 0.15);
-            --filter-btn-color:  #111827;
-
-            --close-modal-color: #111827;
-            --nav-arrow-bg:     rgba(0, 119, 204, 0.1);
-            --nav-arrow-border: rgba(0, 119, 204, 0.3);
-
-            --aura-opacity-dark:  rgba(0, 119, 204, 0.08);
-            --hero-badge-bg:    rgba(0, 119, 204, 0.1);
-            --hero-badge-border: rgba(0, 119, 204, 0.35);
-            --contact-icon-bg:  rgba(0, 119, 204, 0.12);
-            --modal-img-bg:     #e8edf2;
-            --modal-text-bg:    rgba(255, 255, 255, 0.9);
-            --modal-nav-border: rgba(0, 0, 0, 0.1);
-            --preview-close-bg: rgba(0, 0, 0, 0.05);
-            --preview-title-color: #111827;
-            --preview-canva-title: #111827;
-            --preview-footer-border: rgba(0, 0, 0, 0.08);
-            --fallback-icon-bg: rgba(0, 119, 204, 0.1);
-            --cv-modal-img-border: rgba(0, 0, 0, 0.12);
-            --toggle-bg:        rgba(0,0,0,0.08);
-            --toggle-color:     #111827;
-            --particle-color:   #0077CC;
-        }
-
-        /* ============================================================
-           BASE
-        ============================================================ */
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-
-        .dbz-font { font-family: 'Orbitron', sans-serif; }
-
-        /* ============================================================
-           ANIMATIONS DE FOND
-        ============================================================ */
-        .genkidama-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 250px;
-            height: 250px;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .genkidama {
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, #fff 0%, var(--dbz-blue) 35%, transparent 75%);
-            border-radius: 50%;
-            filter: blur(40px);
-            box-shadow: 0 0 60px var(--dbz-blue), inset 0 0 30px #fff;
-            animation: pulseGenki 5s infinite ease-in-out;
-            opacity: 0.2;
-        }
-
-        :root.light .genkidama {
-            opacity: 0.08;
-        }
-
-        @keyframes pulseGenki {
-            0%, 100% { transform: scale(1); opacity: 0.1; filter: blur(20px); }
-            50% { transform: scale(1.05); opacity: 0.6; filter: blur(35px); }
-        }
-
-        :root.light .genkidama {
-            animation: pulseGenkiLight 5s infinite ease-in-out;
-        }
-
-        @keyframes pulseGenkiLight {
-            0%, 100% { transform: scale(1); opacity: 0.04; filter: blur(20px); }
-            50% { transform: scale(1.05); opacity: 0.1; filter: blur(35px); }
-        }
-
-        .energy-particle {
-            position: absolute;
-            background: var(--particle-color);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0;
-            animation: gatherEnergy 4s infinite ease-out;
-        }
-
-        :root.light .energy-particle {
-            box-shadow: 0 0 8px var(--dbz-blue) !important;
-        }
-
-        @keyframes gatherEnergy {
-            0% { transform: translate(var(--start-x), var(--start-y)) scale(0); opacity: 0; }
-            20% { opacity: 0.7; }
-            100% { transform: translate(50vw, 50vh) scale(1.5); opacity: 0; }
-        }
-
-        .aura-bg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, var(--aura-opacity-dark) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            filter: blur(100px);
-            animation: pulseAura 8s infinite alternate;
-        }
-
-        @keyframes pulseAura {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
-        }
-
-        /* ============================================================
-           GLASS CARD
-        ============================================================ */
-        .glass-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-card);
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        :root.light .glass-card {
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--dbz-blue);
-            box-shadow: 0 0 30px var(--aura-glow);
-        }
-
-        /* ============================================================
-           NAVIGATION
-        ============================================================ */
-        nav {
-            background: var(--bg-nav);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-nav);
-            transition: background 0.4s ease, border-color 0.4s ease;
-        }
-
-        nav a, nav .dbz-font {
-            color: var(--text-nav);
-        }
-
-        nav a:hover {
-            color: var(--dbz-blue) !important;
-        }
-
-        /* ============================================================
-           BOUTON TOGGLE MODE CLAIR/SOMBRE
-        ============================================================ */
-        #theme-toggle {
-            background: var(--toggle-bg);
-            color: var(--toggle-color);
-            border: 1px solid var(--border-card);
-            border-radius: 99px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        #theme-toggle:hover {
-            border-color: var(--dbz-blue);
-            color: var(--dbz-blue);
-        }
-
-        /* ============================================================
-           BENTO GRID
-        ============================================================ */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 200px;
-            gap: 20px;
-        }
-
-        .bento-item {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bento-bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.2;
-            transition: opacity 0.5s ease;
-            z-index: 0;
-        }
-
-        .project-card:hover .bento-bg { opacity: 0.5; }
-
-        @media (max-width: 768px) {
-            .bento-grid {
-                grid-template-columns: repeat(1, 1fr);
-                grid-auto-rows: auto;
-            }
-        }
-
-        /* ============================================================
-           SKILL BADGES
-        ============================================================ */
-        .skill-badge {
-            background: var(--bg-skill);
-            border: 1px solid var(--border-skill);
-            border-radius: 20px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            color: var(--text-primary);
-        }
-
-        .skill-badge span {
-            color: var(--text-primary);
-        }
-
-        .skill-badge:hover {
-            background: rgba(0, 163, 255, 0.1);
-            border-color: var(--dbz-blue);
-            transform: scale(1.05);
-        }
-
-        :root.light .skill-badge:hover {
-            background: rgba(0, 119, 204, 0.08);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            filter: drop-shadow(0 0 10px rgba(0, 163, 255, 0.3));
-            transition: 0.3s;
-        }
-
-        .skill-badge:hover .skill-icon {
-            transform: rotate(10deg);
-            filter: drop-shadow(0 0 15px var(--dbz-blue));
-        }
-
-        .skill-logo {
-            width: 56px;
-            height: 56px;
-            object-fit: contain;
-        }
-
-        .text-glow {
-            text-shadow: 0 0 10px var(--dbz-blue);
-        }
-
-        :root.light .text-glow {
-            text-shadow: 0 0 12px rgba(0, 119, 204, 0.5);
-        }
-
-        /* ============================================================
-           BOUTON KI
-        ============================================================ */
-        .btn-ki {
-            background: linear-gradient(90deg, var(--dbz-blue), #0057FF);
-            color: #ffffff !important;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-ki::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: rgba(255,255,255,0.2);
-            transform: rotate(45deg);
-            transition: 0.5s;
-            left: -150%;
-        }
-
-        .btn-ki:hover::after { left: 100%; }
-
-        /* ============================================================
-           FILTER BUTTONS
-        ============================================================ */
-        .filter-btn {
-            padding: 8px 20px;
-            border-radius: 99px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: all 0.3s;
-            border: 1px solid var(--filter-btn-border);
-            color: var(--filter-btn-color);
-            background: transparent;
-        }
-
-        .filter-btn.active {
-            background: var(--dbz-blue);
-            border-color: var(--dbz-blue);
-            box-shadow: 0 0 15px var(--dbz-blue);
-            color: #ffffff;
-        }
-
-        /* ============================================================
-           BARRE DE PROGRESSION
-        ============================================================ */
-        .power-bar {
-            height: 4px;
-            background: var(--bg-power-bar);
-            border-radius: 2px;
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .power-fill {
-            height: 100%;
-            background: var(--dbz-blue);
-            box-shadow: 0 0 10px var(--dbz-blue);
-        }
-
-        /* ============================================================
-           MENU MOBILE
-        ============================================================ */
-        #mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            background: var(--bg-mobile-menu);
-        }
-
-        #mobile-menu a {
-            color: var(--text-primary);
-        }
-        #mobile-menu a:hover { color: var(--dbz-blue) !important; }
-
-        #mobile-menu.active { transform: translateX(0); }
-
-        #mobile-menu button {
-            color: var(--text-primary);
-        }
-
-        /* ============================================================
-           MODALES GÉNÉRIQUES
-        ============================================================ */
-        .custom-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--shadow-modal);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        :root.light .custom-modal-overlay {
-            background: rgba(0, 0, 0, 0.55);
-        }
-
-        .modal-content {
-            background: var(--bg-modal);
-            width: 100%;
-            max-width: 900px;
-            height: 90vh;
-            border-radius: 24px;
-            border: 1px solid var(--dbz-blue);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px; right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--close-modal-color);
-            z-index: 110;
-            transition: color 0.3s;
-        }
-        .close-modal:hover { color: var(--dbz-blue); }
-
-        .custom-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--shadow-modal);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        :root.light .custom-modal {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .modal-body {
-            max-width: 1000px;
-            width: 100%;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        /* ============================================================
-           FLÈCHES DE NAVIGATION MODALE
-        ============================================================ */
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--nav-arrow-bg);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid var(--nav-arrow-border);
-            z-index: 300;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-        }
-
-        .nav-prev { left: -60px; }
-        .nav-next { right: -60px; }
-
-        .nav-arrow:hover {
-            background: var(--dbz-blue);
-            color: white;
-            box-shadow: 0 0 25px var(--dbz-blue);
-            border-color: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        @media (min-width: 1600px) {
-            .nav-arrow { width: 65px; height: 65px; font-size: 1.5rem; }
-            .nav-prev { left: -85px; }
-            .nav-next { right: -85px; }
-        }
-
-        @media (max-width: 1200px) {
-            .nav-arrow { display: none !important; }
-            .modal-nav-mobile { display: flex !important; }
-        }
-
-        .project-card { cursor: pointer; }
-
-        /* ============================================================
-           MODAL PREVIEW
-        ============================================================ */
-        #preview-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.97);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-        }
-
-        :root.light #preview-modal {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .preview-container {
-            width: 100%;
-            max-width: 1200px;
-            height: 95vh;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        @media (min-width: 640px) {
-            #preview-modal { padding: 20px; }
-            .preview-container { height: 90vh; gap: 12px; }
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-preview-h);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-        }
-
-        .preview-url-bar {
-            flex: 1;
-            background: var(--bg-url-bar);
-            border: 1px solid var(--border-url-bar);
-            border-radius: 99px;
-            padding: 6px 16px;
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-family: 'Space Grotesk', monospace;
-            margin: 0 12px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .preview-iframe-wrapper {
-            flex: 1;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-preview);
-            position: relative;
-            background: var(--bg-preview-frame);
-        }
-
-        .preview-iframe-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        .preview-fallback {
-            display: none;
-            position: absolute;
-            inset: 0;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            text-align: center;
-            padding: 40px;
-            background: var(--bg-preview-fall);
-            color: var(--text-primary);
-        }
-
-        .preview-fallback.visible { display: flex; }
-
-        .preview-loading {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            background: var(--bg-preview-load);
-            z-index: 5;
-            transition: opacity 0.4s;
-        }
-
-        .preview-loading.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .spin-ring {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(0,163,255,0.15);
-            border-top-color: var(--dbz-blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ============================================================
-           TEXTES UTILITAIRES THÉMÉS
-        ============================================================ */
-        .text-themed-secondary { color: var(--text-secondary); }
-        .text-themed-muted     { color: var(--text-muted); }
-        .text-themed-faint     { color: var(--text-faint); }
-        .text-themed-primary   { color: var(--text-primary); }
-
-        /* Overrides Tailwind statiques vers variables */
-        .themed-gray-300  { color: var(--text-secondary) !important; }
-        .themed-gray-400  { color: var(--text-muted) !important; }
-        .themed-gray-500  { color: var(--text-faint) !important; }
-
-        /* Sections — couleurs de texte fixes */
-        section p, section span:not(.text-blue-500):not(.text-blue-400):not(.btn-ki *) {
-            color: var(--text-secondary);
-        }
-        section h1, section h2, section h3, section h4 {
-            color: var(--text-primary);
-        }
-        footer { color: var(--text-faint); border-color: var(--border-footer); }
-        footer p { color: var(--text-faint); }
-        footer button { color: var(--text-faint); }
-        footer button:hover { color: var(--dbz-blue) !important; }
-
-        /* Hero */
-        #accueil h1 { color: var(--text-primary); }
-        #accueil p  { color: var(--text-muted); }
-
-        /* Formulaire contact */
-        #contact-form input,
-        #contact-form textarea {
-            background: var(--bg-input) !important;
-            border-color: var(--border-input) !important;
-            color: var(--text-primary) !important;
-        }
-        #contact-form input::placeholder,
-        #contact-form textarea::placeholder {
-            color: var(--text-muted) !important;
-        }
-        #contact-form input:focus,
-        #contact-form textarea:focus {
-            border-color: var(--dbz-blue) !important;
-        }
-
-        /* Modal projet — texte */
-        #modal-title { color: var(--text-primary); }
-        #modal-desc  { color: var(--text-muted); }
-        #modal-cat   { color: var(--dbz-blue); }
-
-        /* Modal mentions légales */
-        #mentions-modal .space-y-6 p { color: var(--text-secondary); }
-        #mentions-modal h3           { color: var(--text-primary); }
-
-        /* Barre de chargement preview */
-        #preview-loading span { color: var(--text-faint); }
-
-        /* Fallback preview */
-        #preview-fallback h3 { color: var(--text-primary); }
-        #preview-fallback p  { color: var(--text-faint); }
-
-        /* CV modal */
-        .cv-modal-header-title { color: var(--text-primary); }
-        .cv-modal-footer-text  { color: var(--text-faint); }
-
-        /* Bouton fermer dans modales projet */
-        .modal-close-x { color: rgba(255,255,255,0.5); }
-        :root.light .modal-close-x { color: rgba(0,0,0,0.45); }
-        .modal-close-x:hover { color: var(--dbz-blue); }
-
-        /* Bouton fermer "Fermer" dans modal projet */
-        .btn-modal-close {
-            border-color: var(--border-close-btn) !important;
-            color: var(--text-primary) !important;
-        }
-        .btn-modal-close:hover {
-            background: var(--bg-skill) !important;
-        }
-
-        /* Bouton preview dans modal projet */
-        .btn-modal-preview {
-            border-color: rgba(0, 163, 255, 0.5) !important;
-            color: var(--dbz-blue) !important;
-        }
-        :root.light .btn-modal-preview {
-            border-color: rgba(0, 119, 204, 0.45) !important;
-        }
-
-        /* Modal nav mobile */
-        .modal-nav-mobile button {
-            color: var(--dbz-blue);
-        }
-        .modal-nav-mobile button:hover { color: var(--text-primary) !important; }
-        .modal-nav-border-themed {
-            border-color: var(--modal-nav-border) !important;
-        }
-
-        /* Card projet — titre */
-        .project-card-title { color: var(--text-primary) !important; }
-
-        /* Hero badge */
-        .hero-badge {
-            border-color: var(--hero-badge-border) !important;
-            background: var(--hero-badge-bg) !important;
-            color: var(--dbz-blue) !important;
-        }
-
-        /* Contact icons */
-        .contact-icon-wrap {
-            background: var(--contact-icon-bg) !important;
-            color: var(--dbz-blue) !important;
-        }
-        .contact-link-text {
-            color: var(--text-secondary) !important;
-        }
-        .contact-link-text:hover { color: var(--dbz-blue) !important; }
-
-        /* Close btn dans preview modal */
-        .preview-close-btn {
-            background: var(--preview-close-bg) !important;
-            color: var(--text-muted) !important;
-        }
-        .preview-close-btn:hover {
-            background: rgba(239, 68, 68, 0.15) !important;
-            color: #ef4444 !important;
-        }
-
-        /* Titre preview header */
-        #preview-title { color: var(--preview-title-color) !important; }
-
-        /* Section ki — subtitle */
-        .ki-subtitle { color: var(--text-muted) !important; }
-
-        /* Présentation — blockquote */
-        .presentation-quote {
-            color: var(--text-secondary) !important;
-        }
-
-        /* Modal img background */
-        .modal-img-bg { background: var(--modal-img-bg) !important; }
-
-        /* Modal text panel */
-        .modal-text-panel { background: var(--modal-text-bg) !important; }
-
-        /* CV modal header */
-        .cv-header-bar {
-            background: var(--bg-modal-header) !important;
-            border-color: var(--border-modal) !important;
-        }
-        .cv-body-bg { background: var(--bg-card) !important; }
-        .cv-img-border { border-color: var(--cv-modal-img-border) !important; }
-        .cv-footer-bar {
-            background: var(--bg-modal-footer) !important;
-            border-color: var(--border-footer) !important;
-        }
-
-    </style>
+    <!-- CSS personnalisé -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Thème appliqué AVANT le premier paint → évite le flash -->
+    <script>
+        (function () {
+            const t = localStorage.getItem('theme');
+            if (t === 'light') document.documentElement.classList.add('light');
+        })();
+    </script>
 </head>
 <body>
-    <!-- Fond animé Genkidama Centré -->
-    <div class="aura-bg"></div>
-    <div class="genkidama-container">
-        <div class="genkidama"></div>
-    </div>
-    <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]"></div>
+    <!-- Fond animé -->
+    <div class="aura-bg" aria-hidden="true"></div>
+    <div class="genkidama-container" aria-hidden="true"><div class="genkidama"></div></div>
+    <div id="energy-field" class="fixed inset-0 pointer-events-none z-[-1]" aria-hidden="true"></div>
 
-    <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center">
-        <div class="dbz-font text-2xl font-black tracking-tighter italic">
-            ETHAN<span class="text-blue-500">CARAÏBE</span>
+    <!-- ═══════════════════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════════════════ -->
+    <nav aria-label="Navigation principale">
+        <div class="nav-logo dbz-font">E<span class="text-blue-500">C</span></div>
+
+        <div class="nav-links" role="list">
+            <a href="#accueil"      class="hover:text-blue-400 transition" data-translate="nav_home">Accueil</a>
+            <a href="#presentation" class="hover:text-blue-400 transition" data-translate="nav_profile">Profil</a>
+            <a href="#projets"      class="hover:text-blue-400 transition" data-translate="nav_projects">Projets</a>
+            <a href="#competences"  class="hover:text-blue-400 transition" data-translate="nav_ki">Niveau de Ki</a>
+            <a href="#contact"      class="hover:text-blue-400 transition" data-translate="nav_contact">Contact</a>
         </div>
-        <div class="hidden md:flex gap-8 font-medium uppercase text-sm tracking-widest">
-            <a href="#accueil" class="hover:text-blue-400 transition">Accueil</a>
-            <a href="#presentation" class="hover:text-blue-400 transition">Profil</a>
-            <a href="#projets" class="hover:text-blue-400 transition">Projets</a>
-            <a href="#competences" class="hover:text-blue-400 transition">Niveau de Ki</a>
-            <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
-        </div>
-        <div class="flex items-center gap-3">
-            <!-- Bouton Toggle Thème -->
-            <button id="theme-toggle" onclick="toggleTheme()" title="Changer de mode">
-                <i id="theme-icon" class="fas fa-sun"></i>
-                <span id="theme-label" class="hidden sm:inline">Mode clair</span>
-            </button>
-            <!-- Burger Icon -->
-            <div class="md:hidden text-2xl focus:outline-none cursor-pointer" style="color:var(--text-primary);" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars" id="burger-icon"></i>
+
+        <div class="nav-controls">
+            <!-- Sélecteur FR | EN -->
+            <div class="lang-switcher" id="lang-switcher" role="group" aria-label="Language selector">
+                <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')" aria-label="Français">FR</button>
+                <span class="lang-sep" aria-hidden="true">|</span>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-label="English">EN</button>
             </div>
+            <!-- Bouton d'accessibilité Audio -->
+            <button id="audio-accessibility-btn" onclick="toggleSpeech()" aria-label="Écouter la page mécaniquement">
+                <i id="audio-icon" class="fas fa-volume-up" aria-hidden="true"></i>
+                <span id="audio-label" data-translate="audio_label">Écouter</span>
+            </button>
+            <!-- Toggle thème -->
+            <button id="theme-toggle" onclick="toggleTheme()" aria-label="Changer de mode">
+                <i id="theme-icon" class="fas fa-sun" aria-hidden="true"></i>
+                <span id="theme-label" data-translate="theme_label">Mode clair</span>
+            </button>
+            <!-- Burger mobile -->
+            <button class="burger-btn" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- MENU MOBILE OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 z-[60] flex flex-col justify-center items-center p-8 md:hidden">
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl">
-            <i class="fas fa-times"></i>
+    <!-- ═══════════════════════════════════════════════════════
+         MENU MOBILE
+    ═══════════════════════════════════════════════════════ -->
+    <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+
+        <!-- Croix fermeture -->
+        <button class="mobile-close-btn" onclick="toggleMobileMenu()" aria-label="Fermer le menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
         </button>
-        <div class="flex flex-col gap-8 text-center">
-            <a href="#accueil" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">ACCUEIL</a>
-            <a href="#presentation" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROFIL</a>
-            <a href="#projets" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">PROJETS</a>
-            <a href="#competences" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">NIVEAU DE KI</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="dbz-font text-3xl italic font-black hover:text-blue-500 transition">CONTACT</a>
+
+        <!-- Liens centrés -->
+        <div class="mobile-nav-links" role="navigation" aria-label="Navigation mobile">
+            <a href="#accueil"      onclick="toggleMobileMenu()" class="dbz-font" data-translate="nav_home">ACCUEIL</a>
+            <a href="#presentation" onclick="toggleMobileMenu()" class="dbz-font" data-translate="nav_profile">PROFIL</a>
+            <a href="#projets"      onclick="toggleMobileMenu()" class="dbz-font" data-translate="nav_projects">PROJETS</a>
+            <a href="#competences"  onclick="toggleMobileMenu()" class="dbz-font" data-translate="nav_ki">NIVEAU DE KI</a>
+            <a href="#contact"      onclick="toggleMobileMenu()" class="dbz-font" data-translate="nav_contact">CONTACT</a>
         </div>
-        <div class="mt-16 flex gap-6 text-2xl">
-            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" class="text-blue-500"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/blue93971/" class="text-blue-500"><i class="fab fa-instagram"></i></a>
+
+        <!-- Réseaux sociaux ancrés en bas -->
+        <div class="mobile-socials">
+            <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/blue93971/" target="_blank" rel="noopener" aria-label="Instagram">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
         </div>
+
     </div>
 
-    <!-- HERO SECTION -->
-    <section id="accueil" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-        <div class="hero-badge inline-block px-4 py-1 rounded-full border text-xs font-bold uppercase tracking-widest mb-6">
-            INFOGRAPHISTE • WEB DESIGNER
-        </div>
-        <h1 class="dbz-font text-5xl md:text-8xl font-black italic leading-none mb-6">
-            REPOUSSER LES <br> <span class="text-blue-500 text-glow">LIMITES DU WEB</span>
+    <!-- ═══════════════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════════════ -->
+    <section id="accueil" class="hero-section">
+        <p class="hero-badge" data-translate="hero_badge">INFOGRAPHISTE • WEB DESIGNER</p>
+        <h1 class="dbz-font hero-title">
+            <span data-translate="hero_h1_line1">REPOUSSER LES</span><br>
+            <span class="text-blue-500 text-glow" data-translate="hero_h1_line2">LIMITES DU WEB</span>
         </h1>
-        <p class="max-w-2xl text-lg md:text-xl mb-10 text-center">
+        <p class="hero-subtitle" data-translate="hero_subtitle">
             Inspiré par l'esthétique DB Moderne. Je fusionne design graphique, développement front-end et stratégie de communication pour créer des expériences digitales foudroyantes.
         </p>
-        <div class="flex flex-wrap justify-center gap-3 md:gap-4">
-            <a href="#projets" class="btn-ki px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-tighter text-sm md:text-base text-white">
-                Mes projets
-            </a>
-            <a href="#contact" class="flex items-center justify-center px-6 py-3 md:px-8 rounded-full border font-bold uppercase tracking-tighter text-sm md:text-base transition" style="border-color:var(--border-card); color:var(--text-primary);" onmouseover="this.style.background='var(--bg-skill)'" onmouseout="this.style.background='transparent'">Me contacter</a>
-            <button onclick="toggleModal()" class="px-6 py-3 md:px-8 md:py-4 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold uppercase tracking-tighter text-sm md:text-base flex items-center gap-2">
-                <i class="fas fa-file-invoice"></i> Mon CV
+        <div class="hero-btns">
+            <a href="#projets" class="btn-ki" data-translate="hero_btn_projects">Mes projets</a>
+            <a href="#contact" class="btn-outline" data-translate="hero_btn_contact">Me contacter</a>
+            <button onclick="toggleModal()" class="btn-cv">
+                <i class="fas fa-file-invoice" aria-hidden="true"></i>
+                <span data-translate="hero_btn_cv">Mon CV</span>
             </button>
         </div>
     </section>
 
-    <!-- SECTION PRÉSENTATION -->
-    <section id="presentation" class="py-24 px-6 md:px-12 max-w-5xl mx-auto">
-        <div class="glass-card p-8 md:p-16 border-blue-500/20 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-4 opacity-10">
-                <i class="fas fa-user-ninja text-9xl"></i>
-            </div>
-            <h2 class="dbz-font text-3xl md:text-4xl font-black italic mb-8 uppercase">
-                Bonjour, je suis <span class="text-blue-500">Ethan Caraïbe</span>
+    <!-- ═══════════════════════════════════════════════════════
+         PRÉSENTATION
+    ═══════════════════════════════════════════════════════ -->
+    <section id="presentation" class="section-container">
+        <div class="glass-card about-card">
+            <i class="fas fa-user-ninja about-deco-icon" aria-hidden="true"></i>
+            <h2 class="dbz-font section-title">
+                <span data-translate="about_greeting">Bonjour, je suis</span>
+                <span class="text-blue-500"> Ethan Caraïbe</span>
             </h2>
-            <div class="space-y-6 text-lg text-justify">
-                <p class="presentation-quote border-l-4 border-blue-500 pl-4 italic py-2" style="background: rgba(0,163,255,0.05);">
-                    Étudiant en 3ᵉ année de BUT MMI à l'IUT de la Guadeloupe, je suis actuellement infographiste chez Pixel Services. Mon objectif est de devenir infographiste ou web designer, en alliant créativité et développement web. 
-                    Je développe mes compétences en programmation (HTML, CSS, PHP, Python) et en création graphique, avec une forte appétence pour les nouvelles technologies.
-                </p>
-            </div>
+            <p class="presentation-quote" data-translate="about_bio">
+                Étudiant en 3ᵉ année de BUT MMI à l'IUT de la Guadeloupe, je suis actuellement infographiste chez Pixel Services. Mon objectif est de devenir infographiste ou web designer, en alliant créativité et développement web.
+                Je développe mes compétences en programmation (HTML, CSS, PHP, Python) et en création graphique, avec une forte appétence pour les nouvelles technologies.
+            </p>
         </div>
     </section>
 
-    <!-- PROJECT SECTION WITH FILTERS -->
-    <section id="projets" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 class="dbz-font text-3xl md:text-5xl font-black italic mb-4 uppercase text-center md:text-left">
-            Mes <span class="text-blue-500">Missions</span>
+    <!-- ═══════════════════════════════════════════════════════
+         PROJETS
+    ═══════════════════════════════════════════════════════ -->
+    <section id="projets" class="section-wide">
+        <h2 class="dbz-font section-title-wide">
+            <span data-translate="projects_title_prefix">Mes</span>
+            <span class="text-blue-500" data-translate="projects_title_accent"> Missions</span>
         </h2>
-        
-        <!-- Filters -->
-        <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-12" id="filter-container">
-            <button class="filter-btn active" data-category="Tous">Tous</button>
-            <button class="filter-btn" data-category="Exprimer">Exprimer</button>
-            <button class="filter-btn" data-category="Comprendre">Comprendre</button>
-            <button class="filter-btn" data-category="Concevoir">Concevoir</button>
-            <button class="filter-btn" data-category="Développer">Développer</button>
-            <button class="filter-btn" data-category="Entreprendre">Entreprendre</button>
-            <button class="filter-btn" data-category="Entreprise">Entreprise</button>
-            <button class="filter-btn" data-category="Personnel">Personnel</button>
+
+        <div class="filter-bar" id="filter-container" role="group" aria-label="Filtres de projets">
+            <button class="filter-btn active" data-category="Tous"         data-filter-key="filter_all">Tous</button>
+            <button class="filter-btn"        data-category="Exprimer"     data-filter-key="filter_express">Exprimer</button>
+            <button class="filter-btn"        data-category="Comprendre"   data-filter-key="filter_understand">Comprendre</button>
+            <button class="filter-btn"        data-category="Concevoir"    data-filter-key="filter_design">Concevoir</button>
+            <button class="filter-btn"        data-category="Développer"   data-filter-key="filter_develop">Développer</button>
+            <button class="filter-btn"        data-category="Entreprendre" data-filter-key="filter_undertake">Entreprendre</button>
+            <button class="filter-btn"        data-category="Entreprise"   data-filter-key="filter_enterprise">Entreprise</button>
+            <button class="filter-btn"        data-category="Personnel"    data-filter-key="filter_personal">Personnel</button>
         </div>
 
-        <!-- Bento Grid Projects -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]" id="project-grid">
-            <!-- Projects injected by JS -->
-        </div>
+        <div id="project-grid" class="project-grid" aria-live="polite"></div>
     </section>
 
-    <!-- MODALE PROJET -->
-    <div id="project-modal" class="custom-modal" onclick="closeModalOnOverlay(event)">
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL PROJET
+    ═══════════════════════════════════════════════════════ -->
+    <div id="project-modal" class="custom-modal" onclick="closeModalOnOverlay(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-body">
-            
-            <!-- Flèches Bureau -->
-            <div class="hidden lg:flex nav-arrow nav-prev" onclick="changeProject(-1)"><i class="fas fa-chevron-left"></i></div>
-            <div class="hidden lg:flex nav-arrow nav-next" onclick="changeProject(1)"><i class="fas fa-chevron-right"></i></div>
-            
-            <div class="glass-card overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] w-full" style="border-color:var(--border-card);">
-                <!-- Image -->
-                <div class="md:w-3/5 overflow-hidden h-64 md:h-auto modal-img-bg">
-                    <img id="modal-img" src="" alt="Projet" class="w-full h-full object-contain">
-                </div>
-                <!-- Texte -->
-                <div class="md:w-2/5 p-5 md:p-12 flex flex-col items-center justify-center modal-text-panel">
-                    <span id="modal-cat" class="font-bold text-xs uppercase tracking-widest mb-2 block" style="color:var(--dbz-blue);"></span>
-                    <h2 id="modal-title" class="dbz-font text-xl md:text-3xl font-black italic mb-4"></h2>
-                    <p id="modal-desc" class="mb-8 leading-relaxed text-justify hyphens-auto text-sm md:text-base"></p>
-                    
-                    <div class="flex gap-4 flex-wrap">
-                        <a id="modal-link" href="#" target="_blank" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Voir en détails</a>
-                        <button id="preview-btn" onclick="openPreviewModal()" class="btn-modal-preview px-8 py-3 rounded-full border transition font-bold uppercase text-xs flex items-center gap-2" style="border-color:rgba(0,163,255,0.5);">
-                            <i class="fas fa-eye"></i> Preview
-                        </button>
-                        <button onclick="closeProjectModal()" class="btn-modal-close px-8 py-3 rounded-full border transition font-bold uppercase text-xs">Fermer</button>
-                    </div>
+            <button class="nav-arrow nav-prev" onclick="changeProject(-1)" aria-label="Projet précédent"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="nav-arrow nav-next" onclick="changeProject(1)"  aria-label="Projet suivant"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
 
-                    <!-- Navigation Mobile -->
-                    <div class="modal-nav-mobile hidden mt-10 flex justify-between w-full border-t pt-6 modal-nav-border-themed">
-                        <button onclick="changeProject(-1)" class="flex items-center gap-2 font-bold uppercase text-xs hover:text-white transition" style="color:var(--dbz-blue);">
-                            <i class="fas fa-chevron-left"></i> Précédent
+            <div class="glass-card modal-inner">
+                <div class="modal-img-bg">
+                    <img id="modal-img" src="" alt="" class="modal-img" loading="lazy">
+                </div>
+                <div class="modal-text-panel">
+                    <span id="modal-cat" class="modal-category" aria-live="polite"></span>
+                    <h2 id="modal-title" class="dbz-font modal-title-text"></h2>
+                    <p id="modal-desc" class="modal-desc"></p>
+                    <div class="modal-actions">
+                        <a id="modal-link" href="#" target="_blank" rel="noopener" class="btn-ki" data-translate="modal_view_details">Voir en détails</a>
+                        <button id="preview-btn" onclick="openPreviewModal()" class="btn-modal-preview">
+                            <i class="fas fa-eye" aria-hidden="true"></i> Preview
                         </button>
-                        <button onclick="changeProject(1)" class="flex items-center gap-2 font-bold uppercase text-xs hover:text-white transition" style="color:var(--dbz-blue);">
-                            Suivant <i class="fas fa-chevron-right"></i>
+                        <button onclick="closeProjectModal()" class="btn-modal-close" data-translate="modal_close">Fermer</button>
+                    </div>
+                    <div class="modal-nav-mobile" aria-label="Navigation entre projets">
+                        <button onclick="changeProject(-1)" class="modal-nav-btn">
+                            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                            <span data-translate="modal_prev">Précédent</span>
+                        </button>
+                        <button onclick="changeProject(1)" class="modal-nav-btn">
+                            <span data-translate="modal_next">Suivant</span>
+                            <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Croix Fermer -->
-            <span class="modal-close-x absolute -top-12 right-0 cursor-pointer text-4xl transition" onclick="closeProjectModal()">&times;</span>
+            <button class="modal-close-x" onclick="closeProjectModal()" aria-label="Fermer">&times;</button>
         </div>
     </div>
-    
-    <!-- MODAL CV -->
-    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)">
+
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL CV / RESUME
+    ═══════════════════════════════════════════════════════ -->
+    <div id="cv-modal" class="custom-modal-overlay" onclick="closeOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Curriculum Vitae">
         <div class="modal-content glass-card">
-            <span class="close-modal" onclick="toggleModal()">&times;</span>
-            <div class="cv-header-bar p-6 border-b flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
-                <h2 class="dbz-font text-lg sm:text-xl italic font-black uppercase cv-modal-header-title">CURRICULUM <span class="text-blue-500">VITAE</span></h2>
-                <a href="images2/CV Caraibe Ethan VF.pdf" download class="btn-ki px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <i class="fas fa-download"></i> Télécharger PDF
+            <button class="close-modal" onclick="toggleModal()" aria-label="Fermer">&times;</button>
+            <div class="cv-header-bar">
+                <h2 class="dbz-font cv-modal-header-title">
+                    <span data-translate="cv_title_main">CURRICULUM</span> <span class="text-blue-500" data-translate="cv_title_sub">VITAE</span>
+                </h2>
+                <a href="images2/CV Caraibe Ethan VF.pdf" download class="btn-ki cv-download-btn">
+                    <i class="fas fa-download" aria-hidden="true"></i>
+                    <span data-translate="cv_download">Télécharger PDF</span>
                 </a>
             </div>
-            <div class="cv-body-bg flex-grow overflow-auto p-4 flex justify-center items-start">
-                <div class="w-full max-w-2xl shadow-2xl rounded-lg overflow-hidden cv-img-border" style="border-width:1px; border-style:solid;">
-                    <img src="images2/CV Caraïbe Ethan VF.jpg" alt="Aperçu CV Ethan Caraïbe" class="w-full h-auto" onerror="this.src='https://via.placeholder.com/800x1200?text=Aperçu+Indisponible'">
+            <div class="cv-body-bg">
+                <div class="cv-img-wrap cv-img-border">
+                    <img src="images2/CV Caraïbe Ethan VF.jpg" alt="Aperçu CV Ethan Caraïbe" class="w-full h-auto" loading="lazy"
+                         onerror="this.src='https://via.placeholder.com/800x1200?text=Aperçu+Indisponible'">
                 </div>
             </div>
-            <div class="cv-footer-bar p-4 text-center text-[10px] italic border-t uppercase cv-modal-footer-text">
+            <p class="cv-footer-bar cv-modal-footer-text" data-translate="cv_footer">
                 Aperçu optimisé • Téléchargez le PDF pour la version complète
-            </div>
+            </p>
         </div>
     </div>
 
-    <!-- SECTION NIVEAU DE KI -->
-    <section id="competences" class="py-24 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="dbz-font text-3xl md:text-5xl font-black italic uppercase">Mon <span class="text-blue-500">Niveau de Ki</span></h2>
-                <p class="ki-subtitle mt-4 uppercase tracking-widest text-xs">Logiciels & Technologies maîtrisés</p>
+    <!-- ═══════════════════════════════════════════════════════
+         COMPÉTENCES
+    ═══════════════════════════════════════════════════════ -->
+    <section id="competences" class="section-ki">
+        <div class="ki-header">
+            <h2 class="dbz-font section-title">
+                <span data-translate="skills_title_prefix">Mon</span>
+                <span class="text-blue-500" data-translate="skills_title_accent"> Niveau de Ki</span>
+            </h2>
+            <p class="ki-subtitle" data-translate="skills_subtitle">Logiciels & Technologies maîtrisés</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-badge">
+                <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo" loading="lazy">
+                <span>DaVinci</span>
             </div>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                
-                <div class="skill-badge flex flex-col items-center">
-                    <img src="images2/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">DaVinci</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CapCut</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Canva</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Gemini</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">ChatGPT</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Photoshop</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Illustrator</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">Python</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">HTML5</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">CSS3</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo">
-                    <span class="text-sm md:text-xs font-bold uppercase tracking-widest mt-2">JS</span>
-                </div>
-
-                <div class="skill-badge">
-                    <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo">
-                    <span class="text-sm font-bold uppercase tracking-widest mt-2">PHP</span>
-                </div>
-
+            <div class="skill-badge">
+                <img src="images2/CapCut-Logo.png" alt="CapCut" class="skill-logo" loading="lazy">
+                <span>CapCut</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/Canva-Logo-Design-Platform-Icon.png" alt="Canva" class="skill-logo" loading="lazy">
+                <span>Canva</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/gemini-color-light (Personnalisé).png" alt="Gemini" class="skill-logo" loading="lazy">
+                <span>Gemini</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/LOGO OPENIA.png" alt="ChatGPT" class="skill-logo" loading="lazy">
+                <span>ChatGPT</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-Adobe_Photoshop_CC_icon.png" alt="Photoshop" class="skill-logo" loading="lazy">
+                <span>Photoshop</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-Adobe_Illustrator_CC_icon.png" alt="Illustrator" class="skill-logo" loading="lazy">
+                <span>Illustrator</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/icons8-python-240.png" alt="Python" class="skill-logo" loading="lazy">
+                <span>Python</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-HTML5_logo_and_wordmark.png" alt="HTML5" class="skill-logo" loading="lazy">
+                <span>HTML5</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-CSS3_logo_and_wordmark.png" alt="CSS3" class="skill-logo" loading="lazy">
+                <span>CSS3</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-Unofficial_JavaScript_logo_2.png" alt="JavaScript" class="skill-logo" loading="lazy">
+                <span>JS</span>
+            </div>
+            <div class="skill-badge">
+                <img src="images2/500px-PHP-logo.png" alt="PHP" class="skill-logo" loading="lazy">
+                <span>PHP</span>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="py-24 px-6 flex items-center min-h-screen">
-        <div class="max-w-5xl mx-auto glass-card p-8 md:p-16 flex flex-col md:flex-row gap-12">
-            <div class="md:w-1/2">
-                <h2 class="dbz-font text-4xl font-black italic mb-6">PRÊT POUR LA <span class="text-blue-500 text-glow">FUSION ?</span></h2>
-                <p class="mb-8 text-lg text-justify">Un projet en tête ou envie de discuter de mon parcours ? Envoyez-moi un signal, je réponds plus vite qu'un déplacement instantané.</p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                        <div class="contact-icon-wrap w-12 h-12 rounded-full flex items-center justify-center">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <a href="mailto:ethan.caraibe@gmail.com" class="contact-link-text hover:text-blue-400 transition leading-none self-center">ethan.caraibe@gmail.com</a>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="contact-icon-wrap w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                            <span class="contact-link-text group-hover:text-blue-400 transition-colors">linkedin.com/in/ethancaraibe</span>
+    <!-- ═══════════════════════════════════════════════════════
+         CONTACT
+    ═══════════════════════════════════════════════════════ -->
+    <section id="contact" class="section-contact">
+        <div class="contact-card glass-card">
+            <div class="contact-info">
+                <h2 class="dbz-font section-title">
+                    <span data-translate="contact_title_prefix">PRÊT POUR LA</span>
+                    <span class="text-blue-500 text-glow" data-translate="contact_title_accent"> FUSION ?</span>
+                </h2>
+                <p class="contact-intro" data-translate="contact_intro">Un projet en tête ou envie de discuter de mon parcours ? Envoyez-moi un signal, je réponds plus vite qu'un déplacement instantané.</p>
+                <ul class="contact-list" aria-label="Coordonnées">
+                    <li>
+                        <div class="contact-icon-wrap" aria-hidden="true"><i class="fas fa-envelope"></i></div>
+                        <a href="mailto:ethan.caraibe@gmail.com" class="contact-link-text">ethan.caraibe@gmail.com</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ethan-caraibe-1bb3172ba/" target="_blank" rel="noopener" class="contact-social-link">
+                            <div class="contact-icon-wrap"><i class="fab fa-linkedin-in" aria-hidden="true"></i></div>
+                            <span class="contact-link-text">linkedin.com/in/ethancaraibe</span>
                         </a>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <a href="https://www.instagram.com/blue93971/" target="_blank" class="flex items-center gap-4 group">
-                            <div class="contact-icon-wrap w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                <i class="fab fa-instagram"></i>
-                            </div>
-                            <span class="contact-link-text group-hover:text-blue-400 transition-colors">@blue93971</span>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/blue93971/" target="_blank" rel="noopener" class="contact-social-link">
+                            <div class="contact-icon-wrap"><i class="fab fa-instagram" aria-hidden="true"></i></div>
+                            <span class="contact-link-text">@blue93971</span>
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-            
-            <!-- FORMULAIRE -->
-            <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="md:w-1/2 space-y-4">
-                <input type="text" name="name" required placeholder="Votre Nom" class="w-full rounded-xl px-6 py-4 outline-none transition" style="background:var(--bg-input);border:1px solid var(--border-input);color:var(--text-primary);">
-                <input type="email" name="email" required placeholder="Votre Email" class="w-full rounded-xl px-6 py-4 outline-none transition" style="background:var(--bg-input);border:1px solid var(--border-input);color:var(--text-primary);">
-                <textarea name="message" required placeholder="Votre Message" rows="4" class="w-full rounded-xl px-6 py-4 outline-none transition" style="background:var(--bg-input);border:1px solid var(--border-input);color:var(--text-primary);"></textarea>
-                
-                <button type="submit" id="submit-btn" class="btn-ki w-full py-4 rounded-xl font-bold uppercase tracking-widest text-white">
-                    <span id="btn-text">Envoyer le message</span>
+
+            <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="contact-form">
+                <input type="text"  name="name"    required id="input-name"    placeholder="Votre Nom"     class="form-input">
+                <input type="email" name="email"   required id="input-email"   placeholder="Votre Email"   class="form-input">
+                <textarea           name="message" required id="input-message" placeholder="Votre Message" rows="4" class="form-input form-textarea"></textarea>
+                <button type="submit" id="submit-btn" class="btn-ki form-submit">
+                    <span id="btn-text" data-translate="contact_send">Envoyer le message</span>
                 </button>
-                <p id="form-status" class="text-sm text-center mt-2 font-bold"></p>
+                <p id="form-status" class="form-status" aria-live="polite"></p>
             </form>
         </div>
     </section>
 
-    <script>
-        // Gestion formulaire contact via AJAX
-        const form = document.getElementById("contact-form");
-        const btn = document.getElementById("submit-btn");
-        const btnText = document.getElementById("btn-text");
-        const status = document.getElementById("form-status");
-
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            btn.disabled = true;
-            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Transmission...';
-            status.innerText = "";
-            const data = new FormData(form);
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (response.ok) {
-                    btnText.innerHTML = '<i class="fas fa-check"></i> Signal envoyé !';
-                    status.classList.add("text-blue-400");
-                    status.innerText = "Fusion réussie ! Je vous répondrai sous peu.";
-                    form.reset();
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btnText.innerText = "Envoyer le message";
-                        status.innerText = "";
-                    }, 5000);
-                } else {
-                    throw new Error();
-                }
-            } catch (error) {
-                btn.disabled = false;
-                btnText.innerText = "Réessayer";
-                status.classList.add("text-red-500");
-                status.innerText = "Erreur lors de l'envoi. Veuillez réessayer.";
-            }
-        };
-    </script>
-
-    <!-- FOOTER -->
-    <footer class="py-12 px-6 border-t text-center text-sm" style="border-color:var(--border-footer);">
-        <p>© 2026 Ethan Caraïbe — Portfolio  Infographiste et Web Designer </p>
-        <p class="mt-2 italic">Designé et codé avec l'énergie du Super Saiyan Blue.</p>
-        <button onclick="toggleMentionsModal()" class="mt-4 hover:text-blue-500 transition uppercase tracking-tighter text-[10px] font-bold">Mentions Légales</button>
+    <!-- ═══════════════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════════════ -->
+    <footer>
+        <p data-translate="footer_copy">© 2026 Ethan Caraïbe — Portfolio Infographiste et Web Designer</p>
+        <p data-translate="footer_tagline">Designé et codé avec l'énergie du Super Saiyan Blue.</p>
+        <div class="flex flex-wrap gap-x-4 justify-center items-center">
+            <button onclick="toggleMentionsModal()" class="footer-legal-btn" data-translate="footer_legal">Mentions Légales</button>
+            <span class="text-gray-600 text-xs select-none" aria-hidden="true">•</span>
+            <button onclick="toggleCguModal()" class="footer-legal-btn" data-translate="footer_cgu">Conditions Générales d'Utilisation</button>
+        </div>
     </footer>
 
-    <!-- MODAL MENTIONS LÉGALES -->
-    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)">
-        <div class="modal-content glass-card p-8 md:p-12 overflow-y-auto">
-            <span class="close-modal" onclick="toggleMentionsModal()">&times;</span>
-            <h2 class="dbz-font text-2xl font-black italic mb-8 uppercase text-blue-500">Mentions <span style="color:var(--text-primary);">Légales</span></h2>
-            
-            <div class="space-y-6 text-sm text-justify">
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">1. Édition du site</h3>
-                    <p>Le présent site est édité par : Ethan Caraïbe
-                        Étudiant en BUT Métiers du Multimédia et de l'Internet (MMI) à l'IUT de la Guadeloupe à Saint-Claude
-                        Contact : ethan.caraibe@gmail.com
-                        Ce site a pour vocation de présenter mon parcours, mes projets académiques et personnels, ainsi que mes compétences dans le domaine du multimédia, du web et du développement.</p>
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL MENTIONS LÉGALES
+    ═══════════════════════════════════════════════════════ -->
+    <div id="mentions-modal" class="custom-modal-overlay" onclick="closeMentionsOnOverlay(event)" role="dialog" aria-modal="true" aria-labelledby="mentions-title">
+        <div class="modal-content glass-card mentions-content">
+            <button class="close-modal" onclick="toggleMentionsModal()" aria-label="Fermer">&times;</button>
+            <h2 id="mentions-title" class="dbz-font mentions-heading text-blue-500">
+                <span data-translate="legal_title">Mentions</span>
+                <span data-translate="legal_title2"> Légales</span>
+            </h2>
+            <div class="mentions-body">
+                <section class="legal-section">
+                    <h3 data-translate="legal_s1_title">1. Édition du site</h3>
+                    <p data-translate="legal_s1_body">Le présent site est édité par : Ethan Caraïbe — Étudiant en BUT Métiers du Multimédia et de l'Internet (MMI) à l'IUT de la Guadeloupe à Saint-Claude — Contact : ethan.caraibe@gmail.com — Ce site a pour vocation de présenter mon parcours, mes projets académiques et personnels, ainsi que mes compétences dans le domaine du multimédia, du web et du développement.</p>
                 </section>
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">2. Hébergement</h3>
-                    <p>Le site est hébergé par :
-                    <br>GitHub, Inc. Adresse : 88 Colin P. Kelly Jr Street, San Francisco, CA 94107, États-Unis 🌐 https://pages.github.com.</p>
+                <section class="legal-section">
+                    <h3 data-translate="legal_s2_title">2. Hébergement</h3>
+                    <p data-translate="legal_s2_body">Le site est hébergé par : GitHub, Inc. — 88 Colin P. Kelly Jr Street, San Francisco, CA 94107, États-Unis — 🌐 https://pages.github.com</p>
                 </section>
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">3. Propriété Intellectuelle</h3>
-                    <p>L'ensemble du contenu présent sur ce site (textes, images, vidéos, logos, graphismes, codes, etc.) est la propriété exclusive d'Ethan Caraïbe, sauf mention contraire.
-                        Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, du contenu du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable. Les visuels issus de projets scolaires ou collectifs sont présentés à titre de démonstration et restent la propriété de leurs auteurs respectifs.</p>
+                <section class="legal-section">
+                    <h3 data-translate="legal_s3_title">3. Propriété Intellectuelle</h3>
+                    <p data-translate="legal_s3_body">L'ensemble du contenu présent sur ce site (textes, images, vidéos, logos, graphismes, codes, etc.) est la propriété exclusive d'Ethan Caraïbe, sauf mention contraire. Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, du contenu du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable. Les visuels issus de projets scolaires ou collectifs sont présentés à titre de démonstration et restent la propriété de leurs auteurs respectifs.</p>
                 </section>
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">4. Collecte de données</h3>
-                    <p>Les données collectées via le formulaire de contact sont utilisées uniquement pour répondre aux messages envoyés par les visiteurs.
-                        Aucune donnée personnelle n'est transmise, vendue ou partagée avec des tiers.
-                        Conformément à la loi Informatique et Libertés et au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, vous pouvez m'écrire à : ethan.caraibe@gmail.com</p>
+                <section class="legal-section">
+                    <h3 data-translate="legal_s4_title">4. Collecte de données</h3>
+                    <p data-translate="legal_s4_body">Les données collectées via le formulaire de contact sont utilisées uniquement pour répondre aux messages envoyés par les visiteurs. Aucune donnée personnelle n'est transmise, vendue ou partagée avec des tiers. Conformément à la loi Informatique et Libertés et au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, vous pouvez m'écrire à : ethan.caraibe@gmail.com</p>
                 </section>
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">5. Cookies</h3>
-                    <p>Le contenu de ce site est fourni à titre informatif.
-                        Malgré le soin apporté à la rédaction et à la mise à jour, il peut contenir des erreurs ou omissions.
-                        Ethan Caraïbe ne saurait être tenu responsable de l'utilisation faite des informations disponibles sur ce site, ni des dommages directs ou indirects pouvant en résulter.</p>
+                <section class="legal-section">
+                    <h3 data-translate="legal_s5_title">5. Cookies</h3>
+                    <p data-translate="legal_s5_body">Le contenu de ce site est fourni à titre informatif. Malgré le soin apporté à la rédaction et à la mise à jour, il peut contenir des erreurs ou omissions. Ethan Caraïbe ne saurait être tenu responsable de l'utilisation faite des informations disponibles sur ce site, ni des dommages directs ou indirects pouvant en résulter.</p>
                 </section>
-                <section>
-                    <h3 class="font-bold uppercase tracking-widest mb-2" style="color:var(--text-primary);">6. Crédits</h3>
-                    <p>Design et développement : Ethan Caraïbe</p>
-                    <p>Technologies utilisées : HTML, CSS, JavaScript, Bootstrap</p>
-                    <p>Hébergement : GitHub Pages</p>
+                <section class="legal-section">
+                    <h3 data-translate="legal_s6_title">6. Crédits</h3>
+                    <p data-translate="legal_s6_body">Design et développement : Ethan Caraïbe — Technologies utilisées : HTML, CSS, JavaScript — Hébergement : GitHub Pages</p>
                 </section>
             </div>
-            
-            <div class="mt-8 pt-6 border-t text-center" style="border-color:var(--border-modal);">
-                <button onclick="toggleMentionsModal()" class="btn-ki px-8 py-3 rounded-full font-bold uppercase text-xs">Fermer</button>
+            <div class="mentions-footer">
+                <button onclick="toggleMentionsModal()" class="btn-ki" data-translate="modal_close">Fermer</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PREVIEW -->
-    <div id="preview-modal" onclick="closePreviewOnOverlay(event)">
-        <div class="preview-container">
-            <!-- Header bar -->
-            <div class="preview-header">
-                <div class="flex items-center gap-3">
-                    <button onclick="closePreviewModal()" class="preview-close-btn w-8 h-8 rounded-full flex items-center justify-center transition text-sm">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <span id="preview-title" class="dbz-font text-xs italic font-black uppercase hidden sm:block"></span>
-                    <span id="preview-type-badge" style="display:none" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full text-blue-400" style="background:rgba(0,163,255,0.15);border:1px solid rgba(0,163,255,0.3);"></span>
-                </div>
-                <div class="preview-url-bar" id="preview-url-display">—</div>
-                <div class="flex items-center gap-2">
-                    <a id="preview-open-link" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-external-link-alt"></i>
-                        <span class="hidden sm:inline">Ouvrir</span>
-                    </a>
-                </div>
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL CONDITIONS GÉNÉRALES D'UTILISATION (CGU)
+    ═══════════════════════════════════════════════════════ -->
+    <div id="cgu-modal" class="custom-modal-overlay" onclick="closeCguOnOverlay(event)" role="dialog" aria-modal="true" aria-labelledby="cgu-title">
+        <div class="modal-content glass-card mentions-content">
+            <button class="close-modal" onclick="toggleCguModal()" aria-label="Fermer">&times;</button>
+            <h2 id="cgu-title" class="dbz-font mentions-heading text-blue-500">
+                <span data-translate="cgu_title">Conditions Générales</span>
+                <span data-translate="cgu_title2"> d'Utilisation</span>
+            </h2>
+            <div class="mentions-body">
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s1_title">1. Présentation et Objet</h3>
+                    <p data-translate="cgu_s1_body">Les présentes Conditions Générales d'Utilisation (CGU) ont pour objet de définir les modalités d'accès et d'utilisation du portfolio numérique d'Ethan Caraïbe. En accédant à ce site, l'utilisateur accepte sans réserve l'intégralité des présentes conditions.</p>
+                </section>
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s2_title">2. Accès au site et Responsabilité</h3>
+                    <p data-translate="cgu_s2_body">L'éditeur s'efforce de permettre l'accès au site 24 heures sur 24, 7 jours sur 7, sauf en cas de force majeure ou d'un événement hors de son contrôle (opérations de maintenance, pannes réseau). L'utilisateur est seul responsable de la sécurité de son équipement informatique utilisé pour visiter le portfolio.</p>
+                </section>
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s3_title">3. Propriété Intellectuelle et Usage</h3>
+                    <p data-translate="cgu_s3_body">Tous les éléments constitutifs de ce site (animations de particules, logos, maquettes graphiques, codes sources JS/CSS, designs interactifs et réalisations artistiques) sont protégés par le droit d'auteur. Aucun droit d'usage commercial ou de republication n'est cédé à l'utilisateur sans un accord préalable écrit de l'éditeur.</p>
+                </section>
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s4_title">4. Formulaire de contact et Données</h3>
+                    <p data-translate="cgu_s4_body">L'utilisateur s'engage à ne fournir que des informations véridiques et constructives dans le formulaire de fusion/contact. Toute utilisation malveillante (SPAM, usurpation d'identité, propos offensants) pourra donner lieu à l'interdiction d'accès au site ou à des poursuites.</p>
+                </section>
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s5_title">5. Liens Externes</h3>
+                    <p data-translate="cgu_s5_body">Ce portfolio propose des liens vers des travaux externes (Canva, YouTube, sites hébergés). N'ayant aucun contrôle sur les serveurs de ces plateformes tierces, l'éditeur ne saurait être tenu responsable du contenu ou de l'indisponibilité de ces sites reliés.</p>
+                </section>
+                <section class="legal-section">
+                    <h3 data-translate="cgu_s6_title">6. Modification des conditions</h3>
+                    <p data-translate="cgu_s6_body">L'éditeur se réserve le droit de modifier unilatéralement et à tout moment les termes des présentes CGU afin de les adapter aux évolutions réglementaires ou techniques du site.</p>
+                </section>
             </div>
-            <!-- iFrame wrapper -->
-            <div class="preview-iframe-wrapper">
-                <!-- Loading -->
-                <div class="preview-loading" id="preview-loading">
-                    <div class="spin-ring"></div>
-                    <span class="text-xs uppercase tracking-widest dbz-font" style="color:var(--text-faint);">Chargement...</span>
+            <div class="mentions-footer">
+                <button onclick="toggleCguModal()" class="btn-ki" data-translate="modal_close">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL PREVIEW
+    ═══════════════════════════════════════════════════════ -->
+    <div id="preview-modal" onclick="closePreviewOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Prévisualisation du projet">
+        <div class="preview-container">
+            <div class="preview-header">
+                <div class="preview-header-left">
+                    <button onclick="closePreviewModal()" class="preview-close-btn" aria-label="Fermer la prévisualisation">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                    <span id="preview-title" class="dbz-font preview-title-text"></span>
+                    <span id="preview-type-badge" class="preview-badge" hidden></span>
                 </div>
-                <!-- iFrame -->
-                <iframe id="preview-iframe" src="" allow="autoplay; fullscreen" onload="onIframeLoad()" onerror="showPreviewFallback()"></iframe>
-                <!-- Bloc image Canva / aperçu image -->
-                <div id="preview-img-block" style="display:none; position:absolute; inset:0; flex-direction:column; justify-content:center; align-items:center; background:var(--bg-img-block); gap:0; overflow:hidden;">
-                    <div style="flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:16px 16px 8px; min-height:0;">
-                        <img id="preview-big-img" src="" alt="Aperçu" style="max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain; border-radius:10px; border:1px solid rgba(0,163,255,0.2); box-shadow: 0 0 40px rgba(0,163,255,0.08);">
+                <div class="preview-url-bar" id="preview-url-display" aria-label="URL du projet">—</div>
+                <a id="preview-open-link" href="#" target="_blank" rel="noopener" class="btn-ki preview-open-btn">
+                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                    <span data-translate="preview_open">Ouvrir</span>
+                </a>
+            </div>
+            <div class="preview-iframe-wrapper">
+                <div class="preview-loading" id="preview-loading">
+                    <div class="spin-ring" aria-hidden="true"></div>
+                    <span class="dbz-font preview-loading-text" data-translate="preview_loading">Chargement...</span>
+                </div>
+                <iframe id="preview-iframe" src="" allow="autoplay; fullscreen" title="Prévisualisation"
+                        onload="onIframeLoad()" onerror="showPreviewFallback()"></iframe>
+                <div id="preview-img-block" class="preview-img-block" hidden>
+                    <div class="preview-img-area">
+                        <img id="preview-big-img" src="" alt="Aperçu du projet" class="preview-big-img" loading="lazy">
                     </div>
-                    <div style="width:100%; padding:10px 16px 14px; display:flex; align-items:center; justify-content:space-between; background:var(--bg-footer-img); border-top:1px solid var(--preview-footer-border); flex-shrink:0; gap:12px;">
-                        <p id="preview-canva-title" class="dbz-font text-xs italic font-black uppercase truncate" style="flex:1; margin:0; color:var(--preview-canva-title);"></p>
-                        <a id="preview-canva-btn" href="#" target="_blank" class="btn-ki px-5 py-2 rounded-full font-bold uppercase text-[10px] flex items-center gap-2 whitespace-nowrap" style="flex-shrink:0;">
-                            <i class="fas fa-external-link-alt"></i> Ouvrir
+                    <div class="preview-img-footer">
+                        <p id="preview-canva-title" class="dbz-font preview-canva-title"></p>
+                        <a id="preview-canva-btn" href="#" target="_blank" rel="noopener" class="btn-ki preview-open-btn">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <span data-translate="preview_open">Ouvrir</span>
                         </a>
                     </div>
                 </div>
-                <!-- Fallback -->
                 <div class="preview-fallback" id="preview-fallback">
-                    <div class="w-20 h-20 rounded-full border flex items-center justify-center mb-4" style="background:var(--fallback-icon-bg); border-color:rgba(0,163,255,0.3);">
-                        <i class="fas fa-shield-alt text-blue-500 text-3xl"></i>
+                    <div class="fallback-icon-wrap" aria-hidden="true">
+                        <i class="fas fa-shield-alt text-blue-500"></i>
                     </div>
-                    <h3 class="dbz-font text-lg italic font-black uppercase">Aperçu bloqué</h3>
-                    <p class="text-sm max-w-sm" style="color:var(--text-faint);">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
-                    <a id="fallback-link" href="#" target="_blank" class="btn-ki mt-4 px-8 py-3 rounded-full font-bold uppercase text-xs flex items-center gap-2">
-                        <i class="fas fa-external-link-alt"></i> Visiter le site
+                    <h3 class="dbz-font" data-translate="preview_blocked_title">Aperçu bloqué</h3>
+                    <p data-translate="preview_blocked_desc">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
+                    <a id="fallback-link" href="#" target="_blank" rel="noopener" class="btn-ki">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        <span data-translate="preview_visit">Visiter le site</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        /* ============================================================
-           TOGGLE THÈME CLAIR / SOMBRE
-        ============================================================ */
-        function toggleTheme() {
-            const root = document.documentElement;
-            const icon  = document.getElementById('theme-icon');
-            const label = document.getElementById('theme-label');
-            const isLight = root.classList.toggle('light');
-
-            if (isLight) {
-                icon.className  = 'fas fa-moon';
-                label.textContent = 'Mode sombre';
-                localStorage.setItem('theme', 'light');
-            } else {
-                icon.className  = 'fas fa-sun';
-                label.textContent = 'Mode clair';
-                localStorage.setItem('theme', 'dark');
-            }
-
-            // Mettre à jour les particules d'énergie
-            updateParticleColors();
-        }
-
-        function updateParticleColors() {
-            const isLight = document.documentElement.classList.contains('light');
-            document.querySelectorAll('.energy-particle').forEach(p => {
-                p.style.background = isLight ? '#0077CC' : 'white';
-            });
-        }
-
-        // Appliquer le thème sauvegardé au chargement
-        (function() {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                document.documentElement.classList.add('light');
-                document.getElementById('theme-icon').className = 'fas fa-moon';
-                document.getElementById('theme-label').textContent = 'Mode sombre';
-            }
-        })();
-
-        /* ============================================================
-           MODAL CV
-        ============================================================ */
-        function toggleModal() {
-            const modal = document.getElementById('cv-modal');
-            const isVisible = modal.style.display === 'flex';
-            modal.style.display = isVisible ? 'none' : 'flex';
-            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
-        }
-
-        function closeOnOverlay(e) {
-            if (e.target.id === 'cv-modal') toggleModal();
-        }
-
-        /* ============================================================
-           PARTICULES D'ÉNERGIE
-        ============================================================ */
-        function createEnergyParticles() {
-            const field = document.getElementById('energy-field');
-            setInterval(() => {
-                const p = document.createElement('div');
-                p.className = 'energy-particle';
-
-                const side = Math.floor(Math.random() * 4);
-                let x, y;
-                if      (side === 0) { x = Math.random() * 100; y = -10; }
-                else if (side === 1) { x = 110; y = Math.random() * 100; }
-                else if (side === 2) { x = Math.random() * 100; y = 110; }
-                else                 { x = -10; y = Math.random() * 100; }
-
-                p.style.setProperty('--start-x', x + 'vw');
-                p.style.setProperty('--start-y', y + 'vh');
-
-                const size = Math.random() * 3 + 2;
-                p.style.width  = size + 'px';
-                p.style.height = size + 'px';
-
-                const isLight = document.documentElement.classList.contains('light');
-                p.style.background  = isLight ? '#0077CC' : 'white';
-                p.style.boxShadow   = isLight ? '0 0 8px #0077CC' : '0 0 8px #fff';
-
-                field.appendChild(p);
-                setTimeout(() => p.remove(), 4000);
-            }, 150);
-        }
-
-        /* ============================================================
-           PARALLAXE
-        ============================================================ */
-        document.addEventListener('mousemove', (e) => {
-            const genki = document.querySelector('.genkidama-container');
-            const x = (e.clientX / window.innerWidth  - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
-            genki.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            const aura = document.querySelector('.aura-bg');
-            const x = (e.clientX / window.innerWidth  - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
-            aura.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.1)`;
-        });
-
-        /* ============================================================
-           APPARITION SCROLL
-        ============================================================ */
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity    = "1";
-                    entry.target.style.transform  = "translateY(0)";
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity   = "0";
-            section.style.transform = "translateY(20px)";
-            section.style.transition = "all 0.8s ease-out";
-            observer.observe(section);
-        });
-    </script>
-
-    <script>
-        /* ============================================================
-           DONNÉES PROJETS
-        ============================================================ */
-        const projects = [
-            {
-                id: 1,
-                title: "Création d'un logo unique, Dragonix le studio de jeu de combat Next Gen",
-                category: "Concevoir",
-                desc: "Création d'un logo original pour un studio de jeux de combat : choix typographique, ajout d'effets visuels et déclinaisons sur mock-ups pour garantir une identité cohérente, responsive et impactante sur tout support.",
-                img: "images2/Plan-de-travail-9_3-cp.jpg",
-                link: "https://www.canva.com/design/DAGcM9i2V-E/j12JE-KQPLoScWYfmk4MVg/view?utm_content=DAGcM9i2V-E&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3f354637ea",
-                span: "md:col-span-1"
-            },
-            {
-                id: 2,
-                title: "SAE 1.05 : Produire un site web",
-                category: "Développer",
-                desc: "Création en groupe d'un site web sur la culture guadeloupéenne, avec 4 pages thématiques. Participation à la recherche de contenu et au développement HTML/CSS du site. Travail collaboratif sur Figma.",
-                img: "images2/Culture-Gwada-1-cp.jpg",
-                link: "https://culture-guadeloupeenne.onrender.com/",
-                span: "md:col-span-2"
-            },
-            {
-                id: 3,
-                title: "SAE 1.04 : Produire un contenu audio et visuel",
-                category: "Exprimer",
-                desc: "Conception en groupe d'un court-métrage de 3 minutes, de l'écriture du scénario au montage final. J'ai assuré la captation vidéo en tant que cameraman et participé à la direction artistique.",
-                img: "images2/miniature silent resilience.jpg",
-                link: "https://youtu.be/VSV6v8G04TM",
-                span: "md:col-span-2"
-            },
-            {
-                id: 4,
-                title: "SAE 1.01 : Auditer une communication numérique",
-                category: "Comprendre",
-                desc: "Réalisation d'un audit de vidéos YouTube de la chaîne Cellule Enov. Évaluation de la qualité visuelle, sonore et de la pertinence du discours. Identification des points d'amélioration narrative.",
-                img: "images2/miniaVidéoCelluleEnov.png",
-                link: "https://youtu.be/i03nImANt1k?si=dkYsDkVAuSJQ318M",
-                span: "md:col-span-1"
-            },
-            {
-                id: 5,
-                title: "SAE 3.02 : Prosuire les contenus pour une communication plurimédia",
-                category: "Concevoir",
-                desc: "Conception d'un flyer institutionnel présentant les formations de l'IUT de la Guadeloupe : mise en page hiérarchisée, intégration de QR codes et respect de la charte graphique.",
-                img: "images2/Affiche-formations-IUT-de-la-Guadeloupe-V2.jpg",
-                link: "https://www.canva.com/design/DAHIMUtqgO8/fYCuQAZ670ecZLy05_w7aw/view?utm_content=DAHIMUtqgO8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1e9a1d3205",
-                span: "md:col-span-2"
-            },
-            {
-                id: 6,
-                title: "SAE 1.02 : Recommandation de communication numérique",
-                category: "Concevoir",
-                desc: "Conception d'une affiche promotionnelle en anglais destinée à valoriser l'apprentissage des langues. Élaboration d'une stratégie visuelle ludique pour rendre le message attractif.",
-                img: "images2/English.png",
-                link: "https://www.canva.com/design/DAFyUNRujp8/2Ht9FxQdbNnNgxMOk1ualQ/view?utm_content=DAFyUNRujp8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha472e828f2",
-                span: "md:col-span-1"
-            },
-            {
-                id: 7,
-                title: "SAE 2.02 : Concevoir un produit et sa communication",
-                category: "Développer",
-                desc: "Conception d'un site vitrine pour une marque de thé glacé locale. Gestion du projet web complet : création des pages, diagramme de Gantt et suivi du planning. Projet associant design et code.",
-                img: "images2/minia site thé pays.png",
-                link: "https://xn--thpays-cva.com/",
-                span: "md:col-span-2"
-            },
-            {
-                id: 8,
-                title: "Fiction Interro Surprise",
-                category: "Concevoir",
-                desc: "Réalisation d'un court-métrage narratif muet produit en 24h : lors d'un examen, des étudiants profitent de l'absence du professeur pour tricher, avant d'être confrontés à une preuve vidéo de leur faute. Un projet alliant écriture à chute, mise en scène de la tension et montage rythmique individuel.",
-                img: "images2/minia fiction.png",
-                link: "https://youtu.be/w0WqZ_nK_O4",
-                span: "md:col-span-1"
-            },
-            {
-                id: 9,
-                title: "Interview de Catherine – Interface 2025",
-                category: "Entreprendre",
-                desc: "Tournage et montage vidéo d'une interview professionnelle. Captation 9:16 avec DJI Osmo Pocket 3, ajout de sous-titres et habillage graphique cohérent.",
-                img: "images2/MINIATURE INTERVIEW CATHERINE.png",
-                link: "https://youtube.com/shorts/T5DOwkHfDKQ",
-                span: "md:col-span-1"
-            },
-            {
-                id: 10,
-                title: "SAE 4.CREA.02 – FAQ Instagram IUT",
-                category: "Exprimer",
-                desc: "Création d'une story interactive de FAQ sur Canva pour informer les futurs étudiants. Conception visuelle conforme à la charte IUT et liens interactifs.",
-                img: "images2/STORY FAQ IUT COUVERTURE.png",
-                link: "https://www.canva.com/design/DAGx9CwVrrQ/3KStPEcyRce4u7cCLn3sPA/view?utm_content=DAGx9CwVrrQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h15e5339ed6",
-                span: "md:col-span-2"
-            },
-            {
-                id: 11,
-                title: "Business Model Canvas d'Aroma-Zone",
-                category: "Entreprendre",
-                desc: "Analyse du modèle économique d'Aroma-Zone : étude de la stratégie bio et fait-maison de la marque, recherche des informations clés pour construire le projet et organisation du travail d'équipe pour préparer le script et le diaporama final",
-                img: "images2/SKINCARe minia.jpg",
-                link: "https://www.canva.com/design/DAHFYCkiwZo/to-spjWBiNt7GXrk_penNw/view?utm_content=DAHFYCkiwZo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1b55e12191",
-                span: "md:col-span-1"
-            },
-            {
-                id: 12,
-                title: "Réel les prix du carburant en Guadeloupe",
-                category: "Exprimer",
-                desc: "Analyse de la fracture territoriale en Guadeloupe à travers l'étude du budget transport : une enquête multimédia sourcée et produite en 24h, démontrant l'impact du prix des carburants et des réformes du permis de conduire sur l'insertion professionnelle des jeunes.",
-                img: "images2/minia reel carburant.png",
-                link: "https://youtube.com/shorts/mgvHaR5NvaI",
-                span: "md:col-span-1"
-            },
-            {
-                id: 13,
-                title: "Atelier FAB Lab – Impression 3D",
-                category: "Entreprendre",
-                desc: "Atelier au BIK'LAB dédié à l'initiation à l'impression 3D. Découverte du prototypage numérique et réalisation d'une première impression additive.",
-                img: "images2/cropped-lebiklab_logo.png",
-                link: "https://www.canva.com/design/DAG_71LYvt0/E-dc-7gUghuCpi6Ds9jkjg/view?utm_content=DAG_71LYvt0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h170d9b2ce8",
-                span: "md:col-span-2"
-            },
-            {
-                id: 14,
-                title: "Assemblée générale UNSA",
-                category: "Personnel",
-                desc: "Conception d'une affiche A3 pour l'UNSA Douanes. Déclinaison de la charte graphique et gestion de la chaîne de production avec imprimeur professionnel.",
-                img: "images2/ASSEMBLÉE GÉNÉRALE UNSA DOUANES FORMAT 15X20 (A5).png",
-                link: "https://www.canva.com/design/DAGoIS1c7q4/eth_s_ypdGqZGoNMOuRzKA/view?utm_content=DAGoIS1c7q4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h5bdeda2349",
-                span: "md:col-span-1"
-            },
-            {
-                id: 15,
-                title: "Documentaire - Le Joueur Intérieur",
-                category: "Personnel",
-                desc: "Projet documentaire personnel explorant le jeu vidéo comme miroir de la psyché humaine. Esthétique minimaliste et montage introspectif rythmé.",
-                img: "images2/MINIATURE DOCUMENTAIRE JV.png",
-                link: "https://youtu.be/HjOy6rqdkDE",
-                span: "md:col-span-2 md:row-span-2"
-            },
-            {
-                id: 16,
-                title: "Projet - Porte-clés Kaz et Palmiers",
-                category: "Entreprise",
-                desc: "Conception de supports physiques personnalisés pour l'entreprise Kaz et Palmiers : fabrication de trois porte-clés en bois pour identifier des bungalows haut de gamme, suite à une adaptation de format en cours de projet. Un projet alliant écoute active du client, ajustement de forme et préparation technique du tracé de découpe laser (cut contour). ",
-                img: "images2/KAZETPALMIERS FICHIER SOURCE.jpg",
-                link: "https://www.canva.com/design/DAHIzfegOG8/c5maJHO-V37hjuGOOU0fHw/view?utm_content=DAHIzfegOG8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha996d56ddf#1",
-                span: "md:col-span-1"
-            },
-            {
-                id: 17,
-                title: "Projet : Guide des Détails Techniques – PIXEL SERVICES",
-                category: "Entreprise",
-                desc: "Conception d'un référentiel technique unifié pour l'agence Pixel Services : création d'un guide complet centralisant les formats et contraintes de production, suite à un constat de dispersion des informations techniques. Un projet alliant analyse des besoins internes, structuration de données complexes et design d'information sur Canva pour sécuriser le flux de production.",
-                img: "images2/GUIDE DETAILS PIXEL VF MINIA.jpg",
-                link: "https://www.canva.com/design/DAG_1m9AcUY/ZxhuU8CTH3srHyO2euO33w/view?utm_content=DAG_1m9AcUY&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6d64fe0c50",
-                span: "md:col-span-1"
-            },
-            {
-                id: 18,
-                title: "Création de supports signalétiques pour la boulangerie Éclat de Blé",
-                category: "Entreprise",
-                desc: "Conception de 4 panneaux de signalétique A2 pour la boulangerie Éclat de Blé : création d'une série de visuels intégrant une bande ardoise effaçable pour la mise à jour des prix, suite à un besoin de modularité tarifaire. Un projet alliant gestion de contraintes techniques d'impression, hiérarchisation d'un catalogue produit dense et déclinaison d'une identité visuelle artisanale pour optimiser l'information client.",
-                img: "images2/Copie de MENU BOISSONS ECLAT DU BLÉ (40 x 60 cm).jpg",
-                link: "https://www.canva.com/design/DAG_557veO8/IUnyJx3NNLRxzK8msQL7lg/view?utm_content=DAG_557veO8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hec44966af5#4",
-                span: "md:col-span-1"
-            },
-            {
-                id: 19,
-                title: "Développement du site vitrine de l'agence Pixel Services",
-                category: "Entreprise",
-                desc: "Création et déploiement du premier site vitrine statique pour l'imprimerie numérique Pixel Services : conception d'une interface moderne et performante hébergée sur GitHub Pages, suite à un besoin d'établir la visibilité en ligne de l'entreprise. Un projet alliant intégration web responsive, optimisation de l'expérience utilisateur sur mobile (iOS/Android) pour maximiser l'impact commercial local. ",
-                img: "images2/minia site pixel.png",
-                link: "https://bluecr3.github.io/PIXEL-SERVICES/",
-                span: "md:col-span-2"
-            },
-        ];
-
-        let currentProjectIndex = 0;
-        let filteredProjects = [...projects];
-
-        /* ============================================================
-           MENU MOBILE
-        ============================================================ */
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
-        }
-
-        /* ============================================================
-           RENDU PROJETS
-        ============================================================ */
-        function renderProjects(filter = "Tous") {
-            const grid = document.getElementById('project-grid');
-            grid.innerHTML = "";
-            filteredProjects = filter === "Tous" ? projects : projects.filter(p => p.category === filter);
-
-            filteredProjects.forEach((p, index) => {
-                const card = document.createElement('div');
-                card.className = `glass-card project-card bento-item ${p.span} p-8 flex flex-col justify-end overflow-hidden group relative`;
-                card.setAttribute('tabindex', '0');
-                card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `Voir le projet : ${p.title}`);
-                card.onclick = () => openProjectModal(index);
-                card.onkeydown = (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openProjectModal(index);
-                    }
-                };
-                card.innerHTML = `
-                    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-20 group-hover:opacity-40 transition-all duration-500" style="background-image: url('${p.img}')"></div>
-                    <div class="relative z-10 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                        <span class="text-blue-500 font-bold text-sm uppercase tracking-[3px]">${p.category}</span>
-                        <h3 class="dbz-font text-xl font-black italic project-card-title mt-1">${p.title}</h3>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        /* ============================================================
-           FILTRES
-        ============================================================ */
-        document.getElementById('filter-container').addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                renderProjects(e.target.dataset.category);
-            }
-        });
-
-        let _lastFocusedCard = null;
-
-        /* ============================================================
-           MODAL PROJET
-        ============================================================ */
-        function openProjectModal(index) {
-            currentProjectIndex = index;
-            const project = filteredProjects[currentProjectIndex];
-            if (!project) return;
-
-            _lastFocusedCard = document.activeElement;
-
-            document.getElementById('modal-title').innerText = project.title;
-            document.getElementById('modal-cat').innerText   = project.category;
-            document.getElementById('modal-desc').innerText  = project.desc;
-            const imgEl = document.getElementById('modal-img');
-            imgEl.src   = project.img;
-            imgEl.alt   = 'Visuel du projet : ' + project.title;
-            document.getElementById('modal-link').href = project.link;
-
-            const modal = document.getElementById('project-modal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-
-            setTimeout(() => {
-                const first = modal.querySelector('a[href], button:not([disabled])');
-                if (first) first.focus();
-            }, 50);
-        }
-
-        function closeProjectModal() {
-            document.getElementById('project-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            if (_lastFocusedCard) _lastFocusedCard.focus();
-        }
-
-        function changeProject(direction) {
-            currentProjectIndex += direction;
-            if (currentProjectIndex < 0)                        currentProjectIndex = filteredProjects.length - 1;
-            if (currentProjectIndex >= filteredProjects.length)  currentProjectIndex = 0;
-            openProjectModal(currentProjectIndex);
-        }
-
-        function closeModalOnOverlay(e) {
-            if (e.target.id === 'project-modal') closeProjectModal();
-        }
-
-        /* ============================================================
-           MODAL PREVIEW
-        ============================================================ */
-        function detectLinkType(url) {
-            if (/youtube\.com|youtu\.be/.test(url))         return 'youtube';
-            if (/canva\.com/.test(url))                     return 'canva';
-            if (/docs\.google\.com\/viewer/.test(url))      return 'gdocs';
-            return 'iframe';
-        }
-
-        function getYoutubeEmbedUrl(url) {
-            let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
-            m = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
-            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
-            m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
-            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0';
-            return null;
-        }
-
-        function getCanvaEmbedUrl(url) {
-            const m = url.match(/canva\.com\/design\/([^/]+)\/([^/]+)\/(view|watch)/);
-            if (m) return 'https://www.canva.com/design/' + m[1] + '/' + m[2] + '/' + m[3] + '?embed';
-            return url;
-        }
-
-        function openPreviewModal() {
-            const project   = filteredProjects[currentProjectIndex];
-            if (!project)   return;
-
-            const modal      = document.getElementById('preview-modal');
-            const iframe     = document.getElementById('preview-iframe');
-            const loading    = document.getElementById('preview-loading');
-            const fallback   = document.getElementById('preview-fallback');
-            const imgPreview = document.getElementById('preview-img-block');
-            const urlBar     = document.getElementById('preview-url-display');
-            const titleEl    = document.getElementById('preview-title');
-            const openLink   = document.getElementById('preview-open-link');
-            const fallbackLink = document.getElementById('fallback-link');
-            const typeBadge  = document.getElementById('preview-type-badge');
-
-            fallback.classList.remove('visible');
-            loading.classList.remove('hidden');
-            iframe.style.display  = 'none';
-            iframe.src            = '';
-            imgPreview.style.display = 'none';
-
-            titleEl.textContent = project.title;
-            urlBar.textContent  = project.link;
-            openLink.href       = project.link;
-            fallbackLink.href   = project.link;
-
-            const type = detectLinkType(project.link);
-
-            if (type === 'youtube') {
-                typeBadge.textContent = '▶ YouTube';
-                typeBadge.style.display = 'inline-block';
-                const embedUrl = getYoutubeEmbedUrl(project.link);
-                if (embedUrl) {
-                    iframe.setAttribute('allow', 'autoplay; fullscreen');
-                    iframe.style.display = 'block';
-                    iframe.src = embedUrl;
-                } else {
-                    showPreviewCanva(project);
-                }
-            } else if (type === 'canva') {
-                typeBadge.textContent = '✦ Canva';
-                typeBadge.style.display = 'inline-block';
-                iframe.setAttribute('allow', 'fullscreen');
-                iframe.style.display = 'block';
-                iframe.src = getCanvaEmbedUrl(project.link);
-            } else if (type === 'gdocs') {
-                typeBadge.textContent = '📄 PDF';
-                typeBadge.style.display = 'inline-block';
-                iframe.style.display = 'block';
-                iframe.removeAttribute('sandbox');
-                iframe.src = project.link;
-            } else {
-                typeBadge.style.display = 'none';
-                iframe.style.display = 'block';
-                iframe.src = project.link;
-            }
-
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function showPreviewCanva(project) {
-            const loading    = document.getElementById('preview-loading');
-            const imgPreview = document.getElementById('preview-img-block');
-            const imgEl      = document.getElementById('preview-big-img');
-            const canvaTitle = document.getElementById('preview-canva-title');
-            const canvaBtn   = document.getElementById('preview-canva-btn');
-
-            loading.classList.add('hidden');
-            imgEl.src = project.img;
-            canvaTitle.textContent = project.title;
-            canvaBtn.href = project.link;
-            imgPreview.style.display = 'flex';
-        }
-
-        function onIframeLoad() {
-            document.getElementById('preview-loading').classList.add('hidden');
-            const iframe = document.getElementById('preview-iframe');
-            try {
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                if (doc && (doc.URL === 'about:blank' || doc.body.innerHTML.trim() === '')) {
-                    showPreviewFallback();
-                }
-            } catch(e) {
-                // Cross-origin = chargé correctement
-            }
-        }
-
-        function showPreviewFallback() {
-            document.getElementById('preview-loading').classList.add('hidden');
-            document.getElementById('preview-fallback').classList.add('visible');
-        }
-
-        function closePreviewModal() {
-            const modal  = document.getElementById('preview-modal');
-            const iframe = document.getElementById('preview-iframe');
-            modal.style.display = 'none';
-            iframe.src = '';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePreviewOnOverlay(e) {
-            if (e.target.id === 'preview-modal') closePreviewModal();
-        }
-
-        function toggleCVModal() {
-            const m = document.getElementById('cv-modal');
-            const isVisible = m.style.display === 'flex';
-            m.style.display = isVisible ? 'none' : 'flex';
-        }
-
-        function closeCVOnOverlay(e) { if(e.target.id === 'cv-modal') toggleCVModal(); }
-
-        /* ============================================================
-           MENTIONS LÉGALES
-        ============================================================ */
-        function toggleMentionsModal() {
-            const m = document.getElementById('mentions-modal');
-            const isVisible = m.style.display === 'flex';
-            m.style.display = isVisible ? 'none' : 'flex';
-            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
-        }
-        function closeMentionsOnOverlay(e) { if(e.target.id === 'mentions-modal') toggleMentionsModal(); }
-
-        /* ============================================================
-           EVENTS & INIT
-        ============================================================ */
-        document.addEventListener('keydown', (e) => {
-            if (e.key !== 'Escape') return;
-            if (document.getElementById('preview-modal').style.display === 'flex')  { closePreviewModal();    return; }
-            if (document.getElementById('project-modal').style.display === 'flex')  { closeProjectModal();    return; }
-            if (document.getElementById('cv-modal').style.display === 'flex')       { toggleModal();          return; }
-            if (document.getElementById('mentions-modal').style.display === 'flex') { toggleMentionsModal();  return; }
-        });
-
-        window.onload = () => renderProjects();
-        createEnergyParticles();
-    </script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
