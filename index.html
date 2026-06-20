@@ -30,6 +30,7 @@
     </script>
 </head>
 <body>
+    <a href="#main-content" class="skip-link" data-translate="skip_to_content">Aller au contenu principal</a>
     <!-- Fond animé -->
     <div class="aura-bg" aria-hidden="true"></div>
     <div class="genkidama-container" aria-hidden="true"><div class="genkidama"></div></div>
@@ -52,17 +53,17 @@
         <div class="nav-controls">
             <!-- Sélecteur FR | EN -->
             <div class="lang-switcher" id="lang-switcher" role="group" aria-label="Language selector">
-                <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')" aria-label="Français">FR</button>
+                <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')" aria-label="Français" aria-pressed="true">FR</button>
                 <span class="lang-sep" aria-hidden="true">|</span>
-                <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-label="English">EN</button>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-label="English" aria-pressed="false">EN</button>
             </div>
             <!-- Bouton d'accessibilité Audio -->
-            <button id="audio-accessibility-btn" onclick="toggleSpeech()" aria-label="Écouter la page mécaniquement">
+            <button id="audio-accessibility-btn" onclick="toggleSpeech()" aria-label="Écouter la page mécaniquement" aria-pressed="false">
                 <i id="audio-icon" class="fas fa-volume-up" aria-hidden="true"></i>
                 <span id="audio-label" data-translate="audio_label">Écouter</span>
             </button>
             <!-- Toggle thème -->
-            <button id="theme-toggle" onclick="toggleTheme()" aria-label="Changer de mode">
+            <button id="theme-toggle" onclick="toggleTheme()" aria-label="Changer de mode" aria-pressed="false">
                 <i id="theme-icon" class="fas fa-sun" aria-hidden="true"></i>
                 <span id="theme-label" data-translate="theme_label">Mode clair</span>
             </button>
@@ -107,6 +108,7 @@
     <!-- ═══════════════════════════════════════════════════════
          HERO
     ═══════════════════════════════════════════════════════ -->
+    <main id="main-content" tabindex="-1">
     <section id="accueil" class="hero-section">
         <p class="hero-badge" data-translate="hero_badge">INFOGRAPHISTE • WEB DESIGNER</p>
         <h1 class="dbz-font hero-title">
@@ -153,14 +155,14 @@
         </h2>
 
         <div class="filter-bar" id="filter-container" role="group" aria-label="Filtres de projets">
-            <button class="filter-btn active" data-category="Tous"         data-filter-key="filter_all">Tous</button>
-            <button class="filter-btn"        data-category="Exprimer"     data-filter-key="filter_express">Exprimer</button>
-            <button class="filter-btn"        data-category="Comprendre"   data-filter-key="filter_understand">Comprendre</button>
-            <button class="filter-btn"        data-category="Concevoir"    data-filter-key="filter_design">Concevoir</button>
-            <button class="filter-btn"        data-category="Développer"   data-filter-key="filter_develop">Développer</button>
-            <button class="filter-btn"        data-category="Entreprendre" data-filter-key="filter_undertake">Entreprendre</button>
-            <button class="filter-btn"        data-category="Entreprise"   data-filter-key="filter_enterprise">Entreprise</button>
-            <button class="filter-btn"        data-category="Personnel"    data-filter-key="filter_personal">Personnel</button>
+            <button class="filter-btn active" data-category="Tous"         data-filter-key="filter_all" aria-pressed="true">Tous</button>
+            <button class="filter-btn"        data-category="Exprimer"     data-filter-key="filter_express" aria-pressed="false">Exprimer</button>
+            <button class="filter-btn"        data-category="Comprendre"   data-filter-key="filter_understand" aria-pressed="false">Comprendre</button>
+            <button class="filter-btn"        data-category="Concevoir"    data-filter-key="filter_design" aria-pressed="false">Concevoir</button>
+            <button class="filter-btn"        data-category="Développer"   data-filter-key="filter_develop" aria-pressed="false">Développer</button>
+            <button class="filter-btn"        data-category="Entreprendre" data-filter-key="filter_undertake" aria-pressed="false">Entreprendre</button>
+            <button class="filter-btn"        data-category="Entreprise"   data-filter-key="filter_enterprise" aria-pressed="false">Entreprise</button>
+            <button class="filter-btn"        data-category="Personnel"    data-filter-key="filter_personal" aria-pressed="false">Personnel</button>
         </div>
 
         <div id="project-grid" class="project-grid" aria-live="polite"></div>
@@ -222,7 +224,7 @@
             </div>
             <div class="cv-body-bg">
                 <div class="cv-img-wrap cv-img-border">
-                    <img src="images2/CV Caraïbe Ethan VF.jpg" alt="Aperçu CV Ethan Caraïbe" class="w-full h-auto" loading="lazy"
+                    <img src="images2/CV Caraïbe Ethan VF.jpg" alt="Aperçu de la première page du CV d'Ethan Caraïbe, infographiste et web designer" class="w-full h-auto" loading="lazy"
                          onerror="this.src='https://via.placeholder.com/800x1200?text=Aperçu+Indisponible'">
                 </div>
             </div>
@@ -327,9 +329,9 @@
             </div>
 
             <form id="contact-form" action="https://formspree.io/f/xnnjzego" method="POST" class="contact-form">
-                <input type="text"  name="name"    required id="input-name"    placeholder="Votre Nom"     class="form-input">
-                <input type="email" name="email"   required id="input-email"   placeholder="Votre Email"   class="form-input">
-                <textarea           name="message" required id="input-message" placeholder="Votre Message" rows="4" class="form-input form-textarea"></textarea>
+                <input type="text"  name="name"    required id="input-name"    aria-label="Votre nom complet" placeholder="Votre Nom"     class="form-input">
+                <input type="email" name="email"   required id="input-email"   aria-label="Votre adresse email" placeholder="Votre Email"   class="form-input">
+                <textarea           name="message" required id="input-message" aria-label="Votre message" placeholder="Votre Message" rows="4" class="form-input form-textarea"></textarea>
                 <button type="submit" id="submit-btn" class="btn-ki form-submit">
                     <span id="btn-text" data-translate="contact_send">Envoyer le message</span>
                 </button>
@@ -337,6 +339,7 @@
             </form>
         </div>
     </section>
+    </main>
 
     <!-- ═══════════════════════════════════════════════════════
          FOOTER
@@ -475,9 +478,9 @@
                 </div>
                 <div class="preview-fallback" id="preview-fallback">
                     <div class="fallback-icon-wrap" aria-hidden="true">
-                        <i class="fas fa-shield-alt text-blue-500"></i>
+                        <i class="fas fa-shield-alt text-blue-500" aria-hidden="true"></i>
                     </div>
-                    <h3 class="dbz-font" data-translate="preview_blocked_title">Aperçu bloqué</h3>
+                    <h2 class="dbz-font" data-translate="preview_blocked_title">Aperçu bloqué</h2>
                     <p data-translate="preview_blocked_desc">Ce site interdit l'affichage dans un cadre externe pour des raisons de sécurité.</p>
                     <a id="fallback-link" href="#" target="_blank" rel="noopener" class="btn-ki">
                         <i class="fas fa-external-link-alt" aria-hidden="true"></i>
