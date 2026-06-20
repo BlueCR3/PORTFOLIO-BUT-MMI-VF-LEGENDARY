@@ -3,6 +3,7 @@
 ════════════════════════════════════════════════════════════════ */
 const translations = {
     fr: {
+        skip_to_content:'Aller au contenu principal',
         nav_home:'Accueil', nav_profile:'Profil', nav_projects:'Projets', nav_ki:'Niveau de Ki', nav_contact:'Contact',
         theme_label:'Mode clair', theme_label_dark:'Mode sombre',
         audio_label:'Écouter', audio_label_stop:'Arrêter',
@@ -58,6 +59,7 @@ const translations = {
         cgu_s6_body:"L'éditeur se réserve le droit de modifier unilatéralement et à tout moment les termes des présentes CGU afin de les adapter aux évolutions réglementaires ou techniques du site.",
     },
     en: {
+        skip_to_content:'Skip to main content',
         nav_home:'Home', nav_profile:'Profile', nav_projects:'Projects', nav_ki:'Ki Level', nav_contact:'Contact',
         theme_label:'Light mode', theme_label_dark:'Dark mode',
         audio_label:'Listen', audio_label_stop:'Stop',
@@ -207,90 +209,149 @@ let currentLang         = localStorage.getItem('lang') || 'fr';
 let currentProjectIndex = 0;
 let filteredProjects    = [];
 let isSpeaking          = false;
-let currentUtterance     = null;
+let speechQueue         = []; // file de SpeechSynthesisUtterance (lecture découpée en phrases)
 
 const getProjects = () => projectsData[currentLang] || projectsData.fr;
 
 /* ════════════════════════════════════════════════════════════════
-   ACCESSIBILITÉ — SYNTHÈSE VOCALE (SPEECH SYNTHESIS)
+   ACCESSIBILITÉ — SYNTHÈSE VOCALE (SPEECH SYNTHESIS) — ROBUSTE
+   PC / mobile / tablette : les listes de voix système se chargent de
+   façon ASYNCHRONE selon les navigateurs (immédiat sur Safari/Firefox,
+   après l'évènement 'voiceschanged' sur Chrome/Edge, parfois jamais
+   sur certains anciens navigateurs mobiles → on couvre les 3 cas).
 ════════════════════════════════════════════════════════════════ */
+let availableVoices = [];
+
+function loadVoices() {
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    if (voices && voices.length) availableVoices = voices;
+    return availableVoices;
+}
+
+if ('speechSynthesis' in window) {
+    loadVoices(); // 1) tentative immédiate (déjà dispo sur Safari/Firefox)
+    window.speechSynthesis.onvoiceschanged = loadVoices; // 2) évènement standard (Chrome/Edge)
+
+    // 3) filet de sécurité : navigateurs qui ne déclenchent jamais l'évènement
+    (function pollVoicesFallback(attempts) {
+        attempts = attempts || 0;
+        if (availableVoices.length || attempts >= 10) return;
+        setTimeout(() => { loadVoices(); pollVoicesFallback(attempts + 1); }, 300);
+    })();
+}
+
+/**
+ * Sélectionne dynamiquement la meilleure voix système pour une langue donnée.
+ * Priorité : voix native (localService) exacte > voix exacte > voix dont le
+ * préfixe de langue correspond (fr-*, en-*) > null (repli sur .lang du navigateur).
+ * @param {string} langCode — ex. 'fr-FR' ou 'en-US'
+ */
+function getBestVoice(langCode) {
+    const voices = availableVoices.length ? availableVoices : loadVoices();
+    if (!voices.length) return null;
+
+    const exact  = voices.filter(v => v.lang === langCode);
+    const native = exact.find(v => v.localService);
+    if (native) return native;
+    if (exact.length) return exact[0];
+
+    const prefix      = langCode.split('-')[0];
+    const byPrefix     = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(prefix));
+    const nativePrefix = byPrefix.find(v => v.localService);
+    if (nativePrefix) return nativePrefix;
+    if (byPrefix.length) return byPrefix[0];
+
+    return null; // aucune voix correspondante : le navigateur utilisera sa voix par défaut
+}
+
+/**
+ * Découpe un texte long en phrases distinctes pour la synthèse vocale.
+ * Indispensable sur mobile/tablette : Safari iOS interrompt silencieusement
+ * toute lecture (SpeechSynthesisUtterance) dépassant ~15 secondes. Lire le
+ * texte phrase par phrase (mise en file native via plusieurs appels .speak())
+ * contourne ce bug et rend l'écoute plus naturelle, avec de vraies pauses.
+ */
+function splitTextForSpeech(text) {
+    const sentences = text.replace(/\s+/g, ' ').trim().match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+    return sentences && sentences.length ? sentences : [text];
+}
+
 function toggleSpeech() {
-    const t = translations[currentLang];
-    const btn = document.getElementById('audio-accessibility-btn');
+    const t     = translations[currentLang];
+    const btn   = document.getElementById('audio-accessibility-btn');
     const label = document.getElementById('audio-label');
-    const icon = document.getElementById('audio-icon');
+    const icon  = document.getElementById('audio-icon');
+
+    const resetUI = () => {
+        isSpeaking  = false;
+        speechQueue = [];
+        if (btn)   { btn.classList.remove('playing'); btn.setAttribute('aria-pressed', 'false'); }
+        if (label) label.textContent = t.audio_label;
+        if (icon)  icon.className = 'fas fa-volume-up';
+    };
 
     if (isSpeaking) {
-        // Arrêter la lecture en cours
+        // Arrêter la lecture en cours (vide aussi la file native du navigateur)
         window.speechSynthesis.cancel();
-        isSpeaking = false;
-        if (btn) btn.classList.remove('playing');
-        if (label) label.textContent = t.audio_label;
-        if (icon) {
-            icon.className = 'fas fa-volume-up';
-        }
-    } else {
-        // Commencer la lecture
-        isSpeaking = true;
-        if (btn) btn.classList.add('playing');
-        if (label) label.textContent = t.audio_label_stop;
-        if (icon) {
-            icon.className = 'fas fa-volume-mute';
-        }
-
-        // Récupérer le texte à lire de manière structurée et accessible
-        let textToRead = "";
-        
-        if (currentLang === 'fr') {
-            textToRead += "Bienvenue sur le portfolio d'Ethan Caraïbe, infographiste et web designer. ";
-            textToRead += "Titre principal : Repousser les limites du web. ";
-            textToRead += "Présentation : " + t.about_bio + " ";
-            textToRead += "Voici mes missions principales : ";
-            getProjects().forEach((proj, idx) => {
-                textToRead += `Mission numéro ${idx + 1} : ${proj.title}. Catégorie : ${proj.category}. Description : ${proj.desc}. `;
-            });
-            textToRead += "Fin de la lecture du portfolio.";
-        } else {
-            textToRead += "Welcome to Ethan Caraïbe's portfolio, graphic designer and web designer. ";
-            textToRead += "Main title: Pushing the limits of the web. ";
-            textToRead += "Profile summary: " + t.about_bio + " ";
-            textToRead += "Here are my main projects: ";
-            getProjects().forEach((proj, idx) => {
-                textToRead += `Project number ${idx + 1}: ${proj.title}. Category: ${proj.category}. Description: ${proj.desc}. `;
-            });
-            textToRead += "End of portfolio reading.";
-        }
-
-        // Création de l'objet de synthèse vocale
-        currentUtterance = new SpeechSynthesisUtterance(textToRead);
-        
-        // Configuration de la langue correcte pour la voix
-        currentUtterance.lang = currentLang === 'fr' ? 'fr-FR' : 'en-US';
-        currentUtterance.rate = 1.0; // vitesse normale
-
-        // Callback de fin de lecture naturelle
-        currentUtterance.onend = function() {
-            isSpeaking = false;
-            if (btn) btn.classList.remove('playing');
-            if (label) label.textContent = t.audio_label;
-            if (icon) {
-                icon.className = 'fas fa-volume-up';
-            }
-        };
-
-        currentUtterance.onerror = function() {
-            isSpeaking = false;
-            if (btn) btn.classList.remove('playing');
-            if (label) label.textContent = t.audio_label;
-            if (icon) {
-                icon.className = 'fas fa-volume-up';
-            }
-        };
-
-        // Lancer la lecture
-        window.speechSynthesis.speak(currentUtterance);
+        resetUI();
+        return;
     }
+
+    // Commencer la lecture
+    isSpeaking = true;
+    if (btn)   { btn.classList.add('playing'); btn.setAttribute('aria-pressed', 'true'); }
+    if (label) label.textContent = t.audio_label_stop;
+    if (icon)  icon.className = 'fas fa-volume-mute';
+
+    // Récupérer le texte à lire de manière structurée et accessible
+    let textToRead = "";
+
+    if (currentLang === 'fr') {
+        textToRead += "Bienvenue sur le portfolio d'Ethan Caraïbe, infographiste et web designer. ";
+        textToRead += "Titre principal : Repousser les limites du web. ";
+        textToRead += "Présentation : " + t.about_bio + " ";
+        textToRead += "Voici mes missions principales : ";
+        getProjects().forEach((proj, idx) => {
+            textToRead += `Mission numéro ${idx + 1} : ${proj.title}. Catégorie : ${proj.category}. Description : ${proj.desc}. `;
+        });
+        textToRead += "Fin de la lecture du portfolio.";
+    } else {
+        textToRead += "Welcome to Ethan Caraïbe's portfolio, graphic designer and web designer. ";
+        textToRead += "Main title: Pushing the limits of the web. ";
+        textToRead += "Profile summary: " + t.about_bio + " ";
+        textToRead += "Here are my main projects: ";
+        getProjects().forEach((proj, idx) => {
+            textToRead += `Project number ${idx + 1}: ${proj.title}. Category: ${proj.category}. Description: ${proj.desc}. `;
+        });
+        textToRead += "End of portfolio reading.";
+    }
+
+    // Langue cible + voix native correspondante (fr-FR pour le mode FR, en-US pour le mode EN)
+    const langCode = currentLang === 'fr' ? 'fr-FR' : 'en-US';
+    const voice    = getBestVoice(langCode);
+
+    // Découpage en phrases : chaque morceau devient sa propre utterance,
+    // mises en file automatiquement par le navigateur via .speak() successifs
+    speechQueue = splitTextForSpeech(textToRead).map(chunk => {
+        const u = new SpeechSynthesisUtterance(chunk.trim());
+        u.lang = langCode;          // filet de sécurité si aucune voix explicite trouvée
+        if (voice) u.voice = voice; // voix native fr-FR / en-US sélectionnée dynamiquement
+        u.rate = 1.0;
+        return u;
+    });
+
+    speechQueue.forEach((utterance, i) => {
+        utterance.onerror = resetUI;
+        if (i === speechQueue.length - 1) utterance.onend = resetUI; // fin = dernier morceau lu
+        window.speechSynthesis.speak(utterance);
+    });
 }
+
+// Robustesse multi-écrans : on coupe proprement la voix si l'utilisateur quitte
+// la page ou change d'onglet pendant la lecture (évite une voix "fantôme").
+window.addEventListener('pagehide', () => {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+});
 
 /* ════════════════════════════════════════════════════════════════
    I18N — setLang
@@ -328,6 +389,8 @@ function setLang(lang) {
     // Boutons FR / EN
     document.getElementById('btn-fr')?.classList.toggle('active', lang === 'fr');
     document.getElementById('btn-en')?.classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr')?.setAttribute('aria-pressed', String(lang === 'fr'));
+    document.getElementById('btn-en')?.setAttribute('aria-pressed', String(lang === 'en'));
 
     // lang HTML
     document.documentElement.lang = lang;
@@ -390,21 +453,21 @@ function renderProjects(filter = 'Tous') {
 ════════════════════════════════════════════════════════════════ */
 document.getElementById('filter-container')?.addEventListener('click', e => {
     if (!e.target.classList.contains('filter-btn')) return;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
     e.target.classList.add('active');
+    e.target.setAttribute('aria-pressed', 'true');
     renderProjects(e.target.dataset.category);
 });
 
 /* ════════════════════════════════════════════════════════════════
    MODAL PROJET
 ════════════════════════════════════════════════════════════════ */
-let _lastFocused = null;
+let _lastFocused = null; // mémorise le déclencheur, pour lui rendre le focus à la fermeture (toutes modales)
 
 function openProjectModal(index) {
     currentProjectIndex = index;
     const p = filteredProjects[index];
     if (!p) return;
-    _lastFocused = document.activeElement;
 
     document.getElementById('modal-title').textContent = p.title;
     document.getElementById('modal-cat').textContent   = p.category;
@@ -418,7 +481,6 @@ function openProjectModal(index) {
 
 function closeProjectModal() {
     hideModal('project-modal');
-    _lastFocused?.focus();
 }
 
 function changeProject(dir) {
@@ -549,8 +611,18 @@ function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const open = menu.classList.toggle('active');
     document.body.style.overflow = open ? 'hidden' : '';
+    menu.toggleAttribute('inert', !open); // retire le panneau hors-écran du clavier/des AT quand fermé
     const btn = document.querySelector('.burger-btn');
     if (btn) btn.setAttribute('aria-expanded', String(open));
+
+    if (open) {
+        _lastFocused = document.activeElement;
+        document.addEventListener('keydown', trapFocus);
+        setTimeout(() => menu.querySelector('a[href]')?.focus(), 50);
+    } else {
+        document.removeEventListener('keydown', trapFocus);
+        _lastFocused?.focus();
+    }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -562,6 +634,7 @@ function toggleTheme() {
     const t       = translations[currentLang];
     document.getElementById('theme-icon').className = isLight ? 'fas fa-moon' : 'fas fa-sun';
     document.getElementById('theme-label').textContent = isLight ? t.theme_label_dark : t.theme_label;
+    document.getElementById('theme-toggle')?.setAttribute('aria-pressed', String(isLight));
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateParticleColors();
 }
@@ -575,22 +648,51 @@ function updateParticleColors() {
 
 /* ════════════════════════════════════════════════════════════════
    HELPERS MODALES (évite la duplication)
+   — capture/restitution du focus + piège à focus clavier (Tab reste
+     à l'intérieur de la modale ouverte, comme l'exige le pattern
+     ARIA "dialog modal" pour une navigation clavier fluide).
 ════════════════════════════════════════════════════════════════ */
+function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const openModal = Array.prototype.find.call(
+        document.querySelectorAll('[role="dialog"]'),
+        m => m.style.display === 'flex' || m.classList.contains('active')
+    );
+    if (!openModal) return;
+
+    const focusables = openModal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last  = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+    }
+}
+
 function showModal(id) {
     const el = document.getElementById(id);
+    _lastFocused = document.activeElement;
     el.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', trapFocus);
     setTimeout(() => { el.querySelector('a[href],button:not([disabled])')?.focus(); }, 50);
 }
 function hideModal(id) {
     document.getElementById(id).style.display = 'none';
     document.body.style.overflow = '';
+    document.removeEventListener('keydown', trapFocus);
+    _lastFocused?.focus();
 }
 function toggleOverlay(id) {
     const el = document.getElementById(id);
     const v  = el.style.display === 'flex';
-    el.style.display = v ? 'none' : 'flex';
-    document.body.style.overflow = v ? '' : 'hidden';
+    if (v) hideModal(id); else showModal(id);
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -698,6 +800,7 @@ document.addEventListener('keydown', e => {
     // Thème (déjà appliqué en tête HTML, juste synchro icône)
     if (document.documentElement.classList.contains('light')) {
         document.getElementById('theme-icon').className = 'fas fa-moon';
+        document.getElementById('theme-toggle')?.setAttribute('aria-pressed', 'true');
     }
 
     // Langue
